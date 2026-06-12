@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+
+# Data & Audio (Ne jamais committer les gros fichiers audio)
+data/
+*.wav
+*.mp3
+*.flac
+*.ogg
+
+# Results & Logs (on garde les CSV finaux, mais pas les logs temporaires)
+*.log
+results/*.tmp
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Environment variables
+.env
+*.env
