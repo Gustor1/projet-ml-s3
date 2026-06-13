@@ -1,0 +1,25 @@
+project:
+  name: local-audio-preprocessing-asr
+  seed: 42
+
+paths:
+  raw_data: data/raw
+  processed_data: data/processed
+  models: models
+  logs: logs
+  outputs: outputs
+
+asr:
+  model_name: "openai/whisper-small"
+  languages: ["en", "fr", "zh"]
+
+preprocessing:
+  sample_rate: 16000
+  enable_denoise: true
+  enable_vad: true
+  enable_echo_cancellation: false
+  enable_beamforming: false
+
+experiments:
+  run_baseline: true
+  run_with_preprocessing: true
