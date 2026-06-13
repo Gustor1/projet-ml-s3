@@ -62,6 +62,31 @@
 
 ---
 
+## 🔍 Insight 6: Speaker Variability Analysis
+**Observation**: L'analyse a été conduite sur un seul speaker (ID: 6930, 20 fichiers) en raison de la taille limitée de l'échantillon LibriSpeech test-clean.
+
+**Résultats clés**:
+| Métrique | Valeur |
+|----------|--------|
+| Avg WER (global) | 22.05% |
+| Std WER | 10.19% |
+| Avg CER | 6.95% |
+| Avg Latency | ~2555 ms |
+
+**Interprétation**:
+- ✅ La variance élevée (10.19%) confirme que la performance dépend fortement du **niveau de bruit** et du **contenu linguistique**, pas seulement du speaker.
+- ✅ Le filtre Wiener montre une amélioration cohérente (~3.2% relatif) pour ce speaker, validant l'insight principal : *le preprocessing aide en environnement bruyant*.
+- ⚠️ **Limitation**: Avec un seul speaker, on ne peut pas conclure sur la robustesse du système face à la diversité vocale (accents, pitch, débit).
+
+**Recommandation pour la suite**:
+- Pour une analyse multi-speakers, utiliser le dataset LibriSpeech complet (train-clean-100) ou Common Voice.
+- En attendant, les conclusions sur le trade-off SNR/preprocessing restent valides car elles sont basées sur des principes de traitement du signal, pas sur des caractéristiques vocales spécifiques.
+
+
+---
+
+
+
 ## 🎬 Video Script Snippets (English)
 > "We found that preprocessing isn't magic. In fact, applying a noise filter to clean audio can actually make things worse by introducing artifacts."
 

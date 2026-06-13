@@ -1,0 +1,20 @@
+Team Contributions — Sujet 3: Local Audio Preprocessing for Better ASR Performance
+
+Eliott — Data & Experimentation Engineer — 17%
+--------------------------------------------------
+Responsabilités :
+- Gestion du pipeline de données (LibriSpeech download & augmentation)
+- Conception et exécution des expériences (Baseline WER, Comparaison Preprocessing)
+- Analyse des métriques (WER, CER, Latency) et extraction des insights
+- Documentation technique et rapports d'expériences
+
+Livrables :
+- scripts/download_real_librispeech.py (Pipeline données)
+- scripts/augment_audio.py (Simulation bruit SNR 20/10/5dB)
+- experiments/baseline_wer.py (Calcul métriques)
+- experiments/compare_preprocessing.py (Comparaison None vs Wiener)
+- results/baseline.csv & results/preprocessing_comparison.csv (Données brutes)
+- docs/experiment-1-baseline.md & docs/experiment-2-comparison.md (Rapports)
+- docs/insights.md & docs/tradeoffs.md (Analyse approfondie)
+
+GitHub Repository : https://github.com/Gustor1/projet-ml-s3
