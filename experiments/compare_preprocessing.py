@@ -87,16 +87,17 @@ def run_comparison(metadata_path, output_csv, model_size="tiny"):
                 lat = (time.time() - start) * 1000
                 pred = out["text"].strip().lower()
                 wer = jiwer.wer(ref, pred) if ref else 1.0
-                results.append({"file_name": wav_path.name, "snr_db": snr, "method": method_name, "wer": round(wer, 4), "latency_ms": round(lat, 2)})
-                logger.info(f"  -> WER: {wer:.2%} | Latency: {lat:.0f}ms")
+                cer = jiwer.cer(ref, pred) if ref else 1.0 
+                results.append({"file_name": wav_path.name, "snr_db": snr, "method": method_name, "wer": round(wer, 4), "cer": round(cer, 4), "latency_ms": round(lat, 2)})
+                logger.info(f"  -> WER: {wer:.2%} | CER: {cer:.2%} | Latency: {lat:.0f}ms")
             except Exception as e:
                 logger.error(f"Error: {e}")
-                results.append({"file_name": wav_path.name, "snr_db": snr, "method": method_name, "wer": -1, "latency_ms": -1})
+                results.append({"file_name": wav_path.name, "snr_db": snr, "method": method_name, "wer": -1, "cer": -1, "latency_ms": -1})
 
     out_csv = Path(output_csv)
     out_csv.parent.mkdir(parents=True, exist_ok=True)
     with open(out_csv, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=["file_name", "snr_db", "method", "wer", "latency_ms"])
+        writer = csv.DictWriter(f, fieldnames=["file_name", "snr_db", "method", "wer", "cer", "latency_ms"])
         writer.writeheader()
         writer.writerows(results)
 

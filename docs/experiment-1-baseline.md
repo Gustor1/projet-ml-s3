@@ -25,4 +25,4 @@ Whisper tiny, although fast to load (~150MB), produces a relatively high WER (18
 - **Hypothesis**: A larger model (base/small) would reduce WER but increase latency -> to test
 
 ## Next Step
-Add artificial noise (various SNRs) then test the impact of preprocessing methods (Wiener, noisereduce) on WER.
+Add artificial noise (various SNRs) then test the impact of preprocessing methods (Wiener, noisereduce) on WER. 
