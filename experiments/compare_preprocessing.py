@@ -35,16 +35,23 @@ def preprocess_spectral_subtraction(audio, sr, alpha=2.0, beta=0.01):
 
     result = np.zeros(n)
     window = np.hanning(nfft)
+    
     for i in range(0, n, hop):
         frame = audio[i:i+nfft]
+        # Pad frame si nécessaire (touche la dernière frame)
         if len(frame) < nfft:
             frame = np.pad(frame, (0, nfft - len(frame)))
+        
         spec = np.fft.rfft(frame * window)
         power = np.abs(spec) ** 2
         clean_pow = np.maximum(power - alpha * noise_pow, beta * noise_pow)
         clean_spec = np.sqrt(clean_pow) * np.exp(1j * np.angle(spec))
         clean_frame = np.fft.irfft(clean_spec) * window
-        result[i:i+nfft] += clean_frame
+        
+        # ✅ FIX : On s'assure que les dimensions correspondent toujours
+        # La dernière tranche de 'result' peut être plus courte que nfft
+        chunk_len = min(nfft, n - i)
+        result[i:i+chunk_len] += clean_frame[:chunk_len]
 
     max_val = np.max(np.abs(result))
     if max_val > 0:

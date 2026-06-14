@@ -84,6 +84,17 @@
 
 
 ---
+## 🔍 Insight 7: Not All Preprocessing Helps
+**Observation**: Spectral subtraction, despite being a classic denoising technique, increased WER by ~9% absolute compared to baseline.
+
+**Hypothesis**: The method may introduce "musical noise" artifacts or phase distortions that confuse Whisper's decoder, especially with the tiny model's limited capacity.
+
+**Engineering Implication**: 
+- Preprocessing is not a plug-and-play solution
+- Method selection must be validated empirically for each ASR model
+- Simpler methods (Wiener) may be more robust than complex spectral techniques
+
+**Recommendation**: Always benchmark preprocessing methods on your target ASR model before deployment.
 
 
 
