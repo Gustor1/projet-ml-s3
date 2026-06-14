@@ -96,6 +96,20 @@
 
 **Recommendation**: Always benchmark preprocessing methods on your target ASR model before deployment.
 
+---
+## 🔍 Insight 8: Preprocessing is Noise-Spectrum-Dependent (Critical Finding)
+**Observation**: The Wiener filter, which modestly helps on white Gaussian noise (+3% relative WER at 5dB), **severely degrades** performance on pink noise (+50% relative WER at 5dB, from 22.2% to 33.3%).
+
+**Scientific Explanation**: The Wiener filter assumes stationary noise with flat power spectral density. On pink noise (1/f spectrum), it over-attenuates high frequencies (where speech formants reside) and under-attenuates low frequencies (where pink noise energy dominates), creating spectral tilt distortion.
+
+**Counter-intuitive Finding**: Pink noise baseline (22.2% WER at 5dB) is actually **better** than white noise baseline (27.5% WER at 5dB) because pink noise's energy concentrates below 1kHz, outside Whisper's most speech-informative Mel bands (1-4kHz).
+
+**Deployment Implication**: 
+- Lab benchmarks on white noise provide an **upper bound** on preprocessing effectiveness, not a realistic estimate
+- Any preprocessing pipeline must be validated against realistic noise profiles (DEMAND, CHiME, AudioSet)
+- **Default recommendation**: No preprocessing, with spectrum-aware conditional activation only
+
+**Engineering Lesson**: The most dangerous preprocessing is the one that works in the lab but fails in production. Spectrum-aware validation is the difference between a research demo and a deployable system.
 
 
 ## 🎬 Video Script Snippets (English)

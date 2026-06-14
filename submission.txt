@@ -18,6 +18,7 @@ Livrables :
 - docs/insights.md & docs/tradeoffs.md (Analyse approfondie)
 - visuals/preprocessing_comparison.png (Visualisation des résultats)
 - docs/speaker_analysis.md (Analyse par speaker)
-- docs/journal/ (Journal de bord technique)
+- docs/experiment-2-final-comparison.md (comprehensive 3-method comparison)
+- docs/journal/ (technical development log)
 
 GitHub Repository : https://github.com/Gustor1/projet-ml-s3
