@@ -134,6 +134,42 @@
 
 **Engineering Lesson**: The "lab-to-real-world" gap is not a minor engineering detail — it is a fundamental scientific challenge. Preprocessing validated on white noise is **misleading** for real-world deployment. Real-world validation on representative noise corpora (DEMAND, CHiME, AudioSet) is non-negotiable.
 
+---
+
+---
+
+## 🔍 Insight 10: Babble Noise Triggers ASR Hallucinations (Critical Finding)
+
+**Observation**: Babble noise (cocktail party problem) is the most challenging noise type tested, with baseline WER reaching **37.0% at 5dB SNR**. Both Wiener filter (+4.32% overall, +8.12% at 5dB) and spectral subtraction (+9.58% overall, +18.49% at 5dB) **degrade performance catastrophically**.
+
+**Critical Phenomenon**: At 5dB SNR, babble noise triggers **ASR hallucinations** — 6 samples (3.3%) exhibited WER > 100%, where the model generated completely unrelated text instead of making normal recognition errors. Example: file `6930-75918-0010_babble_snr5dB.wav` produced WER of 59.33 (5933%) for `none`, 30.67 for `wiener`, and 49.17 for `spectral_subtraction`.
+
+**Statistical Correction**: After excluding the 6 hallucinated samples (robust statistics on 174/180 valid inferences), the true performance emerges:
+| Method | Robust Avg WER | Δ vs Baseline |
+|--------|----------------|---------------|
+| `none` | 25.44% | — |
+| `wiener` | 29.76% | **+4.32% ❌** |
+| `spectral_subtraction` | 35.02% | **+9.58% ❌** |
+
+**Comparative Analysis Across All Noise Types**:
+| Noise Type | Baseline WER (5dB) | Wiener Δ (5dB) | Spectral Δ (5dB) |
+|------------|--------------------|-----------------|------------------|
+| White Gaussian | 27.5% | **-2.8% ✅** | +9.7% ❌ |
+| Pink (1/f) | 22.2% | +11.1% ❌ | +27.0% ❌ |
+| Urban Real | 27.0% | +5.0% ❌ | +18.0% ❌ |
+| **Babble (Crowd)** | **37.0%** | **+8.12% ❌** | **+18.49% ❌** |
+
+**Scientific Explanation**: Babble noise represents the "cocktail party problem" — interfering speech occupies the same frequency bands (300Hz-3kHz) as target speech and is highly non-stationary. Classical DSP methods (Wiener, spectral subtraction) cannot distinguish target speech from interfering speech because they operate on spectral features, not semantic content. The hallucinations occur because Whisper's autoregressive decoder, faced with ambiguous acoustic features, falls back on its language model prior and "dreams up" fluent but fabricated sentences.
+
+**Deployment Implication**: 
+- **Default recommendation**: No preprocessing for mobile/PC ASR pipelines
+- **Babble noise requires fundamentally different approaches**: Speaker diarization, target speaker extraction (VoiceFilter, SpEx+), or multi-channel beamforming
+- **Hallucination detection is critical**: Implement confidence scoring to reject low-confidence transcriptions rather than outputting fabricated content
+
+**Final Engineering Lesson**: The cocktail party problem cannot be solved with classical signal processing. When the noise is speech, you need speech-aware methods, not spectral filters. Lab benchmarks on white noise overestimate preprocessing effectiveness by ~11 percentage points — real-world validation on representative noise types is non-negotiable.
+
+---
+
 ## 🎬 Video Script Snippets (English)
 > "We found that preprocessing isn't magic. In fact, applying a noise filter to clean audio can actually make things worse by introducing artifacts."
 
