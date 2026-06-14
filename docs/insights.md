@@ -111,6 +111,28 @@
 
 **Engineering Lesson**: The most dangerous preprocessing is the one that works in the lab but fails in production. Spectrum-aware validation is the difference between a research demo and a deployable system.
 
+---
+
+## 🔍 Insight 9: Preprocessing Fails on Real-World Urban Noise (Critical Finding)
+**Observation**: Both Wiener filter and spectral subtraction **degrade** ASR performance on real urban noise (traffic, café, street), with Wiener transitioning from modest helper on white noise (+3% relative WER gain at 5dB) to severe degrader on urban noise (+18% relative WER loss at 5dB).
+
+**Scientific Explanation**: Classical DSP methods (Wiener, spectral subtraction) assume **stationary noise** with stable power spectral density. Urban noise is **non-stationary**: traffic patterns change, conversations start/stop, klaxons are impulsive. The filter's noise estimate becomes stale, introducing temporal smearing and musical noise artifacts that confuse Whisper's temporal attention.
+
+**Comparative Analysis Across Noise Types**:
+| Noise Type | Wiener at 5dB | Spectral Sub at 5dB |
+|------------|---------------|---------------------|
+| White Gaussian | -2.8% ✅ (helps) | +9.7% ❌ (harms) |
+| Pink (1/f) | +11.1% ❌ (harms) | +27.0% ❌ (catastrophic) |
+| Urban Real | +5.0% ❌ (harms) | +18.0% ❌ (severe) |
+
+**Counter-intuitive Finding**: The modest benefit of Wiener on white noise **completely reverses** on urban noise. This is not a marginal effect — it is a fundamental limitation of classical DSP methods.
+
+**Deployment Implication**: 
+- Lab benchmarks on synthetic noise provide an **upper bound** on preprocessing effectiveness, not a realistic estimate
+- **Default recommendation**: No preprocessing for mobile/PC ASR pipelines
+- **Future work**: Deep learning-based denoising (DCCRN, Conv-TasNet) trained on real noise, or noise-robust ASR models (Whisper large)
+
+**Engineering Lesson**: The "lab-to-real-world" gap is not a minor engineering detail — it is a fundamental scientific challenge. Preprocessing validated on white noise is **misleading** for real-world deployment. Real-world validation on representative noise corpora (DEMAND, CHiME, AudioSet) is non-negotiable.
 
 ## 🎬 Video Script Snippets (English)
 > "We found that preprocessing isn't magic. In fact, applying a noise filter to clean audio can actually make things worse by introducing artifacts."
