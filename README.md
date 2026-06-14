@@ -1,25 +1,63 @@
-# 🎙️ Local Audio Preprocessing for Better ASR Performance
+# Local Audio Preprocessing for Better ASR Performance
 
-**Sujet 3** - Projet de Machine Learning (SHU)
+This project implements a complete pipeline for **local audio preprocessing** (noise reduction, VAD, enhancement, echo handling, etc.) to improve the performance of an **ASR (Automatic Speech Recognition)** model.
 
-## 🎯 Objectif
-Construire un pipeline de prétraitement audio local (réduction de bruit, VAD, enhancement) pour améliorer significativement la performance d'un modèle ASR (Whisper).
+The repository is organized by roles:
+- `preprocessing/` – audio preprocessing modules
+- `asr/` – ASR model integration and evaluation
+- `experiments/` – experiments, ablation studies, and plots
+- `optimization/` – profiling and real-time performance
+- `demo/` – interactive demo and final video assets
+- `configs/` – configuration files
+- `utils/` – shared utilities
 
-##  Structure du projet
-- `scripts/` : Scripts utilitaires (téléchargement datasets, augmentation audio)
-- `experiments/` : Pipelines d'expérimentation (baseline, ablation studies)
-- `data/` : Datasets audio (ignoré par Git)
-- `results/` : Métriques et logs (CSV)
-- `visuals/` : Graphiques et assets pour la vidéo
-- `docs/` : Documentation, insights, et journal de bord
-- `src/` : Code source modulaire
+## Setup (Ubuntu / WSL)
 
-## 🤖 AI-Assisted Development
-Ce projet est développé en utilisant des outils IA (Continue, Cline, DeepSeek V4 Flash, Qwen 3.5).
-Le contexte de chaque rôle est documenté dans les fichiers `*-data.md` à la racine.
+```bash
+git clone https://github.com/Gustor1/projet-ml-s3.git
+cd projet-ml-s3
 
-## 👥 Équipe
-| Rôle | Membre |
-|------|--------|
-| Data & Experimentation Engineer | Eliott |
-| *(À compléter avec les autres membres)* | ... |
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+## Run baseline pipeline entrypoint
+
+For now, the main script only loads the config and prepares the future pipeline integration:
+
+```bash
+python main.py --config configs/config.yaml
+```
+
+You should see:
+
+```text
+[INFO] Loaded config for project: local-audio-preprocessing-asr
+[INFO] Placeholder main() finished. Pipeline integration will be added later.
+```
+
+## Project structure (high level)
+
+```text
+projet-ml-s3/
+  asr/
+  preprocessing/
+  experiments/
+  optimization/
+  demo/
+  utils/
+  configs/
+  scripts/
+  data/
+    raw/
+    processed/
+  models/
+  logs/
+  main.py
+  requirements.txt
+  README.md
+```
+
+Each role will progressively fill its own directory with code and experiments.
