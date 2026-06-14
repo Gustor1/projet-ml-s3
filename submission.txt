@@ -2,23 +2,53 @@ Team Contributions — Sujet 3: Local Audio Preprocessing for Better ASR Perform
 
 Eliott — Data & Experimentation Engineer — 17%
 --------------------------------------------------
+
 Responsabilités :
-- Gestion du pipeline de données (LibriSpeech download & augmentation)
-- Conception et exécution des expériences (Baseline WER, Comparaison Preprocessing)
-- Analyse des métriques (WER, CER, Latency) et extraction des insights
-- Documentation technique et rapports d'expériences
+- Gestion du pipeline de données (LibriSpeech download, conversion, augmentation multi-bruits)
+- Conception et exécution itérative de 5 expériences scientifiques (Baseline, Bruit Blanc, Rose, Urbain, Babble)
+- Debug technique (correction bug FFT) et analyse statistique robuste (gestion des hallucinations ASR / outliers)
+- Analyse des métriques (WER, CER, Latency) et extraction de 10 insights techniques
+- Documentation complète des compromis d'ingénierie (trade-offs) et du journal de bord
 
 Livrables :
+
+[Pipeline & Augmentation Audio]
 - scripts/download_real_librispeech.py (Pipeline données)
-- scripts/augment_audio.py (Simulation bruit SNR 20/10/5dB)
-- experiments/baseline_wer.py (Calcul métriques)
-- experiments/compare_preprocessing.py (Comparaison None vs Wiener)
-- results/baseline.csv & results/preprocessing_comparison.csv (Données brutes)
-- docs/experiment-1-baseline.md & docs/experiment-2-comparison.md (Rapports)
-- docs/insights.md & docs/tradeoffs.md (Analyse approfondie)
-- visuals/preprocessing_comparison.png (Visualisation des résultats)
-- docs/speaker_analysis.md (Analyse par speaker)
-- docs/experiment-2-final-comparison.md (comprehensive 3-method comparison)
-- docs/journal/ (technical development log)
+- scripts/augment_audio.py (Bruit blanc gaussien SNR 20/10/5dB)
+- scripts/augment_pink_noise.py (Bruit rose 1/f spectrum)
+- scripts/augment_urban_noise.py (Bruit urbain réel : trafic, café, rue)
+- scripts/augment_babble_noise.py (Bruit de foule / Cocktail party problem)
+
+[Expériences & Données Brutes]
+- experiments/baseline_wer.py (Calcul métriques audio propre)
+- experiments/compare_preprocessing.py (Comparaison None vs Wiener vs Spectral Subtraction)
+- results/baseline.csv & results/preprocessing_comparison.csv (Résultats bruit blanc)
+- results/pink_noise_comparison.csv (Résultats bruit rose)
+- results/urban_noise_comparison.csv (Résultats bruit urbain)
+- results/babble_noise_comparison.csv (Résultats bruit babble + analyse outliers)
+
+[Scripts d'Analyse & Visualisation]
+- scripts/add_cer_baseline.py (Ajout métrique CER)
+- scripts/analyze_speakers.py (Analyse de variance)
+- scripts/analyze_babble_robust.py (Filtrage des hallucinations ASR)
+- scripts/generate_all_visuals.py (Génération des graphiques comparatifs)
+
+[Documentation & Rapports Scientifiques]
+- docs/experiment-1-baseline.md (Baseline audio propre)
+- docs/experiment-2-final-comparison.md (Bruit blanc + démarche de debug FFT)
+- docs/experiment-3-pink-noise.md (Impact du spectre coloré)
+- docs/experiment-4-urban-noise.md (Tests sur bruit réel)
+- docs/experiment-5-babble-noise.md (Cocktail party problem & hallucinations ASR)
+- docs/insights.md (10 insights scientifiques détaillés)
+- docs/tradeoffs.md (Compromis d'ingénierie pour le déploiement)
+- docs/speaker_analysis.md (Analyse de variance par speaker)
+- docs/journal/ (Journal de développement itératif)
+
+[Assets pour la Vidéo]
+- visuals/preprocessing_comparison.png
+- visuals/pink_noise_comparison.png
+- visuals/urban_noise_comparison.png
+- visuals/babble_noise_comparison.png
+- visuals/all_noise_types_comparison.png
 
 GitHub Repository : https://github.com/Gustor1/projet-ml-s3
