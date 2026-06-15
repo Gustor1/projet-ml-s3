@@ -94,10 +94,10 @@ This is the critical scientific contribution of Experiment 3 — comparing the s
 ### Wiener Filter Behavior
 
 | SNR | WER on White Noise | WER on Pink Noise | Δ (Pink − White) |
-|---|---|---|---|
-| 20dB | 18.7% *(none: 18.9%)* | 19.9% *(none: 18.5%)* | +1.2% vs baseline |
-| 10dB | 21.6% *(none: 20.8%)* | 21.6% *(none: 19.5%)* | +2.1% vs baseline |
-| 5dB | 24.7% ✅ *(none: 27.5%)* | 33.3% ❌ *(none: 22.2%)* | +11.1% vs baseline |
+|-----|--------------------|--------------------|------------------|
+| 20dB | 18.79% (none: 18.94%) | 18.89% (none: 17.48%) | +1.41% vs baseline |
+| 10dB | 21.57% (none: 20.81%) | 21.56% (none: 19.47%) | +2.09% vs baseline |
+| 5dB | 24.72% ✅ (none: 27.47%) | 33.34% ❌ (none: 22.21%) | +11.13% vs baseline |
 
 ### Key Finding: Spectrum-Dependent Effectiveness
 
@@ -109,8 +109,8 @@ This is not a marginal effect — it is an **11.1 percentage point WER increase*
 
 Spectral subtraction degrades performance on both noise types, but the effect is dramatically worse on pink noise:
 
-- **White noise 5dB**: WER 37.2% (+9.7% vs baseline)
-- **Pink noise 5dB**: WER 49.2% (+27.0% vs baseline)
+White noise 5dB: WER 42.11% (+14.64% vs baseline)
+Pink noise 5dB: WER 49.20% (+26.99% vs baseline)
 
 At 5dB pink noise, spectral subtraction produces **near-total failure** (WER approaching 50%, equivalent to random guessing on short utterances).
 

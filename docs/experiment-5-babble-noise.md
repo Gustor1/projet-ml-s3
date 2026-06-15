@@ -90,10 +90,10 @@ This experiment completes our 4-part noise analysis. The contrast between synthe
 
 | Noise Type | Baseline WER (5dB) | Wiener Δ (5dB) | Spectral Δ (5dB) | Conclusion |
 |------------|--------------------|-----------------|------------------|------------|
-| **White Gaussian** (Lab) | 27.5% | **-2.8% ✅** | +9.7% ❌ | Wiener helps slightly |
-| **Pink 1/f** (Synthetic) | 22.2% | +11.1% ❌ | +27.0% ❌ | Wiener fails |
-| **Urban Real** (Realistic) | 27.0% | +5.0% ❌ | +18.0% ❌ | Wiener fails |
-| **Babble/Crowd** (Realistic)| **37.0%** | **+8.12% ❌** | +18.49% ❌ | **Wiener fails + Hallucinations** |
+| White Gaussian (Lab) | 27.47% | -2.75% ✅ | +14.64% ❌ | Wiener helps slightly |
+| Pink 1/f (Synthetic) | 22.21% | +11.13% ❌ | +26.99% ❌ | Wiener fails |
+| Urban Real (Realistic) | 26.17% | +9.31% ❌ | +20.75% ❌ | Wiener fails |
+| Babble/Crowd (Realistic) | 37.00% | +8.12% ❌ | +18.50% ❌ | Wiener fails + Hallucinations |
 
 ### Key Scientific Takeaways
 1. **Classical DSP is obsolete for modern neural ASR on realistic noise**: Wiener and Spectral Subtraction only work on stationary, flat-spectrum noise (White Gaussian). On *any* realistic noise profile, they degrade performance.

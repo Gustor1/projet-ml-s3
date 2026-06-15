@@ -71,17 +71,17 @@ python experiments/compare_preprocessing.py \
 
 ### Performance Breakdown by SNR Level
 
-| SNR Level | Method | Avg WER | Δ vs `none` | Observation |
-|---|---|---|---|---|
-| **20dB** (Low noise) | `none` | ~18% | — | Baseline |
-| **20dB** | `wiener` | ~19% | +1% | Marginal degradation |
-| **20dB** | `spectral_subtraction` | ~25% | +7% | Degrades performance |
-| **10dB** (Moderate) | `none` | ~22% | — | Baseline |
-| **10dB** | `wiener` | ~24% | +2% | Degradation |
-| **10dB** | `spectral_subtraction` | ~30% | +8% | Severe degradation |
-| **5dB** (High noise) | `none` | ~27% | — | Baseline |
-| **5dB** | `wiener` | ~32% | +5% ❌ | Significant degradation |
-| **5dB** | `spectral_subtraction` | ~45% | +18% ❌ | Catastrophic failure |
+| SNR Level | Method | Avg WER | Δ vs none | Observation |
+|-----------|--------|---------|-----------|-------------|
+| **20dB** (Low noise) | `none` | 18.24% | — | Baseline |
+| 20dB | `wiener` | 19.18% | +0.94% | Marginal degradation |
+| 20dB | `spectral_subtraction` | 25.04% | +6.80% | Degrades performance |
+| **10dB** (Moderate) | `none` | 22.12% | — | Baseline |
+| 10dB | `wiener` | 22.07% | -0.05% | Neutral |
+| 10dB | `spectral_subtraction` | 28.40% | +6.29% | Severe degradation |
+| **5dB** (High noise) | `none` | 26.17% | — | Baseline |
+| 5dB | `wiener` | 35.48% | +9.31% ❌ | Significant degradation |
+| 5dB | `spectral_subtraction` | 46.92% | +20.75% ❌ | Catastrophic failure |
 
 ---
 
@@ -92,18 +92,18 @@ This is the critical scientific contribution of Experiment 4 — comparing prepr
 ### Wiener Filter Behavior Across Noise Types
 
 | Noise Type | 20dB ΔWER | 10dB ΔWER | 5dB ΔWER | Overall Trend |
-|---|---|---|---|---|
-| White Gaussian | -0.2% (neutral) | +0.8% (slight loss) | -2.8% ✅ | Helps only at 5dB |
-| Pink (1/f) | +1.4% (loss) | +2.1% (loss) | +11.1% ❌ | Degrades everywhere |
-| Urban Real | +1% (loss) | +2% (loss) | +5% ❌ | Degrades everywhere |
+|------------|-----------|-----------|----------|---------------|
+| White Gaussian | -0.15% (neutral) | +0.76% (slight loss) | -2.75% ✅ | Helps only at 5dB |
+| Pink (1/f) | +1.41% (loss) | +2.09% (loss) | +11.13% ❌ | Degrades everywhere |
+| Urban Real | +0.94% (loss) | -0.05% (neutral) | +9.31% ❌ | Degrades at 20dB & 5dB |
 
 ### Spectral Subtraction: Consistently Harmful
 
 | Noise Type | 20dB ΔWER | 10dB ΔWER | 5dB ΔWER | Overall Trend |
-|---|---|---|---|---|
-| White Gaussian | +9.5% | +9.3% ❌ | +9.7% ❌ | Degrades everywhere |
-| Pink (1/f) | +6.4% ❌ | +10.0% ❌ | +27.0% ❌ | Catastrophic at 5dB |
-| Urban Real | +7% ❌ | +8% ❌ | +18% ❌ | Severe degradation |
+|------------|-----------|-----------|----------|---------------|
+| White Gaussian | +6.79% ❌ | +6.87% ❌ | +14.64% ❌ | Degrades everywhere |
+| Pink (1/f) | +7.40% ❌ | +10.07% ❌ | +26.99% ❌ | Catastrophic at 5dB |
+| Urban Real | +6.80% ❌ | +6.29% ❌ | +20.75% ❌ | Severe degradation |
 
 ### Key Finding: Preprocessing Fails on Real-World Noise
 
