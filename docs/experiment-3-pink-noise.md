@@ -73,17 +73,18 @@ python experiments/compare_preprocessing.py \
 
 ### Performance Breakdown by SNR Level
 
-| SNR Level | Method | Avg WER | Δ vs `none` | Observation |
-|---|---|---|---|---|
-| **20dB** (Low noise) | `none` | 18.5% | — | Baseline |
-| **20dB** | `wiener` | 19.9% | +1.4% | Slight degradation |
-| **20dB** | `spectral_subtraction` | 24.9% | +6.4% | Degrades performance |
-| **10dB** (Moderate) | `none` | 19.5% | — | Baseline |
-| **10dB** | `wiener` | 21.6% | +2.1% | Degradation |
-| **10dB** | `spectral_subtraction` | 29.5% | +10.0% | Severe degradation |
-| **5dB** (High noise) | `none` | 22.2% | — | Baseline |
-| **5dB** | `wiener` | 33.3% | +11.1% ❌ | Massive degradation |
-| **5dB** | `spectral_subtraction` | 49.2% | +27.0% ❌ | Catastrophic failure |
+|SNR Level       |Method              |Avg WER|Δ vs none|Observation         |
+|----------------|--------------------|-------|---------|--------------------|
+|20dB (Low noise)|none                |17.48% |—        |Baseline            |
+|20dB            |wiener              |18.89% |+1.41%   |Slight degradation  |
+|20dB            |spectral_subtraction|24.88% |+7.40%   |Degrades performance|
+|10dB (Moderate) |none                |19.47% |—        |Baseline            |
+|10dB            |wiener              |21.56% |+2.09%   |Degradation         |
+|10dB            |spectral_subtraction|29.54% |+10.07%  |Severe degradation  |
+|5dB (High noise)|none                |22.21% |—        |Baseline            |
+|5dB             |wiener              |33.34% |+11.13% ❌|Massive degradation |
+|5dB             |spectral_subtraction|49.20% |+26.99% ❌|Catastrophic failure|
+
 
 ---
 
@@ -98,6 +99,8 @@ This is the critical scientific contribution of Experiment 3 — comparing the s
 | 20dB | 18.79% (none: 18.94%) | 18.89% (none: 17.48%) | +1.41% vs baseline |
 | 10dB | 21.57% (none: 20.81%) | 21.56% (none: 19.47%) | +2.09% vs baseline |
 | 5dB | 24.72% ✅ (none: 27.47%) | 33.34% ❌ (none: 22.21%) | +11.13% vs baseline |
+
+Note: "pp" = percentage points. The Δ column shows the difference in Wiener WER between pink and white noise. The dramatic +8.62 pp increase at 5dB demonstrates spectrum-dependent failure.
 
 ### Key Finding: Spectrum-Dependent Effectiveness
 
