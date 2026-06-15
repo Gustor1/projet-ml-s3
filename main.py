@@ -1,3 +1,4 @@
+
 import argparse
 from pathlib import Path
 
@@ -10,7 +11,28 @@ def load_config(config_path: str):
     raise FileNotFoundError(f"Config file not found: {config_path}")
   with config_path.open("r", encoding="utf-8") as f:
     return yaml.safe_load(f)
+def run_audio_preprocessing():
+    """
+    Hook for the audio preprocessing pipeline.
 
+    This is where the Audio Preprocessing Engineer will plug:
+    - noise reduction
+    - voice activity detection (VAD)
+    - echo cancellation / enhancement
+    """
+    pass
+
+
+def run_asr_inference():
+    """
+    Hook for the ASR inference and evaluation pipeline.
+
+    This is where the ASR Integration/Evaluation Engineer will:
+    - load ASR models
+    - run decoding on (preprocessed) audio
+    - compute metrics such as WER / CER
+    """
+    pass
 
 def main(config_path: str):
   config = load_config(config_path)
