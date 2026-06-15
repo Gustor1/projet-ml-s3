@@ -21,3 +21,21 @@ Livrables :
 - docs/journal/ (Journal de bord technique)
 
 GitHub Repository : https://github.com/Gustor1/projet-ml-s3
+Boatel — ASR Integration & Evaluation Engineer — 17%
+--------------------------------------------------
+Responsabilités :
+- Intégration des modèles ASR (Whisper, Wav2Vec2) avec support EN/FR/ZH
+- Calcul des métriques WER/CER avec jiwer, export CSV
+- Pipeline de benchmark raw vs preprocessed
+- Ablation study sur les tailles de modèles Whisper (tiny/base/small/medium)
+
+Livrables :
+- asr/whisper_wrapper.py (Wrapper Whisper multi-taille et multi-langue)
+- asr/wav2vec_wrapper.py (Wrapper Wav2Vec2 EN/FR/ZH)
+- asr/evaluator.py (Calcul WER/CER + export CSV)
+- asr/benchmark.py (Comparaison raw vs preprocessed)
+- asr/ablation_study.py (Ablation study modèles Whisper)
+- results/comparison.csv (Métriques comparatives)
+- results/ablation_raw.csv (Résultats ablation)
+
+GitHub Repository : https://github.com/Gustor1/projet-ml-s3
