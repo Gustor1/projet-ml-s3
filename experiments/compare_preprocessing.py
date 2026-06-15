@@ -16,6 +16,9 @@ from scipy.signal import wiener
 from transformers import pipeline
 import jiwer
 
+np.random.seed(42)
+random.seed(42)
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 

@@ -1,11 +1,25 @@
-torch
-torchaudio
-transformers
-librosa
-pandas
-matplotlib
-seaborn
-jiwer
-soundfile
-streamlit
-gradio
+# Core dependencies for Local Audio Preprocessing for ASR
+# Python 3.8+ recommended
+
+# ASR Model
+transformers>=4.30.0
+torch>=2.0.0
+
+# Audio processing
+soundfile>=0.12.0
+librosa>=0.10.0
+scipy>=1.10.0
+numpy>=1.23.0
+
+# Metrics
+jiwer>=3.0.0
+
+# Data handling
+pandas>=2.0.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Utilities
+tqdm>=4.65.0

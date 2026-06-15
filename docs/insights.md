@@ -170,6 +170,19 @@
 
 ---
 
+---
+### 📌 Note Méthodologique : Limites des Tests Statistiques Formels
+Pour des raisons de scope et de ressources de calcul (inférence CPU-only, N=20 fichiers uniques par condition), nous n'avons pas appliqué de tests d'hypothèse formels (ex: test t de Student ou Mann-Whitney) pour valider la significativité p-value des écarts de WER entre les méthodes. 
+
+Cependant, la robustesse de nos conclusions est étayée par :
+1. La cohérence des tendances sur **720+ inférences** et 4 types de bruits distincts.
+2. L'analyse de variance documentée (écart-type WER ≈ 10.2%, piloté par le SNR et non par l'instabilité du prétraitement).
+3. L'application de statistiques robustes (exclusion des outliers >100% WER) pour éviter le biais des hallucinations ASR.
+
+*Recommandation future* : Une validation à plus grande échelle (N>100) avec tests statistiques formels renforcerait la rigueur académique, mais les tendances observées ici sont suffisamment fortes pour guider les décisions d'ingénierie.
+
+---
+
 ## 🎬 Video Script Snippets (English)
 > "We found that preprocessing isn't magic. In fact, applying a noise filter to clean audio can actually make things worse by introducing artifacts."
 

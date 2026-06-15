@@ -59,27 +59,29 @@ result[i:i+chunk_len] += clean_frame[:chunk_len]
 
 ### Overall Performance Averages
 
-| Method | Avg WER | Avg CER | Avg Latency (ms) | Observation |
-|---|---|---|---|---|
-| `none` | 22.41% | 6.7% | ~2555 | Baseline (noisy input) |
-| `wiener` | 21.69% | 6.1% | ~2450 | Modest gain (~3.2% relative) |
-| `spectral_subtraction` | 31.84% | 11.2% | ~2800 | ❌ Degrades performance significantly |
+|Method              |Avg WER|Avg CER|Avg Latency (ms)|Observation                         |
+|--------------------|-------|-------|----------------|------------------------------------|
+|none                |22.41% |6.78%  |~3227           |Baseline (noisy input)              |
+|wiener              |21.69% |7.11%  |~3153           |Modest gain (~3.2% relative)        |
+|spectral_subtraction|31.84% |12.68% |~3168           |❌ Degrades performance significantly|
+
 
 > All averages computed directly from `results/preprocessing_comparison.csv`.
 
 ### Performance Breakdown by SNR Level
 
-| SNR Level | Method | Avg WER | Avg CER | Avg Latency (ms) | Observation |
-|---|---|---|---|---|---|
-| **20dB** (Low noise) | `none` | 18.9% | 4.4% | ~2300 | Baseline |
-| **20dB** | `wiener` | 18.7% | 4.8% | ~2200 | Marginal / neutral |
-| **20dB** | `spectral_subtraction` | 28.4% | 9.8% | ~2400 | ❌ Degrades clean speech |
-| **10dB** (Moderate) | `none` | 20.8% | 5.6% | ~2400 | Noise impact visible |
-| **10dB** | `wiener` | 21.6% | 5.7% | ~2350 | Neutral / slight loss |
-| **10dB** | `spectral_subtraction` | 30.1% | 10.5% | ~2500 | ❌ Degrades performance |
-| **5dB** (High noise) | `none` | 27.5% | 9.6% | ~2800 | Severe degradation |
-| **5dB** | `wiener` | 24.7% | 8.9% | ~2650 | ✅ Best method (~10% relative gain) |
-| **5dB** | `spectral_subtraction` | 37.2% | 14.2% | ~2900 | ❌ Worst performance |
+|SNR Level           |Method|Avg WER|Avg CER|Avg Latency (ms)                    |Observation                       |
+|--------------------|------|-------|-------|------------------------------------|----------------------------------|
+|20dB (Low)          |none  |18.94% |4.35%  |~3385                               |Baseline                          |
+|20dB                |wiener|18.79% |4.97%  |~3357                               |Marginal/neutral                  |
+|20dB                |spectral_subtraction|25.73% |9.10%  |~3365                               |❌ Degrades clean speech           |
+|10dB (Moderate)     |none  |20.81% |6.14%  |~3297                               |Noise impact visible              |
+|10dB                |wiener|21.57% |7.17%  |~3196                               |Neutral / slight loss             |
+|10dB                |spectral_subtraction|27.67% |10.64% |~3081                               |❌ Degrades performance            |
+|5dB (High)          |none  |27.47% |9.86%  |~2998                               |Severe degradation                |
+|5dB                 |wiener|24.72% |9.20%  |~2906                               |✅ Best method (~10% relative gain)|
+|5dB                 |spectral_subtraction|42.11% |18.29% |~3058                               |❌ Worst performance               |
+
 
 ---
 

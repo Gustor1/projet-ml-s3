@@ -25,19 +25,19 @@ Livrables :
 - results/baseline.csv & results/preprocessing_comparison.csv (Résultats bruit blanc)
 - results/pink_noise_comparison.csv (Résultats bruit rose)
 - results/urban_noise_comparison.csv (Résultats bruit urbain)
-- results/babble_noise_comparison.csv (Résultats bruit babble + analyse outliers)
+- results/babble_noise_comparison.csv (Résultats bruit babble + analyse des outliers)
 
 [Scripts d'Analyse & Visualisation]
 - scripts/add_cer_baseline.py (Ajout métrique CER)
 - scripts/analyze_speakers.py (Analyse de variance)
-- scripts/analyze_babble_robust.py (Filtrage des hallucinations ASR)
+- scripts/analyze_babble_robust.py (Filtrage statistique des hallucinations ASR)
 - scripts/generate_all_visuals.py (Génération des graphiques comparatifs)
 
 [Documentation & Rapports Scientifiques]
 - docs/experiment-1-baseline.md (Baseline audio propre)
 - docs/experiment-2-final-comparison.md (Bruit blanc + démarche de debug FFT)
 - docs/experiment-3-pink-noise.md (Impact du spectre coloré)
-- docs/experiment-4-urban-noise.md (Tests sur bruit réel)
+- docs/experiment-4-urban-noise.md (Tests sur bruit réel non-stationnaire)
 - docs/experiment-5-babble-noise.md (Cocktail party problem & hallucinations ASR)
 - docs/insights.md (10 insights scientifiques détaillés)
 - docs/tradeoffs.md (Compromis d'ingénierie pour le déploiement)
