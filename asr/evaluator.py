@@ -23,6 +23,7 @@ TRANSFORM_CER = jiwer.Compose([
 
 def compute_wer(reference: str, hypothesis: str) -> float:
     if not hypothesis.strip():
+        logger.warning(f"[WER] Empty hypothesis for ref: '{reference[:50]}'")
         return 1.0 if len(reference.split()) > 0 else 0.0
     return jiwer.wer(reference, hypothesis,
                      reference_transform=TRANSFORM_WER,
@@ -30,6 +31,7 @@ def compute_wer(reference: str, hypothesis: str) -> float:
 
 def compute_cer(reference: str, hypothesis: str) -> float:
     if not hypothesis.strip():
+        logger.warning(f"[CER] Empty hypothesis for ref: '{reference[:50]}'")
         return 1.0 if len(reference.replace(" ", "")) > 0 else 0.0
     return jiwer.cer(reference, hypothesis,
                      reference_transform=TRANSFORM_CER,
