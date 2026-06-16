@@ -39,7 +39,7 @@ Livrables :
 - docs/experiment-3-pink-noise.md (Impact du spectre coloré)
 - docs/experiment-4-urban-noise.md (Tests sur bruit réel non-stationnaire)
 - docs/experiment-5-babble-noise.md (Cocktail party problem & hallucinations ASR)
-- docs/insights.md (10 insights scientifiques détaillés)
+- docs/insights.md (10 insights + Whisper-AT citation [Gong et al., 2023])
 - docs/tradeoffs.md (Compromis d'ingénierie pour le déploiement)
 - docs/speaker_analysis.md (Analyse de variance par speaker)
 - docs/journal/ (Journal de développement itératif)
@@ -50,5 +50,7 @@ Livrables :
 - visuals/urban_noise_comparison.png
 - visuals/babble_noise_comparison.png
 - visuals/all_noise_types_comparison.png
+- visuals/wiener_degradation_matrix.png      # NEW: heatmap ΔWER across noise types
+- visuals/latency_distribution.png            # NEW: latency distribution histograms
 
 GitHub Repository : https://github.com/Gustor1/projet-ml-s3
