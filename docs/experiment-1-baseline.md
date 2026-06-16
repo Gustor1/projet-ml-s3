@@ -1,10 +1,22 @@
 # 🧪 Experiment 1: Baseline ASR Performance (Clean Audio)
 
+## 📚 Related Work
+
+### Whisper ASR
+Radford et al. (2022) introduced Whisper, a transformer-based ASR model trained on 680,000 hours of multilingual web audio. Unlike traditional LibriSpeech-trained models, Whisper demonstrates superior robustness to noise and accents due to its large-scale weakly supervised training regime [1]. The `tiny` variant (39M parameters) achieves ~7.6% WER on LibriSpeech test-clean under standard evaluation conditions [1].
+
+### LibriSpeech Dataset
+Panayotov et al. (2015) created LibriSpeech from public domain audiobooks, providing a standardized benchmark for ASR evaluation [2]. The `test-clean` subset contains 5.4 hours of speech from 40 speakers, enabling controlled speaker-specific analysis.
+
+### References
+[1] A. Radford et al., "Robust Speech Recognition via Large-Scale Weak Supervision," *Proc. ICML*, 2022.
+[2] V. Panayotov et al., "Librispeech: An ASR corpus based on public domain audio books," *Proc. ICASSP*, pp. 5206–5210, 2015. 
+
 ## 📖 Context & Scientific Objective
 Before evaluating the impact of audio preprocessing in noisy environments, it is critical to establish a **ground-truth baseline**. The objective of this experiment is to measure the inherent performance limits of the Whisper tiny model on clean, uncorrupted speech. This serves as the control group against which all noisy and preprocessed conditions (Experiments 2–5) will be compared.
 
 ## 🎯 Hypotheses
-- **H1 (Accuracy)**: Whisper tiny will achieve a relatively low Word Error Rate (WER < 10%) on clean LibriSpeech audio, as there is no acoustic interference.
+- **H1 (Accuracy)**: Whisper tiny will achieve WER < 15% on clean LibriSpeech audio for speaker 6930, accounting for speaker-specific complexity and our conservative text normalization (no aggressive punctuation removal). This is higher than the official benchmark (~7.6% WER) [1] due to our controlled single-speaker evaluation.
 - **H2 (Latency)**: Despite its small size (39M parameters), inference latency will be noticeable (~1.5–2.0s per file) due to CPU execution and the autoregressive nature of the transformer decoder.
 
 ## 🔬 Experimental Protocol
