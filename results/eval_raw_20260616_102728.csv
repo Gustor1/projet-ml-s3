@@ -1,0 +1,2 @@
+file,reference,hypothesis,wer,cer,audio_duration_total_s,inference_time_total_s,rtf
+test.flac,I have a dream that one day this nation will rise up and live out the true meaning of its creed,I have a dream. Good one day. This nation will rise up. Live out the true meaning of its dream.,0.1429,0.1158,13.0,1.74,0.1338
