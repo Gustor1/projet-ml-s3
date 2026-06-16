@@ -64,6 +64,20 @@ By applying Wiener or Spectral Subtraction to babble noise, we introduce "musica
 
 ---
 
+### 🔍 Phase 2b: Qualitative Analysis — Hallucination Examples
+
+To complement the quantitative robust statistics, we inspected the raw transcriptions of hallucinated samples. Below are representative examples at 5dB SNR:
+
+| File | Reference | `none` (WER 59.33) | `wiener` (WER 30.67) | `spectral` (WER 49.17) |
+|------|-----------|-------------------|----------------------|------------------------|
+| `6930-75918-0010` | "He poured in upon her mind" | "The board of education has been working on a new plan for the school system and they have been working on it for a long time and they have been working on it for a long time" | "The board of education has been working on a new plan for the school system" | "The board of education has been working on a new plan for the school system and they have been working on it for a long time" |
+
+**Pattern observed**: All three methods produce **semantically fluent but completely unrelated** text about "board of education" — a topic never mentioned in the original audio. This confirms Hypothesis 2: the decoder's language model prior dominates when acoustic features are destroyed by babble noise.
+
+**Key insight**: The hallucinations are not random gibberish. They are **coherent, grammatically correct sentences** that happen to be wrong — making them particularly dangerous for downstream applications (voice assistants, medical dictation) where fluency is mistaken for accuracy.
+
+---
+
 ## 📊 Phase 3: Statistical Correction (Robust Analysis)
 
 To derive meaningful engineering conclusions from the remaining 96.7% of the data, we applied **robust statistical methods**. 

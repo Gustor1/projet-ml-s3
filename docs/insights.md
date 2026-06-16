@@ -18,6 +18,18 @@ This work makes three contributions to the understanding of classical preprocess
 [5] E. Vincent et al., "The 4th CHiME Speech Separation and Recognition Challenge," *Proc. CHiME*, 2016.
 [6] Y. Luo and N. Mesgarani, "Conv-TasNet: Surpassing Ideal Time–Frequency Magnitude Masking for Speech Separation," *IEEE/ACM Trans. Audio, Speech, Lang. Process.*, vol. 27, no. 8, pp. 1256–1266, 2019.
 
+### Whisper-AT: Noise-Variant Representations
+
+A recent finding by Gong et al. (2023) [7] provides critical theoretical support for our "no preprocessing" recommendation. They demonstrated that Whisper's intermediate representations are **not noise-invariant** — contrary to the common assumption in robust ASR. Instead, Whisper **encodes the background sound type** and then transcribes speech *conditioned* on that noise type.
+
+> "Whisper recognizes speech conditioned on the noise type" — Gong et al., Interspeech 2023 [7]
+
+This explains why classical preprocessing (which destroys noise information) **harms** Whisper: by removing or distorting the noise profile, we deprive Whisper of the acoustic context it uses to condition its transcription. Our empirical results (Wiener degrades on 3/4 noise types) align perfectly with this mechanism: preprocessing strips the very information Whisper needs for robust recognition.
+
+**Implication**: The optimal strategy is not to remove noise before Whisper, but to let Whisper handle it natively — exactly our "no preprocessing" recommendation.
+
+[7] Y. Gong et al., "Whisper-AT: Noise-Robust Automatic Speech Recognizers are Also Strong General Audio Event Taggers," *Proc. Interspeech*, pp. 2798–2802, 2023.
+
 ## 📊 Metrics Used
 - **WER (Word Error Rate)**: Primary metric for ASR accuracy (standard for English speech recognition).
 - **CER (Character Error Rate)**: Computed to evaluate character-level precision. Typically 25-35% of WER, useful for spelling-sensitive applications.
@@ -150,6 +162,16 @@ This work makes three contributions to the understanding of classical preprocess
 - Future work: Deep learning-based denoising (DCCRN, Conv-TasNet) trained on real noise, or noise-robust ASR models (Whisper large)
 
 **Engineering Lesson**: The "lab-to-real-world" gap is not a minor engineering detail — it is a fundamental scientific challenge. Preprocessing validated on white noise is misleading for real-world deployment. Real-world validation on representative noise corpora (DEMAND, CHiME, AudioSet) is non-negotiable.
+
+---
+
+## 🔍 Insight 9b: Visual Degradation Matrix (Heatmap)
+
+The following heatmap visualizes the Wiener filter's impact across all noise types and SNR levels. It confirms the pattern analytically: **only white Gaussian noise at 5dB shows improvement** (green); all other conditions show degradation (red).
+
+![Wiener Degradation Matrix](visuals/wiener_degradation_matrix.png)
+
+> **Interpretation**: The Wiener filter's "Goldilocks zone" is vanishingly small — limited to a single noise type (white) at a single SNR level (5dB). Everywhere else, it actively harms performance. This visual evidence supports the "no preprocessing" default recommendation.
 
 ---
 
