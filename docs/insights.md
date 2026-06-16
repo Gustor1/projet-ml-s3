@@ -74,6 +74,21 @@ This explains why classical preprocessing (which destroys noise information) **h
 
 ---
 
+## 🔍 Insight 3b: Latency Distribution Analysis
+
+While average latency is informative, the **distribution** reveals method stability. The histograms below show latency distributions across all noise types:
+
+![Latency Distribution](../visuals/latency_distribution.png)
+
+**Observations**:
+- **Wiener filter** consistently shifts the distribution left (faster inference) by ~50-100ms — likely because cleaner input reduces decoder iterations.
+- **Spectral subtraction** shows higher variance (wider distribution) due to FFT computation overhead and variable frame lengths.
+- **No preprocessing** has the widest spread, driven by noisy input forcing the decoder into longer, more uncertain autoregressive loops.
+
+**Engineering implication**: The latency benefit of Wiener is real but minor (<3% of total pipeline time). It does not justify the accuracy degradation on realistic noise types.
+
+---
+
 ## 🔍 Insight 4: CER Validates WER Conclusions
 **Observation**: CER values are consistently ~25-35% of WER values across all conditions.
 
@@ -169,7 +184,7 @@ This explains why classical preprocessing (which destroys noise information) **h
 
 The following heatmap visualizes the Wiener filter's impact across all noise types and SNR levels. It confirms the pattern analytically: **only white Gaussian noise at 5dB shows improvement** (green); all other conditions show degradation (red).
 
-![Wiener Degradation Matrix](visuals/wiener_degradation_matrix.png)
+![Wiener Degradation Matrix](../visuals/wiener_degradation_matrix.png)
 
 > **Interpretation**: The Wiener filter's "Goldilocks zone" is vanishingly small — limited to a single noise type (white) at a single SNR level (5dB). Everywhere else, it actively harms performance. This visual evidence supports the "no preprocessing" default recommendation.
 
