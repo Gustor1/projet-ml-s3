@@ -95,7 +95,9 @@ result[i:i+chunk_len] += clean_frame[:chunk_len]
 |5dB                 |wiener|24.72% |9.20%  |~2906                               |✅ Best method (~10% relative gain)|
 |5dB                 |spectral_subtraction|42.11% |18.29% |~3058                               |❌ Worst performance               |
 
-
+### 📈 Visualisation des Résultats (Bruit Blanc)
+![Exp 2: White Gaussian Noise](../visuals/exp2_white_noise.png)
+*Figure 1: WER versus SNR for white noise. The Wiener filter (green) shows a marginal gain of 5 dB.*
 ---
 
 ## 🔍 In-Depth Analysis & Engineering Trade-offs

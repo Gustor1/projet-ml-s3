@@ -97,6 +97,10 @@ python experiments/compare_preprocessing.py \
 | 5dB | `wiener` | 35.48% | +9.31% ❌ | Significant degradation |
 | 5dB | `spectral_subtraction` | 46.92% | +20.75% ❌ | Catastrophic failure |
 
+
+### 📈 Visualisation des Résultats (Bruit Urbain)
+![Exp 4: Urban Noise](../visuals/exp4_urban_noise.png)
+*Figure 1: Variation of the WER as a function of the SNR for real-world urban noise. Confirmation that conventional methods fail in non-stationary environments.*
 ---
 
 ## 🔍 Comparative Analysis: All Noise Types

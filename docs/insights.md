@@ -219,6 +219,9 @@ The following heatmap visualizes the Wiener filter's impact across all noise typ
 
 **Final Engineering Lesson**: The cocktail party problem cannot be solved with classical signal processing. When the noise is speech, you need speech-aware methods, not spectral filters. Lab benchmarks on white noise overestimate preprocessing effectiveness by ~17 percentage points — real-world validation on representative noise types is non-negotiable.
 
+### 🔬 Mechanistic Proof: Decoder Perplexity vs WER
+![Perplexity vs WER](../visuals/perplexity_vs_wer.png)
+*Figure: Corrélation entre la perplexité du décodeur et le WER sur le bruit babble. Les hallucinations (WER > 100%) correspondent systématiquement à une perplexité extrême (> 10,000), confirmant que le modèle "invente" du texte quand les indices acoustiques sont détruits.*
 ---
 
 ## 📌 Methodological Note: Statistical Rigor and Effect Size
