@@ -1,4 +1,4 @@
-Team Contributions — Sujet 3: Local Audio Preprocessing for Better ASR Performance
+Team Contributions — Topic 3: Local Audio Preprocessing for Better ASR Performance
 
 Eliott — Data & Experimentation Engineer — 17%
 --------------------------------------------------
@@ -39,3 +39,63 @@ Livrables :
 - results/ablation_raw.csv (Résultats ablation)
 
 GitHub Repository : https://github.com/Gustor1/projet-ml-s3
+
+Responsibilities:
+- Managed the data pipeline (LibriSpeech download, conversion, multi-noise augmentation).
+- Designed and iteratively ran 5 scientific experiments (Baseline, White Noise, Pink Noise, Urban Noise, Babble Noise).
+- Performed technical debugging (FFT bug fix) and robust statistical analysis (handling ASR hallucinations / outliers).
+- Analyzed metrics (WER, CER, Latency) and extracted 10 technical insights.
+- Produced complete documentation on engineering trade-offs and the development journal.
+
+Deliverables:
+
+[Audio Pipeline & Augmentation]
+- scripts/download_real_librispeech.py (Data pipeline)
+- scripts/augment_audio.py (Gaussian white noise augmentation at SNR 20/10/5 dB)
+- scripts/augment_pink_noise.py (Pink noise, 1/f spectrum)
+- scripts/augment_urban_noise.py (Real urban noise: traffic, café, street)
+- scripts/augment_babble_noise.py (Crowd noise / Cocktail party problem)
+
+[Experiments & Raw Data]
+- experiments/baseline_wer.py (Metric computation on clean audio)
+- experiments/compare_preprocessing.py (Comparison of None vs Wiener vs Spectral Subtraction)
+- results/baseline.csv & results/preprocessing_comparison.csv (White noise results)
+- results/pink_noise_comparison.csv (Pink noise results)
+- results/urban_noise_comparison.csv (Urban noise results)
+- results/babble_noise_comparison.csv (Babble noise results + outlier analysis)
+
+[Analysis & Visualization Scripts]
+- scripts/add_cer_baseline.py (CER metric addition)
+- scripts/analyze_speakers.py (Variance analysis)
+- scripts/analyze_babble_robust.py (Statistical filtering of ASR hallucinations)
+- scripts/generate_all_visuals.py (Generation of comparative charts)
+
+[Scientific Documentation & Reports]
+- docs/experiment-1-baseline.md (Clean audio baseline)
+- docs/experiment-2-final-comparison.md (White noise + FFT debugging process)
+- docs/experiment-3-pink-noise.md (Impact of colored spectrum)
+- docs/experiment-4-urban-noise.md (Tests on real non-stationary noise)
+- docs/experiment-5-babble-noise.md (Cocktail party problem & ASR hallucinations)
+- docs/insights.md (10 insights + Whisper-AT citation [Gong et al., 2023])
+- docs/tradeoffs.md (Engineering trade-offs for deployment)
+- docs/speaker_analysis.md (Speaker-level variance analysis)
+- docs/journal/ (Iterative development journal)
+
+[Video Assets]
+- visuals/preprocessing_comparison.png
+- visuals/pink_noise_comparison.png
+- visuals/urban_noise_comparison.png
+- visuals/babble_noise_comparison.png
+- visuals/all_noise_types_comparison.png
+- visuals/wiener_degradation_matrix.png
+- visuals/latency_distribution.png
+- visuals/exp2_white_noise.png
+- visuals/exp3_pink_noise.png
+- visuals/exp4_urban_noise.png
+- visuals/exp5_babble_noise.png
+- visuals/perplexity_vs_wer_scatter.png
+- visuals/perplexity_vs_wer.png
+- visuals/spectrogram_pink_wiener.png
+- visuals/wiener_impact_heatmap.png
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
