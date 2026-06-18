@@ -1,91 +1,91 @@
-# 🎙️ Répartition des Rôles — Projet ASR & Prétraitement Audio (Sujet 3)
-> **Sujet choisi :** `Local Audio Preprocessing for Better ASR Performance`  
-> **Groupe :** 6 étudiants | **Vidéo finale :** ≥ 10 min, en anglais, fun & fancy  
-> **Règle d'or du prof :** L'historique GitHub sera vérifié. Chaque membre doit avoir des commits techniques réguliers et visibles.
+# 🎙️ Role Distribution — ASR & Audio Preprocessing Project (Topic 3)
+> **Selected Topic:** `Local Audio Preprocessing for Better ASR Performance`  
+> **Group:** 6 students | **Final Video:** ≥ 10 min, in English, fun & fancy  
+> **Professor's Golden Rule:** GitHub history will be checked. Every member must have regular and visible technical commits.
 
 ---
 
-## 📌 Contexte & Objectif du Projet
-Construire un pipeline complet qui **prétraite l'audio localement** (réduction de bruit, VAD, enhancement, écho, etc.) pour **améliorer significativement la performance d'un modèle ASR** (Whisper, Wav2Vec, etc.).  
-Le projet doit aller au-delà de l'usage basique d'API : il faut montrer des **insights techniques**, des **ablation studies**, des **trade-offs d'ingénierie**, et une **démo fonctionnelle**.
+## 📌 Context & Project Goal
+Build a complete pipeline that **preprocesses audio locally** (noise reduction, VAD, enhancement, echo cancellation, etc.) to **significantly improve the performance of an ASR model** (Whisper, Wav2Vec, etc.).  
+The project must go beyond the basic use of APIs: it must show **technical insights**, **ablation studies**, **engineering trade-offs**, and a **functional demo**.
 
 ---
 
-## 👥 Les 6 Rôles & Missions Techniques
+## 👥 The 6 Technical Roles & Missions
 
 ### 1️⃣ Pipeline Architect & DevOps
-- 🎯 **Mission :** Structurer le projet, assurer l'intégration des modules, gérer l'environnement et la CI/CD.
-- 💻 **Commits attendus :** `main.py`, `config.yaml`, `utils/`, `requirements.txt`, `Dockerfile`, scripts d'installation, GitHub Actions.
-- 📊 **Contribution :** ~17%
-- 🛠️ **Stack :** Python, YAML, Docker/WSL, GitHub, CLI tools.
+- 🎯 **Mission:** Structure the project, ensure module integration, manage the environment and CI/CD.
+- 💻 **Expected Commits:** `main.py`, `config.yaml`, `utils/`, `requirements.txt`, `Dockerfile`, installation scripts, GitHub Actions.
+- 📊 **Contribution:** ~17%
+- 🛠️ **Stack:** Python, YAML, Docker/WSL, GitHub, CLI tools.
 
 ### 2️⃣ Audio Preprocessing Engineer
-- 🎯 **Mission :** Développer les algorithmes de prétraitement audio (débruitage, VAD, annulation d'écho, beamforming, enhancement).
-- 💻 **Commits attendus :** `preprocessing/denoise.py`, `preprocessing/vad.py`, `preprocessing/beamform.py`, `preprocessing/pipeline.py`, tests unitaires.
-- 📊 **Contribution :** ~17%
-- 🛠️ **Stack :** `librosa`, `noisereduce`, `webrtcvad`, `demucs`, `scipy.signal`.
+- 🎯 **Mission:** Develop audio preprocessing algorithms (denoising, VAD, echo cancellation, beamforming, enhancement).
+- 💻 **Expected Commits:** `preprocessing/denoise.py`, `preprocessing/vad.py`, `preprocessing/beamform.py`, `preprocessing/pipeline.py`, unit tests.
+- 📊 **Contribution:** ~17%
+- 🛠️ **Stack:** `librosa`, `noisereduce`, `webrtcvad`, `demucs`, `scipy.signal`.
 
 ### 3️⃣ ASR Integration & Evaluation Engineer
-- 🎯 **Mission :** Intégrer les modèles ASR, calculer le WER/CER, comparer les performances avec/sans prétraitement.
-- 💻 **Commits attendus :** `asr/whisper_wrapper.py`, `asr/wav2vec_wrapper.py`, `asr/evaluator.py`, scripts de benchmark, support multi-langue (EN/FR/ZH).
-- 📊 **Contribution :** ~17%
-- 🛠️ **Stack :** `transformers`, `jiwer`, `openai-whisper`, `pyannote` (si besoin).
+- 🎯 **Mission:** Integrate ASR models, calculate WER/CER, compare performances with and without preprocessing.
+- 💻 **Expected Commits:** `asr/whisper_wrapper.py`, `asr/wav2vec_wrapper.py`, `asr/evaluator.py`, benchmark scripts, multilingual support (EN/FR/ZH).
+- 📊 **Contribution:** ~17%
+- 🛠️ **Stack:** `transformers`, `jiwer`, `openai-whisper`, `pyannote` (if needed).
 
 ### 4️⃣ Experimentation & Data Engineer
-- 🎯 **Mission :** Préparer les datasets, concevoir les expériences, lancer les ablation studies, générer les métriques & graphiques.
-- 💻 **Commits attendus :** `experiments/ablation_study.py`, `experiments/plot_results.py`, scripts de data loading, gestion des logs/CSV, notebooks d'analyse.
-- 📊 **Contribution :** ~17%
-- 🛠️ **Stack :** `matplotlib`, `seaborn`, `pandas`, AutoDL/GPU management, `wandb` ou `mlflow` (optionnel).
+- 🎯 **Mission:** Prepare datasets, design experiments, run ablation studies, generate metrics & plots.
+- 💻 **Expected Commits:** `experiments/ablation_study.py`, `experiments/plot_results.py`, data loading scripts, CSV/log management, analysis notebooks.
+- 📊 **Contribution:** ~17%
+- 🛠️ **Stack:** `matplotlib`, `seaborn`, `pandas`, AutoDL/GPU management, `wandb` or `mlflow` (optional).
 
 ### 5️⃣ Optimization & Real-Time Performance Engineer
-- 🎯 **Mission :** Profiler le pipeline, réduire la latence, optimiser la mémoire, tester le streaming temps réel & la quantization.
-- 💻 **Commits attendus :** `optimization/profiler.py`, `optimization/streaming_audio.py`, `optimization/quantize_model.py`, benchmarks CPU/edge, rapports de performance.
-- 📊 **Contribution :** ~16%
-- 🛠️ **Stack :** `torch.profiler`, `onnxruntime`, `pydub`, `sounddevice`, Raspberry Pi / CPU-only tests.
+- 🎯 **Mission:** Profile the pipeline, reduce latency, optimize memory, test real-time streaming & quantization.
+- 💻 **Expected Commits:** `optimization/profiler.py`, `optimization/streaming_audio.py`, `optimization/quantize_model.py`, CPU/edge benchmarks, performance reports.
+- 📊 **Contribution:** ~16%
+- 🛠️ **Stack:** `torch.profiler`, `onnxruntime`, `pydub`, `sounddevice`, Raspberry Pi / CPU-only tests.
 
 ### 6️⃣ Demo, Visualization & Video Production Engineer
-- 🎯 **Mission :** Créer une démo interactive, exporter les assets audio/vidéo, produire la vidéo finale ≥10 min en anglais.
-- 💻 **Commits attendus :** `demo/app.py` (Streamlit/Gradio), `demo/export_demo.py`, `demo/spectrogram_viz.py`, `docs/README.md`, assets de montage.
-- 📊 **Contribution :** ~16%
-- 🛠️ **Stack :** `streamlit`/`gradio`, `ffmpeg`, `moviepy`, `audacity`/`davinci resolve`, Markdown/Docs.
+- 🎯 **Mission:** Create an interactive demo, export audio/video assets, produce the final video (≥10 min in English).
+- 💻 **Expected Commits:** `demo/app.py` (Streamlit/Gradio), `demo/export_demo.py`, `demo/spectrogram_viz.py`, `docs/README.md`, video editing assets.
+- 📊 **Contribution:** ~16%
+- 🛠️ **Stack:** `streamlit`/`gradio`, `ffmpeg`, `moviepy`, `audacity`/`davinci resolve`, Markdown/Docs.
 
-> ✅ **Note importante :** Le rôle 6 ne fait pas "que du montage vidéo". Il code d'abord les outils de démo et d'export automatique. La vidéo est un produit dérivé du code, pas une tâche isolée.
+> ✅ **Important Note:** Role 6 does not "just do video editing". They first code the demo and auto-export tools. The video is a product of the code, not an isolated task.
 
 ---
 
-## 🛠️ Règles GitHub & Workflow (OBLIGATOIRE)
-Le professeur vérifiera l'historique des commits. Pour que tout soit validé :
+## 🛠️ GitHub Rules & Workflow (MANDATORY)
+The professor will check the commit history. To ensure everything is validated:
 
-| Règle | Détail |
+| Rule | Detail |
 |-------|--------|
-| 🌿 Branches | Chaque membre travaille sur sa branche : `feature/role-name` |
-| 📝 Commits | Minimum **2 à 3 commits/semaine/personne** (même petits : `fix:`, `docs:`, `test:`) |
-| 🔀 Merge | Toutes les intégrations passent par des **Pull Requests** avec review |
-| 🤖 IA | Utilisation de Copilot/Cursor/Qwen fortement encouragée, mais **documenter les insights & trade-offs** |
-| 📁 Structure | Respecter l'arborescence définie. Pas de fichiers en dehors des dossiers assignés |
-| 📊 Traçabilité | Chaque issue GitHub = une tâche assignée à une personne |
+| 🌿 Branches | Each member works on their own branch: `feature/role-name` |
+| 📝 Commits | Minimum **2 to 3 commits/week/person** (even small ones: `fix:`, `docs:`, `test:`) |
+| 🔀 Merge | All integrations go through **Pull Requests** with reviews |
+| 🤖 AI | Use of Copilot/Cursor/Qwen is highly encouraged, but **insights & trade-offs must be documented** |
+| 📁 Structure | Respect the defined folder structure. No files outside of assigned folders |
+| 📊 Traceability | Each GitHub issue = one task assigned to a specific person |
 
 ---
 
-## 📦 Checklist de Submission Finale
-- [ ] Vidéo finale `≥ 10 min`, en **anglais**, fun & fancy
-- [ ] Code source propre, structuré, hébergé sur GitHub (URL fournie)
-- [ ] Fichier `submission.txt` avec rôle + % de contribution par membre
-- [ ] Historique GitHub équilibré (commits visibles pour les 6)
-- [ ] Dossier zippé → Upload Google Drive → Lien envoyé **en privé** (WeChat/Email)
+## 📦 Final Submission Checklist
+- [ ] Final video `≥ 10 min`, in **English**, fun & fancy
+- [ ] Clean, structured source code, hosted on GitHub (URL provided)
+- [ ] `submission.txt` file indicating roles + % contribution per member
+- [ ] Balanced GitHub history (visible commits for all 6)
+- [ ] Zipped folder → Upload to Google Drive → Link sent **in private** (WeChat/Email)
 
 ---
 
-## 🚀 Prochaines Étapes
-1. ✅ Chaque membre **valide son rôle** dans ce fichier
-2. 🍴 Fork du repo de base → Création de la branche dédiée
-3. 💻 Setup environnement (WSL2/Docker/AutoDL) → **Premier commit sous 48h**
-4. 🗓️ Point hebdomadaire de 30 min (avancement + blocages)
-5. 🎬 Montage vidéo final 2 semaines avant deadline
+## 🚀 Next Steps
+1. ✅ Each member **validates their role** in this file
+2. 🍴 Fork the base repository → Create dedicated branch
+3. 💻 Environment setup (WSL2/Docker/AutoDL) → **First commit within 48h**
+4. 🗓️ 30-minute weekly sync (progress + blockers)
+5. 🎬 Final video editing 2 weeks before the deadline
 
-> 📩 **En cas de doute ou de surcharge**, on réajuste ensemble en advance. L'objectif est un projet solide, bien documenté, et validé sans stress.
+> 📩 **In case of doubt or overload**, we will adjust together in advance. The goal is a solid, well-documented project completed without stress.
 
 ---
-🔗 *Repo GitHub :* [À compléter]  
-📅 *Deadline :* Premier vendredi de la semaine d'examens SHU, 23:59  
-👥 *Groupe :* 6 étudiants | *Sujet :* 3 — Local Audio Preprocessing for Better ASR
+🔗 *GitHub Repo:* [To be completed]  
+📅 *Deadline:* First Friday of SHU exam weeks, 23:59  
+👥 *Group:* 6 students | *Topic:* 3 — Local Audio Preprocessing for Better ASR

@@ -221,7 +221,28 @@ The following heatmap visualizes the Wiener filter's impact across all noise typ
 
 ### 🔬 Mechanistic Proof: Decoder Perplexity vs WER
 ![Perplexity vs WER](../visuals/perplexity_vs_wer.png)
-*Figure: Corrélation entre la perplexité du décodeur et le WER sur le bruit babble. Les hallucinations (WER > 100%) correspondent systématiquement à une perplexité extrême (> 10,000), confirmant que le modèle "invente" du texte quand les indices acoustiques sont détruits.*
+*Figure: Correlation between decoder perplexity and WER on babble noise. Hallucinations (WER > 100%) systematically correspond to extreme perplexity (> 10,000), confirming that the model "invents" text when acoustic cues are destroyed.*
+---
+
+## 🔍 Insight 11: Impact of Preprocessing on Non-Verbal Speech Emotion Recognition (SER)
+**Observation**: Audio preprocessing heavily distorts the non-verbal acoustic cues (pitch, prosody, formants) that Speech Emotion Recognition (SER) models rely on. While Whisper is conditioned on speech recognition, SER models are extremely sensitive to phase and high-frequency spectral modifications.
+
+We evaluated the performance of `superb/wav2vec2-base-superb-er` on clean, noisy, and preprocessed audio (28 RAVDESS Actor 01 samples, mapping neutral, happy, sad, angry):
+
+- **Clean Baseline**: 35.71% (reflecting the cross-corpus domain gap between IEMOCAP training and RAVDESS acted testing).
+- **White Gaussian Noise (5dB)**: Raw Noisy (39.29%) -> Wiener Filter (17.86% ❌ severe degradation) | Spectral Subtraction (53.57% ✅).
+- **Urban Real Noise (5dB)**: Raw Noisy (39.29%) -> Wiener Filter (28.57% ❌) | Spectral Subtraction (28.57% ❌).
+
+### Visual Analysis
+The figure below compares the classification accuracy of the SER model across all experimental conditions:
+
+![Speech Emotion Recognition Accuracy](../visuals/emotion_accuracy.png)
+
+**Takeaway**: 
+- **Wiener filter** severely damages emotion cues under white noise (degrading accuracy from 39.29% to 17.86%) and urban noise (from 39.29% to 28.57%). This suggests that Wiener filtering over-smoothes speech prosody and energy dynamics, which are primary features for emotion classification.
+- **Spectral subtraction** helps under stationary white noise (increasing accuracy from 39.29% to 53.57%), but fails catastrophically on non-stationary urban noise (degrading accuracy to 28.57%).
+- **Engineering Recommendation**: For edge applications requiring joint ASR and SER (such as emotion-aware assistants or call analytics), classical preprocessing is highly hazardous. It is better to use no preprocessing by default, or explore deep representation-learning denoising rather than classical DSP.
+
 ---
 
 ## 📌 Methodological Note: Statistical Rigor and Effect Size

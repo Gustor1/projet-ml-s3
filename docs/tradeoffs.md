@@ -21,3 +21,8 @@ This document summarizes the key engineering trade-offs identified during the pr
 - **Observation**: Spectral subtraction consistently degraded performance across all noise types (+6.79% to +26.99% WER) and initially caused pipeline crashes due to FFT boundary mismatches.
 - **Trade-off**: Aggressive noise removal vs. introduction of "musical noise" artifacts and pipeline instability.
 - **Final Decision**: Spectral subtraction is **completely discarded** from the recommended pipeline. The artifacts it introduces are more damaging to Whisper's autoregressive decoder than the original noise itself.
+
+## 5. Speech Enhancement vs. Non-Verbal Feature Preservation (ASR vs. SER)
+- **Observation**: While noise removal filters (Wiener) modestly improve ASR under specific noise conditions (stationary white noise), they severely degrade downstream Speech Emotion Recognition (SER) models (reducing classification accuracy from 39.29% to 17.86% under white noise at 5dB).
+- **Trade-off**: Cleaning the audio signal for verbal content recognition (ASR) vs. preserving acoustic indicators of the speaker's emotional state (SER, pitch, energy dynamics).
+- **Final Decision**: **Do NOT apply classical preprocessing globally in multi-task pipelines.** In systems requiring both ASR and SER (e.g., emotion-aware conversational interfaces), the raw audio must either be routed directly to the SER model (bypassing the noise filter), or the pipeline should utilize modern deep feature learning that handles noise natively.
