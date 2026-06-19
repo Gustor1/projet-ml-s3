@@ -1,31 +1,32 @@
 # 📋 Project Roadmap: Remaining Tasks & Deliverables by Role
 
-This document details the checklist of tasks remaining to finalize the Audio Preprocessing & ASR Project (Topic 3), structured by group roles.
+This document details the checklist of tasks remaining to finalize the Audio Preprocessing, ASR & Vocal Emotion Integration Project (Topic 3), structured by group roles. All roles have been aligned to support the joint multimodal pipeline (ASR transcription + Text Sentiment + Speech Emotion Recognition + Sarcasm Detection).
 
 ---
 
 ## 👥 Remaining Tasks by Role
 
 ### 1️⃣ Pipeline Architect & DevOps
-* **Objective**: Structure core imports, secure model execution inside container boundaries, and implement model caching.
+* **Objective**: Package the 3-model multimodal stack, manage global configs, and integrate the final pipeline entry point.
 * **Tasks**:
-  - [ ] **Model Caching Script**: Write a script to pre-download Hugging Face weights (`openai/whisper-tiny`, `superb/wav2vec2-base-superb-er`, and `distilbert-base-uncased-finetuned-sst-2-english`) into a local directory during Docker build. This ensures the container works 100% offline.
-  - [ ] **Pipeline Integration (`main.py`)**: Replace the current placeholder code in [main.py](file:///c:/Users/eliot/projet-ml-s3/main.py) with an end-to-end execution flow calling the `preprocessing` API and `asr` wrappers.
-  - [ ] **Configuration File**: Complete `configs/config.yaml` to specify hyperparameters (sampling rates, default noise parameters) and model versions.
-  - [ ] **GitHub Actions**: Add a basic CI pipeline to run tests or code format checks automatically.
+  - [ ] **Docker Model Caching**: Write a caching script to pre-download Hugging Face weights (`openai/whisper-tiny`, `superb/wav2vec2-base-superb-er`, and `distilbert-base-uncased-finetuned-sst-2-english`) during Docker image build. This guarantees the joint ASR+NLP+SER container executes fully offline.
+  - [ ] **Pipeline Entry Point (`main.py`)**: Integrate the modules inside [main.py](file:///c:/Users/eliot/projet-ml-s3/main.py) to run the full sequence: load raw audio, apply VAD, trigger parallel routes (denoised audio to ASR; normalized audio to SER), feed ASR transcription to DistilBERT, and execute sarcasm checks.
+  - [ ] **Config Specification (`configs/config.yaml`)**: Complete the YAML configuration to set default SNR thresholds, model paths, YIN pitch min/max frequencies, and VAD sensitivity.
+  - [ ] **CI Actions**: Set up basic GitHub Actions workflows for format checkers (linting) and unit testing.
 
 ### 2️⃣ Audio Preprocessing Engineer
-* **Objective**: Move local preprocess functions into formal APIs, implement VAD, and write unit tests.
+* **Objective**: Export DSP filters, implement ASR vs. SER routing, and code VAD helpers.
 * **Tasks**:
-  - [ ] **Modularize Filters**: Move the Wiener filter and Spectral Subtraction implementations out of the demo app and into `preprocessing/denoise.py`.
-  - [ ] **VAD Implementation (`preprocessing/vad.py`)**: Integrate a clean Voice Activity Detection wrapper (using libraries like `webrtcvad` or simple energy metrics) to strip silent frames.
-  - [ ] **Unit Tests**: Write tests verifying that preprocessors output valid signal formats (correct shape, sample rates, non-null values).
+  - [ ] **Extract Denoising APIs (`preprocessing/denoise.py`)**: Move the Wiener filter and Spectral Subtraction implementations out of the demo code into importable modular functions.
+  - [ ] **Parallel Stream Routing**: Adapt the pipeline to support parallel routes: a **Denoised Stream** (optimized for ASR transcription, as classical filters clean static noise) and a **Normalized Stream** (optimized for SER, as classical filters destroy pitch prosody but peak scaling + silent margin trimming preserves emotion features).
+  - [ ] **VAD Implementation (`preprocessing/vad.py`)**: Integrate a Voice Activity Detection utility (e.g., using `webrtcvad` or energy levels) to automatically isolate voiced segments.
+  - [ ] **Unit Tests**: Write testing scripts to check signal properties (sample rate matches 16kHz, output amplitude bounds, etc.).
 
 ### 3️⃣ ASR Integration & Evaluation Engineer
-* **Objective**: Maintain wrapper features and finalize ASR ablation studies.
+* **Objective**: Maintain wrapper features and analyze how ASR transcription quality impacts downstream NLP sentiment.
 * **Tasks**:
-  - [ ] **ASR Wrapper finalization (`asr/whisper_wrapper.py`)**: Ensure proper support for English, French, and Chinese speech transcription.
-  - [ ] **Evaluate Ablation Studies**: Summarize performance and word error rates (WER) across different model sizes (tiny vs. base vs. small vs. medium) on noisy audio.
+  - [ ] **ASR Wrapper Support (`asr/whisper_wrapper.py`)**: Maintain wrapper inference capabilities with EN/FR/ZH support.
+  - [ ] **Cross-Modal Ablation Study**: Evaluate how ASR transcription errors cascade into text sentiment predictions. Benchmark how Whisper model size (tiny vs. base vs. small) affects sarcasm detection reliability (e.g., analyzing if ASR typos trigger false positive sarcasm alerts).
 
 ### 4️⃣ Experimentation & Data Engineer (Eliott)
 * **Objective**: Complete scientific report documentation and explore dataset expansion.
@@ -37,17 +38,17 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
   - [ ] **Document Calibration Gains**: Add a short section in `docs/experiment-6-emotions.md` explaining how peak normalization and multimodal fusion solved live close-mic errors.
 
 ### 5️⃣ Optimization & Real-Time Performance Engineer
-* **Objective**: Profile inference latency, implement model quantization, and verify GPU/CPU metrics.
+* **Objective**: Quantize the 3-model pipeline, profile GPU/CPU resource allocation, and analyze execution latency.
 * **Tasks**:
-  - [ ] **Model Quantization (`optimization/quantize_model.py`)**: Convert PyTorch models to INT8 using PyTorch Dynamic Quantization to reduce memory usage and speed up CPU inference.
-  - [ ] **Execution Profiling (`optimization/profiler.py`)**: Write scripts to profile memory footprint and CPU utilization for the joint pipeline (ASR + SER + NLP).
-  - [ ] **ONNX Runtime (Optional)**: Export models to ONNX to benchmark latency improvements.
+  - [ ] **Model Quantization (`optimization/quantize_model.py`)**: Quantize the models (Whisper-tiny, Wav2Vec2-ER, DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprints on edge CPUs.
+  - [ ] **Joint Pipeline Profiling (`optimization/profiler.py`)**: Profile execution latency and peak RAM usage during joint ASR + SER + NLP multimodal inference runs.
+  - [ ] **ONNX Runtime (Optional)**: Export models to ONNX to benchmark CPU latency improvements.
 
 ### 6️⃣ Demo, Visualization & Video Production Engineer
-* **Objective**: Keep the Web dashboard responsive and produce the final presentation video.
+* **Objective**: Maintain the Web dashboard responsive and produce the final presentation video.
 * **Tasks**:
   - [x] **Streamlit App Interface**: Finished building [app.py](file:///c:/Users/eliot/projet-ml-s3/demo/app.py) with dual columns, hyperparameter sliders, and pitch-over-spectrogram plots.
-  - [ ] **Video Production (MANDATORY)**: Record, edit, and export a $\ge 10$-minute final presentation video in English demonstrating the project goals, experimental insights, and showcasing the Streamlit dashboard in action.
+  - [ ] **Video Production (MANDATORY)**: Record, edit, and export a $\ge 10$-minute final presentation video in English demonstrating the project goals, explaining the science of the ASR-vs-SER trade-offs, and showcasing the Streamlit dashboard in action.
 
 ---
 
