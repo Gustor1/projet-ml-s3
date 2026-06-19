@@ -46,12 +46,18 @@ Deliverables:
 - docs/experiment-4-urban-noise.md (Tests on real non-stationary noise)
 - docs/experiment-5-babble-noise.md (Cocktail party problem & ASR hallucinations)
 - docs/experiment-6-emotions.md (Speech Emotion Recognition & Sarcasm report)
+- docs/emotion_integration.md (Technical instructions and guidelines for emotion integration)
+- docs/emotion_roadmap.md (ASR/SER multimodal integration progress roadmap)
+- docs/vocal_emotion_report.md (Comprehensive English report on vocal emotion calibration & multimodal fusion)
 - docs/insights.md (11 insights + Whisper-AT citation [Gong et al., 2023])
 - docs/tradeoffs.md (Engineering trade-offs for ASR & SER)
 - docs/speaker_analysis.md (Speaker-level variance analysis)
 - docs/journal/ (Iterative development journal)
 
-[Video Assets]
+[Interactive Demonstration]
+- demo/app.py (Full multi-modal Streamlit application with parameter sliders, live pitch tracking overlays, and calibrated SER/sarcasm alerts)
+
+[Video & Image Assets]
 - visuals/preprocessing_comparison.png
 - visuals/pink_noise_comparison.png
 - visuals/urban_noise_comparison.png
@@ -68,6 +74,7 @@ Deliverables:
 - visuals/spectrogram_pink_wiener.png
 - visuals/wiener_impact_heatmap.png
 - visuals/emotion_accuracy.png (Speech Emotion Recognition accuracy comparison plot)
+- docs/images/user_happy_test.png (Screenshot verifying successful live recording calibration)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 

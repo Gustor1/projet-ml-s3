@@ -238,10 +238,21 @@ The figure below compares the classification accuracy of the SER model across al
 
 ![Speech Emotion Recognition Accuracy](../visuals/emotion_accuracy.png)
 
-**Takeaway**: 
+### 🚀 Denoising & Multimodal Calibration Solutions
+To overcome these acoustic degradations and resolve microphone proximity saturation issues (which systematically misclassified happy voices as angry), we implemented three calibration solutions:
+1. **Silence Trimming (`trim_silence`)**: Crops out silent padding margins using `librosa.effects.split` to ensure the neural features standardize purely on the active speech signal.
+2. **Volume Peak Normalization (`normalize_volume`)**: Peak normalizes amplitude to `1.0` before classification, compensating for microphone distance variations and clipping.
+3. **Multimodal Fusion Calibration (`fuse_modalities`)**: Calibrates final prediction probabilities by combining ASR text sentiment (DistilBERT) and estimated pitch ($F_0$ from Librosa's YIN tracker):
+   - Positive words boost the `happy` class and penalize `angry`/`sad`.
+   - High pitch ($F_0 > 180\text{ Hz}$) combined with positive sentiment corrects false positive `angry` predictions to `happy`.
+   - Low pitch ($F_0 < 130\text{ Hz}$) boosts `sad` and `neutral` classes.
+
+**Calibration Benchmark**: Applying this joint alignment heuristic boosted baseline RAVDESS classification accuracy from **35.71% to 42.86%** (+20% relative improvement), successfully correcting acting-induced domain mismatch errors.
+
+**Takeaway & Engineering Recommendation**: 
 - **Wiener filter** severely damages emotion cues under white noise (degrading accuracy from 39.29% to 17.86%) and urban noise (from 39.29% to 28.57%). This suggests that Wiener filtering over-smoothes speech prosody and energy dynamics, which are primary features for emotion classification.
 - **Spectral subtraction** helps under stationary white noise (increasing accuracy from 39.29% to 53.57%), but fails catastrophically on non-stationary urban noise (degrading accuracy to 28.57%).
-- **Engineering Recommendation**: For edge applications requiring joint ASR and SER (such as emotion-aware assistants or call analytics), classical preprocessing is highly hazardous. It is better to use no preprocessing by default, or explore deep representation-learning denoising rather than classical DSP.
+- **Joint-Task Mitigation**: For edge applications requiring joint ASR and SER, classical preprocessing should not be globally active. Instead, use a parallel routing architecture (denoised stream for ASR, peak-normalized/silence-trimmed stream for SER) calibrated using multimodal metadata (text sentiment + pitch).
 
 ---
 
