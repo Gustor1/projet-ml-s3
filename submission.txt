@@ -78,6 +78,38 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
+Elio — Pipeline Architect & DevOps — 17%
+--------------------------------------------------
+Responsibilities:
+- Designed and implemented the full multimodal pipeline entry point (main.py) integrating ASR, SER, and text sentiment into a single config-driven executable.
+- Implemented dual-route audio preprocessing architecture: denoised stream for ASR (Whisper) and normalized stream for SER (Wav2Vec2), based on Experiment 6 findings that classical DSP filters destroy prosodic cues.
+- Completed the project-wide YAML configuration specification (95+ parameters) as a single source of truth for all models, preprocessing methods, pitch estimation bounds, and sarcasm detection thresholds.
+- Built Docker model caching infrastructure for fully offline container execution (pre-downloading 3 HuggingFace models during image build).
+- Set up CI/CD pipeline with GitHub Actions: flake8 linting (critical errors blocking, style advisory), Python compilation checks, and pytest unit testing.
+- Wrote 16 unit tests covering config validation, preprocessing functions, and sarcasm detection logic.
+
+Deliverables:
+
+[Pipeline & Configuration]
+- main.py (Full multimodal pipeline: audio loading → dual-route preprocessing → Whisper ASR → DistilBERT sentiment → Wav2Vec2 SER → sarcasm detection → JSON output)
+- configs/config.yaml (Complete config specification: model paths, preprocessing parameters, SNR thresholds, VAD sensitivity, YIN pitch bounds, fusion calibration, sarcasm toggle)
+
+[Docker & Deployment]
+- Dockerfile (Production-ready with system deps, pip install, and model caching for offline execution)
+- scripts/cache_models.py (Pre-downloads openai/whisper-tiny, superb/wav2vec2-base-superb-er, distilbert-base-uncased-finetuned-sst-2-english during Docker build)
+
+[CI/CD & Testing]
+- .github/workflows/ci.yml (3-job CI: flake8 lint, Python compilation, pytest)
+- tests/test_config.py (5 unit tests validating YAML structure, model names, preprocessing defaults, pitch ranges)
+- tests/test_pipeline.py (11 unit tests for preprocessing functions, normalization, and sarcasm detection heuristic)
+- requirements.txt (Updated with pyyaml, pytest, flake8)
+
+[Documentation]
+- docs/pipeline-architecture-report.md (Technical report: architecture decisions, what worked, what didn't, limitations, reproducibility)
+- docs/journal/2026-06-21-pipeline-integration.md (Development journal: design decisions, trade-offs, debugging notes)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
 Bilel — ASR Integration & Evaluation Engineer — 17%
 --------------------------------------------------
 Responsibilities:
