@@ -9,10 +9,10 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
 ### 1️⃣ Pipeline Architect & DevOps
 * **Objective**: Package the 3-model multimodal stack, manage global configs, and integrate the final pipeline entry point.
 * **Tasks**:
-  - [ ] **Docker Model Caching**: Write a caching script to pre-download Hugging Face weights (`openai/whisper-tiny`, `superb/wav2vec2-base-superb-er`, and `distilbert-base-uncased-finetuned-sst-2-english`) during Docker image build. This guarantees the joint ASR+NLP+SER container executes fully offline.
-  - [ ] **Pipeline Entry Point (`main.py`)**: Integrate the modules inside [main.py](file:///c:/Users/eliot/projet-ml-s3/main.py) to run the full sequence: load raw audio, apply VAD, trigger parallel routes (denoised audio to ASR; normalized audio to SER), feed ASR transcription to DistilBERT, and execute sarcasm checks.
-  - [ ] **Config Specification (`configs/config.yaml`)**: Complete the YAML configuration to set default SNR thresholds, model paths, YIN pitch min/max frequencies, and VAD sensitivity.
-  - [ ] **CI Actions**: Set up basic GitHub Actions workflows for format checkers (linting) and unit testing.
+  - [x] **Docker Model Caching**: Write a caching script to pre-download Hugging Face weights (`openai/whisper-tiny`, `superb/wav2vec2-base-superb-er`, and `distilbert-base-uncased-finetuned-sst-2-english`) during Docker image build. This guarantees the joint ASR+NLP+SER container executes fully offline.
+  - [x] **Pipeline Entry Point (`main.py`)**: Integrate the modules inside [main.py](file:///c:/Users/eliot/projet-ml-s3/main.py) to run the full sequence: load raw audio, apply VAD, trigger parallel routes (denoised audio to ASR; normalized audio to SER), feed ASR transcription to DistilBERT, and execute sarcasm checks.
+  - [x] **Config Specification (`configs/config.yaml`)**: Complete the YAML configuration to set default SNR thresholds, model paths, YIN pitch min/max frequencies, and VAD sensitivity.
+  - [x] **CI Actions**: Set up basic GitHub Actions workflows for format checkers (linting) and unit testing.
 
 ### 2️⃣ Audio Preprocessing Engineer
 * **Objective**: Export DSP filters, implement ASR vs. SER routing, and code VAD helpers.
