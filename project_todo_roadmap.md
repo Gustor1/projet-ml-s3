@@ -25,8 +25,9 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
 ### 3️⃣ ASR Integration & Evaluation Engineer
 * **Objective**: Maintain wrapper features and analyze how ASR transcription quality impacts downstream NLP sentiment.
 * **Tasks**:
-  - [ ] **ASR Wrapper Support (`asr/whisper_wrapper.py`)**: Maintain wrapper inference capabilities with EN/FR/ZH support.
-  - [ ] **Cross-Modal Ablation Study**: Evaluate how ASR transcription errors cascade into text sentiment predictions. Benchmark how Whisper model size (tiny vs. base vs. small) affects sarcasm detection reliability (e.g., analyzing if ASR typos trigger false positive sarcasm alerts).
+  - [x] **ASR Wrapper Support (`asr/whisper_wrapper.py`)**: Maintain wrapper inference capabilities with EN/FR/ZH support.
+  - [x] **Cross-Modal Ablation Study**: Evaluate how ASR transcription errors cascade into text sentiment predictions. Benchmark how Whisper model size (tiny vs. base vs. small) affects sarcasm detection reliability (e.g., analyzing if ASR typos trigger false positive sarcasm alerts).
+
 
 ### 4️⃣ Experimentation & Data Engineer (Eliott)
 * **Objective**: Complete scientific report documentation and explore dataset expansion.
