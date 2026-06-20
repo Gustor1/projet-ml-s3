@@ -1,0 +1,102 @@
+Team Contributions — Topic 3: Local Audio Preprocessing for Better ASR Performance
+
+Eliott — Data & Experimentation Engineer — 17%
+--------------------------------------------------
+Responsibilities:
+- Managed the data pipeline (LibriSpeech and RAVDESS download, conversion, multi-noise augmentation).
+- Designed and iteratively ran 6 scientific experiments (Baseline, White Noise, Pink Noise, Urban Noise, Babble Noise, Speech Emotion Recognition).
+- Performed technical debugging (FFT bug fix) and robust statistical analysis (handling ASR hallucinations and emotion degradation).
+- Implemented a joint voice sarcasm detection pipeline (combining Whisper ASR, Wav2Vec2 SER, and DistilBERT sentiment).
+- Analyzed metrics (WER, CER, Latency, Perplexity, SER Accuracy) and extracted 11 technical insights.
+- Produced complete documentation on engineering trade-offs and the development journal.
+
+Deliverables:
+
+[Audio Pipeline & Augmentation]
+- scripts/download_real_librispeech.py (Data pipeline)
+- scripts/download_emotion_samples.py (RAVDESS Actor 01 speech data downloader & prep)
+- scripts/augment_audio.py (Gaussian white noise augmentation at SNR 20/10/5 dB)
+- scripts/augment_pink_noise.py (Pink noise, 1/f spectrum)
+- scripts/augment_urban_noise.py (Real urban noise: traffic, café, street)
+- scripts/augment_babble_noise.py (Crowd noise / Cocktail party problem)
+- scripts/augment_emotion_noise.py (White & urban noise injection on emotional speech)
+
+[Experiments & Raw Data]
+- experiments/baseline_wer.py (Metric computation on clean audio)
+- experiments/compare_preprocessing.py (Comparison of None vs Wiener vs Spectral Subtraction)
+- experiments/evaluate_emotion_robustness.py (Accuracy benchmark of SER model superb/wav2vec2-base-superb-er)
+- experiments/sarcasm_detector.py (ASR + SER + Text Sentiment sarcasm joint pipeline)
+- results/baseline.csv & results/preprocessing_comparison.csv (White noise results)
+- results/pink_noise_comparison.csv (Pink noise results)
+- results/urban_noise_comparison.csv (Urban noise results)
+- results/babble_noise_comparison.csv (Babble noise results + outlier analysis)
+- results/emotion_robustness.csv (SER model raw accuracy metrics)
+
+[Analysis & Visualization Scripts]
+- scripts/add_cer_baseline.py (CER metric addition)
+- scripts/analyze_speakers.py (Variance analysis)
+- scripts/analyze_babble_robust.py (Statistical filtering of ASR hallucinations)
+- scripts/generate_all_visuals.py (Generation of comparative charts)
+- scripts/generate_emotion_visuals.py (SER accuracy visual chart generator)
+
+[Scientific Documentation & Reports]
+- docs/experiment-1-baseline.md (Clean audio baseline)
+- docs/experiment-2-final-comparison.md (White noise + FFT debugging process)
+- docs/experiment-3-pink-noise.md (Impact of colored spectrum)
+- docs/experiment-4-urban-noise.md (Tests on real non-stationary noise)
+- docs/experiment-5-babble-noise.md (Cocktail party problem & ASR hallucinations)
+- docs/experiment-6-emotions.md (Speech Emotion Recognition & Sarcasm report)
+- docs/emotion_integration.md (Technical instructions and guidelines for emotion integration)
+- docs/emotion_roadmap.md (ASR/SER multimodal integration progress roadmap)
+- docs/vocal_emotion_report.md (Comprehensive English report on vocal emotion calibration & multimodal fusion)
+- docs/insights.md (11 insights + Whisper-AT citation [Gong et al., 2023])
+- docs/tradeoffs.md (Engineering trade-offs for ASR & SER)
+- docs/speaker_analysis.md (Speaker-level variance analysis)
+- docs/journal/ (Iterative development journal)
+
+[Interactive Demonstration]
+- demo/app.py (Full multi-modal Streamlit application with parameter sliders, live pitch tracking overlays, and calibrated SER/sarcasm alerts)
+
+[Video & Image Assets]
+- visuals/preprocessing_comparison.png
+- visuals/pink_noise_comparison.png
+- visuals/urban_noise_comparison.png
+- visuals/babble_noise_comparison.png
+- visuals/all_noise_types_comparison.png
+- visuals/wiener_degradation_matrix.png
+- visuals/latency_distribution.png
+- visuals/exp2_white_noise.png
+- visuals/exp3_pink_noise.png
+- visuals/exp4_urban_noise.png
+- visuals/exp5_babble_noise.png
+- visuals/perplexity_vs_wer_scatter.png
+- visuals/perplexity_vs_wer.png
+- visuals/spectrogram_pink_wiener.png
+- visuals/wiener_impact_heatmap.png
+- visuals/emotion_accuracy.png (Speech Emotion Recognition accuracy comparison plot)
+- docs/images/user_happy_test.png (Screenshot verifying successful live recording calibration)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
+Bilel — ASR Integration & Evaluation Engineer — 17%
+--------------------------------------------------
+Responsibilities:
+- Integration of ASR models (Whisper, Wav2Vec2) with EN/FR/ZH support, error-handling capabilities, and hardware acceleration detection.
+- Calculation of WER/CER metrics using jiwer and export to CSV.
+- Benchmark pipeline for raw vs preprocessed audio.
+- Ablation study on Whisper model sizes (tiny/base/small/medium).
+- Cross-modal ablation study to evaluate how ASR transcription errors cascade into text sentiment predictions (DistilBERT) and impact sarcasm/passive-aggressiveness detection reliability (False Positives/Negatives).
+
+Deliverables:
+- asr/whisper_wrapper.py (Multi-size and multi-language Whisper wrapper, GPU-aware)
+- asr/wav2vec_wrapper.py (Wav2Vec2 wrapper for EN/FR/ZH)
+- asr/evaluator.py (WER/CER calculation + CSV export)
+- asr/benchmark.py (Raw vs preprocessed comparison)
+- asr/ablation_study.py (Whisper model ablation study)
+- asr/cross_modal_ablation.py (ASR to Sentiment and Sarcasm cascading errors ablation)
+- results/comparison.csv (Comparative metrics)
+- results/ablation_raw.csv (Ablation results)
+- results/cross_modal_ablation.csv (Detail per-file cross-modal study)
+- results/cross_modal_ablation_summary.csv (Summary metrics for ASR cascaded errors)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
