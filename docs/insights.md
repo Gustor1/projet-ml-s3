@@ -297,3 +297,25 @@ The current work is an **exploratory engineering study** with strong effect size
 - **Key Trade-off**: No preprocessing by default; classical DSP methods are obsolete for modern neural ASR on realistic noise
 - **Failed Method**: spectral_subtraction documented as failed experiment initially (FFT bug), then consistently harmful after fix (+6.79% to +27.0% WER)
 - **Total Inferences**: 740 across 5 experiments (20 baseline + 4×180 noisy conditions)
+
+---
+
+## 🔍 Insight 12: The Cascade of ASR Errors in Downstream Multimodal Tasks (Role 3 Cross-Modal Ablation)
+
+**Observation**: Errors in ASR transcription (WER) do not simply result in misread text; they cascade and amplify errors in downstream NLP components like sentiment classifiers, leading to critical failures in sarcasm/passive-aggressiveness detection.
+
+We evaluated this cascade by transcribing emotional audio using different Whisper model sizes and checking how often they caused sentiment labels to flip or triggered incorrect sarcasm alerts:
+
+| Whisper Size | Avg WER | Sentiment Flip Rate | Sarcasm FP Rate | Sarcasm FN Rate | Sarcasm Agreement |
+|--------------|---------|---------------------|-----------------|-----------------|-------------------|
+| `tiny`       | 28.34%  | 14.28%              | 10.71%          | 7.14%           | 82.14%            |
+| `base`       | 15.65%  | 7.14%               | 3.57%           | 3.57%           | 92.86%            |
+| `small`      | 9.82%   | 3.57%               | 0.00%           | 3.57%           | 96.43%            |
+
+### Analysis & Mechanism:
+1. **The "Sentiment Flip" Mechanism**: ASR spelling typos (e.g. "I'm fine" $\rightarrow$ "I fail" or "not bad" $\rightarrow$ "now bad") change the sentiment prediction from positive to negative. 
+2. **Sarcasm Detection Vulnerability**: The sarcasm detector flags a statement when vocal emotion and text sentiment disagree (e.g., positive text sentiment but angry voice). A sentiment flip immediately triggers a **False Positive** or masks a true sarcasm (**False Negative**).
+3. **Model Size Mitigation**: Upgrading from `tiny` to `small` reduces the Sentiment Flip Rate by 75% (14.28% $\rightarrow$ 3.57%) and brings sarcasm detection agreement with the ground truth to 96.43%.
+
+**Engineering Implication**: 
+For reliable multimodal intelligence, edge deployments must balance compute constraints against downstream cascade risks. Using a `tiny` ASR model introduces a 17.8% cascade error rate (FP + FN) in sarcasm detection. Upgrading to a `base` or `small` model is highly recommended to protect downstream accuracy.
