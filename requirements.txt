@@ -1,7 +1,9 @@
-# Core dependencies for Local Audio Preprocessing for ASR
-# Python 3.8+ recommended
+# ============================================================
+# Python Dependencies — Audio Preprocessing + ASR + SER Pipeline
+# Python 3.10+ recommended
+# ============================================================
 
-# ASR Model
+# ASR Model (Whisper + Transformers Hub)
 transformers>=4.30.0
 torch>=2.0.0
 
@@ -23,6 +25,11 @@ seaborn>=0.12.0
 
 # Utilities
 tqdm>=4.65.0
+pyyaml>=6.0
 
 # Interactive Demo
 streamlit>=1.24.0
+
+# Testing & Linting
+pytest>=7.0.0
+flake8>=6.0.0
