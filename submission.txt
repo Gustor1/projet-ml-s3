@@ -81,18 +81,22 @@ GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 Boatel — ASR Integration & Evaluation Engineer — 17%
 --------------------------------------------------
 Responsibilities:
-- Integration of ASR models (Whisper, Wav2Vec2) with EN/FR/ZH support.
+- Integration of ASR models (Whisper, Wav2Vec2) with EN/FR/ZH support, error-handling capabilities, and hardware acceleration detection.
 - Calculation of WER/CER metrics using jiwer and export to CSV.
 - Benchmark pipeline for raw vs preprocessed audio.
 - Ablation study on Whisper model sizes (tiny/base/small/medium).
+- Cross-modal ablation study to evaluate how ASR transcription errors cascade into text sentiment predictions (DistilBERT) and impact sarcasm/passive-aggressiveness detection reliability (False Positives/Negatives).
 
 Deliverables:
-- asr/whisper_wrapper.py (Multi-size and multi-language Whisper wrapper)
+- asr/whisper_wrapper.py (Multi-size and multi-language Whisper wrapper, GPU-aware)
 - asr/wav2vec_wrapper.py (Wav2Vec2 wrapper for EN/FR/ZH)
 - asr/evaluator.py (WER/CER calculation + CSV export)
 - asr/benchmark.py (Raw vs preprocessed comparison)
 - asr/ablation_study.py (Whisper model ablation study)
+- asr/cross_modal_ablation.py (ASR to Sentiment and Sarcasm cascading errors ablation)
 - results/comparison.csv (Comparative metrics)
 - results/ablation_raw.csv (Ablation results)
+- results/cross_modal_ablation.csv (Detail per-file cross-modal study)
+- results/cross_modal_ablation_summary.csv (Summary metrics for ASR cascaded errors)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
