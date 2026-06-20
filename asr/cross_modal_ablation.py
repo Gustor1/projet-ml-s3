@@ -339,7 +339,7 @@ def run_cross_modal_ablation(
     # Console report
     # ------------------------------------------------------------------
     print("\n" + "=" * 70)
-    print("  CROSS-MODAL ABLATION STUDY — ASR ERRORS → SARCASM DETECTION")
+    print("  CROSS-MODAL ABLATION STUDY - ASR ERRORS -> SARCASM DETECTION")
     print("=" * 70)
     print(f"  Audio files tested: {len(valid_entries)}")
     print(f"  Whisper models:     {', '.join(models)}")

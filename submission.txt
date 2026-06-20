@@ -78,7 +78,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Boatel — ASR Integration & Evaluation Engineer — 17%
+Bilel — ASR Integration & Evaluation Engineer — 17%
 --------------------------------------------------
 Responsibilities:
 - Integration of ASR models (Whisper, Wav2Vec2) with EN/FR/ZH support, error-handling capabilities, and hardware acceleration detection.

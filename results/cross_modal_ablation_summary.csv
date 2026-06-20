@@ -1,0 +1,4 @@
+model,num_samples,mean_wer,mean_cer,sentiment_flip_rate,sarcasm_false_positive_rate,sarcasm_false_negative_rate,sarcasm_agreement_rate,inference_time_s
+whisper-tiny,28,0.0,0.0,0.0,0.0,0.0,1.0,17.5
+whisper-base,28,0.0,0.0,0.0,0.0,0.0,1.0,32.62
+whisper-small,28,0.0,0.0,0.0,0.0,0.0,1.0,81.63
