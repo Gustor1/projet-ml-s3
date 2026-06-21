@@ -38,12 +38,12 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
   - [x] **Scientific Expansion**: Expand evaluation runs from Actor 01 (28 files) to a larger subset (e.g., all 24 actors) to increase statistical significance.
   - [x] **Document Calibration Gains**: Add a short section in `docs/experiment-6-emotions.md` explaining how peak normalization and multimodal fusion solved live close-mic errors.
 
-### 5️⃣ Optimization & Real-Time Performance Engineer
+### 5️⃣ Optimization & Real-Time Performance Engineer (Split: Bilel & Elio)
 * **Objective**: Quantize the 3-model pipeline, profile GPU/CPU resource allocation, and analyze execution latency.
 * **Tasks**:
-  - [ ] **Model Quantization (`optimization/quantize_model.py`)**: Quantize the models (Whisper-tiny, Wav2Vec2-ER, DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprints on edge CPUs.
-  - [ ] **Joint Pipeline Profiling (`optimization/profiler.py`)**: Profile execution latency and peak RAM usage during joint ASR + SER + NLP multimodal inference runs.
-  - [ ] **ONNX Runtime (Optional)**: Export models to ONNX to benchmark CPU latency improvements.
+  - [x] **Model Quantization (`optimization/quantize_model.py`)**: [Elio] Quantize the models (Whisper-tiny, Wav2Vec2-ER, DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprints on edge CPUs.
+  - [x] **Streaming Audio (`optimization/streaming_audio.py`)**: [Elio] Chunked audio processing for real-time edge constraints.
+  - [x] **Joint Pipeline Profiling (`optimization/profiler.py`)**: [Bilel] Profile execution latency and peak RAM usage during joint ASR + SER + NLP multimodal inference runs.
 
 ### 6️⃣ Demo, Visualization & Video Production Engineer
 * **Objective**: Maintain the Web dashboard responsive and produce the final presentation video.
