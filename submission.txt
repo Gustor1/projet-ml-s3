@@ -132,3 +132,36 @@ Deliverables:
 - results/cross_modal_ablation_summary.csv (Summary metrics for ASR cascaded errors)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
+Elio — Optimization & Real-Time Performance Engineer — 16%
+--------------------------------------------------
+Responsibilities:
+- Quantized pipeline models (Whisper-tiny and DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprint on edge CPUs.
+- Profiled the full 3-model multimodal pipeline (ASR + NLP + SER) measuring per-stage latency, peak RAM, and model sizes.
+- Implemented a streaming/chunked audio loader for processing long audio files (podcasts, meetings) without loading everything into memory.
+- Investigated ONNX Runtime export (documented as impractical for encoder-decoder Whisper architecture).
+- Wrote 11 unit tests covering streaming chunker logic and quantization helpers.
+
+Deliverables:
+
+[Quantization & Benchmarking]
+- optimization/quantize_model.py (INT8 dynamic quantization for Whisper-tiny and DistilBERT with before/after size and latency benchmarks, CSV export, and visualization)
+- results/quantization_report.csv (Generated: per-model size reduction and speedup metrics)
+- visuals/quantization_speedup.png (Generated: FP32 vs INT8 comparison charts)
+
+[Pipeline Profiling]
+- optimization/profiler.py (3-stage pipeline profiler: per-model load time, inference latency, peak RAM via tracemalloc, model size estimation)
+- results/profiling_report.csv (Generated: per-stage profiling metrics)
+- visuals/profiling_breakdown.png (Generated: latency stacked bar + model size pie chart)
+
+[Streaming Audio]
+- optimization/streaming_audio.py (Chunked audio loader with configurable window size, overlap, and overlap-aware transcription merging for long-form audio processing)
+
+[Testing]
+- tests/test_optimization.py (11 unit tests for streaming chunker boundaries, overlap validation, merge deduplication, and model size helper)
+
+[Documentation]
+- docs/optimization-report.md (Technical report: profiling methodology, quantization results, Wav2Vec2 exclusion rationale, ONNX investigation, honest limitations)
+- docs/journal/2026-06-21-optimization-profiling.md (Development journal: what worked, what didn't, key findings)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
