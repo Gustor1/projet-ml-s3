@@ -1,0 +1,2 @@
+model,num_samples,device,asr_load_time_s,asr_load_ram_mb,sentiment_load_time_s,sentiment_load_ram_mb,ser_load_time_s,ser_load_ram_mb,mean_asr_latency_s,mean_sentiment_latency_s,mean_ser_latency_s,mean_total_latency_s,mean_rtf,max_asr_peak_ram_mb,max_ser_peak_ram_mb
+whisper-tiny,3,cpu,14.0664,25.76,4.7588,1.03,7.682,2.05,0.8373,0.0887,0.3779,1.3038,0.4,7.55,0.61

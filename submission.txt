@@ -101,3 +101,45 @@ Deliverables:
 - results/cross_modal_ablation_summary.csv (Summary metrics for ASR cascaded errors)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
+Elio — Pipeline Architect & DevOps — 17%
+--------------------------------------------------
+Responsibilities:
+- Structured the project repository, managed environmental configuration, and set up containerization (Docker).
+- Created the base pipeline entry point, configuration system, and dependency management.
+- Set up GitHub Actions CI workflows for automated testing.
+- Co-developed the Optimization & Real-Time Performance module (Role 5) with Bilel.
+
+Deliverables:
+
+[Project Architecture & DevOps]
+- main.py (Pipeline entry point)
+- configs/config.yaml (Base configuration)
+- Dockerfile (Container setup)
+- requirements.txt (Dependency management)
+- .github/workflows/ (CI pipeline)
+
+[Optimization — INT8 Quantization & Streaming (shared Role 5)]
+- optimization/quantize_model.py (INT8 dynamic quantization for Whisper & DistilBERT)
+- optimization/streaming_audio.py (Chunked audio processing for long files)
+- results/quantization_report.csv (FP32 vs INT8 size & speed comparison)
+- visuals/quantization_speedup.png (Quantization benchmark chart)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
+Bilel — Optimization & Profiling (shared Role 5) — additional 8%
+--------------------------------------------------
+Responsibilities (Role 5, shared with Elio):
+- Profiled the joint multimodal pipeline (Whisper + DistilBERT + Wav2Vec2) for latency and peak RAM usage.
+- Generated performance benchmarks and latency visualizations.
+
+Deliverables:
+
+[Optimization — Pipeline Profiling (shared Role 5)]
+- optimization/profiler.py (Joint pipeline latency & RAM profiling)
+- results/profiling_report.csv (Per-file latency breakdown)
+- results/profiling_summary.csv (Aggregate profiling statistics)
+- visuals/profiling_latency.png (Per-model latency bar chart)
+- docs/journal/2026-06-21-role5-profiling.md (Development journal)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
