@@ -1,85 +1,85 @@
 model,file,true_emotion,voice_emotion,ser_confidence,ref_text,asr_text,wer,cer,gt_sentiment,asr_sentiment,sentiment_flipped,gt_sarcastic,asr_sarcastic,sarcasm_false_positive,sarcasm_false_negative,sarcasm_agree,asr_sarcasm_reason
-whisper-tiny,03-01-01-01-01-01-01.wav,neutral,happy,0.4339,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-01-01-01-02-01.wav,neutral,happy,0.4434,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-01-01-02-01-01.wav,neutral,angry,0.488,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-01-01-02-02-01.wav,neutral,neutral,0.4703,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-03-01-01-01-01.wav,happy,angry,0.4748,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-tiny,03-01-03-01-01-02-01.wav,happy,angry,0.5471,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-tiny,03-01-03-01-02-01-01.wav,happy,neutral,0.4991,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-03-01-02-02-01.wav,happy,happy,0.6227,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
-whisper-tiny,03-01-03-02-01-01-01.wav,happy,angry,0.855,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-tiny,03-01-03-02-01-02-01.wav,happy,angry,0.5506,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-tiny,03-01-03-02-02-01-01.wav,happy,angry,0.6594,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-03-02-02-02-01.wav,happy,angry,0.8185,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-04-01-01-01-01.wav,sad,happy,0.6535,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-04-01-01-02-01.wav,sad,happy,0.4389,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-04-01-02-01-01.wav,sad,happy,0.6463,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
-whisper-tiny,03-01-04-01-02-02-01.wav,sad,neutral,0.5685,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-04-02-01-01-01.wav,sad,neutral,0.6089,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-04-02-01-02-01.wav,sad,angry,0.5487,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-tiny,03-01-04-02-02-01-01.wav,sad,neutral,0.5052,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-04-02-02-02-01.wav,sad,happy,0.4543,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
-whisper-tiny,03-01-05-01-01-01-01.wav,angry,angry,0.9927,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-tiny,03-01-05-01-01-02-01.wav,angry,angry,0.9519,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-tiny,03-01-05-01-02-01-01.wav,angry,angry,0.9007,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-05-01-02-02-01.wav,angry,angry,0.9731,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-05-02-01-01-01.wav,angry,angry,0.9639,Kids are talking by the door.,Kids are talking by the door!,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-tiny,03-01-05-02-01-02-01.wav,angry,angry,0.9736,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-tiny,03-01-05-02-02-01-01.wav,angry,angry,0.9987,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-tiny,03-01-05-02-02-02-01.wav,angry,angry,0.997,Dogs are sitting by the door.,Dogs are sitting by the door!,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-01-01-01-01-01.wav,neutral,happy,0.4339,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-01-01-01-02-01.wav,neutral,happy,0.4434,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-01-01-02-01-01.wav,neutral,angry,0.488,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-01-01-02-02-01.wav,neutral,neutral,0.4703,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-03-01-01-01-01.wav,happy,angry,0.4748,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-base,03-01-03-01-01-02-01.wav,happy,angry,0.5471,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-base,03-01-03-01-02-01-01.wav,happy,neutral,0.4991,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-03-01-02-02-01.wav,happy,happy,0.6227,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
-whisper-base,03-01-03-02-01-01-01.wav,happy,angry,0.855,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-base,03-01-03-02-01-02-01.wav,happy,angry,0.5506,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-base,03-01-03-02-02-01-01.wav,happy,angry,0.6594,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-03-02-02-02-01.wav,happy,angry,0.8185,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-04-01-01-01-01.wav,sad,happy,0.6535,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-04-01-01-02-01.wav,sad,happy,0.4389,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-04-01-02-01-01.wav,sad,happy,0.6463,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
-whisper-base,03-01-04-01-02-02-01.wav,sad,neutral,0.5685,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-04-02-01-01-01.wav,sad,neutral,0.6089,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-04-02-01-02-01.wav,sad,angry,0.5487,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-base,03-01-04-02-02-01-01.wav,sad,neutral,0.5052,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-04-02-02-02-01.wav,sad,happy,0.4543,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
-whisper-base,03-01-05-01-01-01-01.wav,angry,angry,0.9927,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-base,03-01-05-01-01-02-01.wav,angry,angry,0.9519,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-base,03-01-05-01-02-01-01.wav,angry,angry,0.9007,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-05-01-02-02-01.wav,angry,angry,0.9731,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-05-02-01-01-01.wav,angry,angry,0.9639,Kids are talking by the door.,Kids are talking by the door!,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-base,03-01-05-02-01-02-01.wav,angry,angry,0.9736,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-base,03-01-05-02-02-01-01.wav,angry,angry,0.9987,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-base,03-01-05-02-02-02-01.wav,angry,angry,0.997,Dogs are sitting by the door.,Dogs are sitting by the door!,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-01-01-01-01-01.wav,neutral,happy,0.4339,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-01-01-01-02-01.wav,neutral,happy,0.4434,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-01-01-02-01-01.wav,neutral,angry,0.488,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-01-01-02-02-01.wav,neutral,neutral,0.4703,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-03-01-01-01-01.wav,happy,angry,0.4748,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-small,03-01-03-01-01-02-01.wav,happy,angry,0.5471,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-small,03-01-03-01-02-01-01.wav,happy,neutral,0.4991,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-03-01-02-02-01.wav,happy,happy,0.6227,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
-whisper-small,03-01-03-02-01-01-01.wav,happy,angry,0.855,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-small,03-01-03-02-01-02-01.wav,happy,angry,0.5506,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-small,03-01-03-02-02-01-01.wav,happy,angry,0.6594,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-03-02-02-02-01.wav,happy,angry,0.8185,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-04-01-01-01-01.wav,sad,happy,0.6535,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-04-01-01-02-01.wav,sad,happy,0.4389,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-04-01-02-01-01.wav,sad,happy,0.6463,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
-whisper-small,03-01-04-01-02-02-01.wav,sad,neutral,0.5685,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-04-02-01-01-01.wav,sad,neutral,0.6089,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-04-02-01-02-01.wav,sad,angry,0.5487,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-small,03-01-04-02-02-01-01.wav,sad,neutral,0.5052,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-04-02-02-02-01.wav,sad,happy,0.4543,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
-whisper-small,03-01-05-01-01-01-01.wav,angry,angry,0.9927,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-small,03-01-05-01-01-02-01.wav,angry,angry,0.9519,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-small,03-01-05-01-02-01-01.wav,angry,angry,0.9007,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-05-01-02-02-01.wav,angry,angry,0.9731,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-05-02-01-01-01.wav,angry,angry,0.9639,Kids are talking by the door.,Kids are talking by the door!,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-small,03-01-05-02-01-02-01.wav,angry,angry,0.9736,Kids are talking by the door.,Kids are talking by the door!,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (angry).
-whisper-small,03-01-05-02-02-01-01.wav,angry,angry,0.9987,Dogs are sitting by the door.,Dogs are sitting by the door!,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
-whisper-small,03-01-05-02-02-02-01.wav,angry,angry,0.997,Dogs are sitting by the door.,Dogs are sitting by the door!,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-01-01-01-01-01.wav,neutral,neutral,0.8542,Kids are talking by the door.,kids are talking by the door,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-01-01-01-02-01.wav,neutral,neutral,0.8304,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-01-01-02-01-01.wav,neutral,neutral,0.5972,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-01-01-02-02-01.wav,neutral,neutral,0.7429,Dogs are sitting by the door.,Dogs are sitting right at door.,0.3333,0.25,negative,positive,1,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-03-01-01-01-01.wav,happy,happy,0.5207,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-03-01-01-02-01.wav,happy,neutral,0.5079,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-03-01-02-01-01.wav,happy,happy,0.6075,Dogs are sitting by the door.,dogs are sitting by the door,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-tiny,03-01-03-01-02-02-01.wav,happy,happy,0.7095,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-tiny,03-01-03-02-01-01-01.wav,happy,happy,0.6352,Kids are talking by the door.,kids are talking by the dollar.,0.1667,0.1071,positive,negative,1,0,1,1,0,0,Negative words spoken with a happy/excited voice.
+whisper-tiny,03-01-03-02-01-02-01.wav,happy,happy,0.6313,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-03-02-02-01-01.wav,happy,happy,0.862,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-tiny,03-01-03-02-02-02-01.wav,happy,happy,0.7394,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-tiny,03-01-04-01-01-01-01.wav,sad,neutral,0.7064,Kids are talking by the door.,kids are talking by the door,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-04-01-01-02-01.wav,sad,neutral,0.4639,Kids are talking by the door.,kids are talking by the door,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-04-01-02-01-01.wav,sad,neutral,0.53,Dogs are sitting by the door.,dogs are sitting by the door,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-04-01-02-02-01.wav,sad,neutral,0.4154,Dogs are sitting by the door.,Don't do sitting by the door.,0.3333,0.1786,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-04-02-01-01-01.wav,sad,sad,0.4312,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (sad).
+whisper-tiny,03-01-04-02-01-02-01.wav,sad,happy,0.4397,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-04-02-02-01-01.wav,sad,happy,0.7368,Dogs are sitting by the door.,It's done. They're sitting by the door.,0.5,0.3571,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-tiny,03-01-04-02-02-02-01.wav,sad,happy,0.5206,Dogs are sitting by the door.,dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-tiny,03-01-05-01-01-01-01.wav,angry,happy,0.6708,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-05-01-01-02-01.wav,angry,happy,0.9177,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-05-01-02-01-01.wav,angry,happy,0.7697,Dogs are sitting by the door.,dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-tiny,03-01-05-01-02-02-01.wav,angry,happy,0.7456,Dogs are sitting by the door.,"God, I'm sitting by the door.",0.3333,0.2143,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-tiny,03-01-05-02-01-01-01.wav,angry,happy,0.7378,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-tiny,03-01-05-02-01-02-01.wav,angry,happy,0.8405,Kids are talking by the door.,He is out talking by the door.,0.5,0.25,positive,negative,1,0,1,1,0,0,Negative words spoken with a happy/excited voice.
+whisper-tiny,03-01-05-02-02-01-01.wav,angry,happy,0.5472,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-tiny,03-01-05-02-02-02-01.wav,angry,happy,0.4948,Dogs are sitting by the door.,"Dogs are sitting, fly the door!",0.1667,0.0714,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-base,03-01-01-01-01-01-01.wav,neutral,neutral,0.8542,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-01-01-01-02-01.wav,neutral,neutral,0.8304,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-01-01-02-01-01.wav,neutral,neutral,0.5972,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-01-01-02-02-01.wav,neutral,neutral,0.7429,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-03-01-01-01-01.wav,happy,happy,0.5207,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-03-01-01-02-01.wav,happy,neutral,0.5079,Kids are talking by the door.,kids are talking by the door,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-03-01-02-01-01.wav,happy,happy,0.6075,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-base,03-01-03-01-02-02-01.wav,happy,happy,0.7095,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-base,03-01-03-02-01-01-01.wav,happy,happy,0.6352,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-03-02-01-02-01.wav,happy,happy,0.6313,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-03-02-02-01-01.wav,happy,happy,0.862,Dogs are sitting by the door.,The dogs are sitting by the door.,0.1667,0.1429,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-base,03-01-03-02-02-02-01.wav,happy,happy,0.7394,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-base,03-01-04-01-01-01-01.wav,sad,neutral,0.7064,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-04-01-01-02-01.wav,sad,neutral,0.4639,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-04-01-02-01-01.wav,sad,neutral,0.53,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-04-01-02-02-01.wav,sad,neutral,0.4154,Dogs are sitting by the door.,The dogs are sitting by the door.,0.1667,0.1429,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-04-02-01-01-01.wav,sad,sad,0.4312,Kids are talking by the door.,Kids are taught human by the door.,0.3333,0.3571,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (sad).
+whisper-base,03-01-04-02-01-02-01.wav,sad,happy,0.4397,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-04-02-02-01-01.wav,sad,happy,0.7368,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-base,03-01-04-02-02-02-01.wav,sad,happy,0.5206,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-base,03-01-05-01-01-01-01.wav,angry,happy,0.6708,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-05-01-01-02-01.wav,angry,happy,0.9177,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-05-01-02-01-01.wav,angry,happy,0.7697,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-base,03-01-05-01-02-02-01.wav,angry,happy,0.7456,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-base,03-01-05-02-01-01-01.wav,angry,happy,0.7378,Kids are talking by the door.,Kids are talking by the door!,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-05-02-01-02-01.wav,angry,happy,0.8405,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-base,03-01-05-02-02-01-01.wav,angry,happy,0.5472,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-base,03-01-05-02-02-02-01.wav,angry,happy,0.4948,Dogs are sitting by the door.,Dogs are sitting by the door!,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-small,03-01-01-01-01-01-01.wav,neutral,neutral,0.8542,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-01-01-01-02-01.wav,neutral,neutral,0.8304,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-01-01-02-01-01.wav,neutral,neutral,0.5972,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-01-01-02-02-01.wav,neutral,neutral,0.7429,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-03-01-01-01-01.wav,happy,happy,0.5207,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-03-01-01-02-01.wav,happy,neutral,0.5079,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-03-01-02-01-01.wav,happy,happy,0.6075,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-small,03-01-03-01-02-02-01.wav,happy,happy,0.7095,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-small,03-01-03-02-01-01-01.wav,happy,happy,0.6352,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-03-02-01-02-01.wav,happy,happy,0.6313,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-03-02-02-01-01.wav,happy,happy,0.862,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-small,03-01-03-02-02-02-01.wav,happy,happy,0.7394,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-small,03-01-04-01-01-01-01.wav,sad,neutral,0.7064,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-04-01-01-02-01.wav,sad,neutral,0.4639,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-04-01-02-01-01.wav,sad,neutral,0.53,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-04-01-02-02-01.wav,sad,neutral,0.4154,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-04-02-01-01-01.wav,sad,sad,0.4312,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,1,1,0,0,1,Positive words spoken with a negative voice (sad).
+whisper-small,03-01-04-02-01-02-01.wav,sad,happy,0.4397,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-04-02-02-01-01.wav,sad,happy,0.7368,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-small,03-01-04-02-02-02-01.wav,sad,happy,0.5206,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-small,03-01-05-01-01-01-01.wav,angry,happy,0.6708,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-05-01-01-02-01.wav,angry,happy,0.9177,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-05-01-02-01-01.wav,angry,happy,0.7697,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-small,03-01-05-01-02-02-01.wav,angry,happy,0.7456,Dogs are sitting by the door.,Dogs are sitting by the door.,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-small,03-01-05-02-01-01-01.wav,angry,happy,0.7378,Kids are talking by the door.,Kids are talking by the door!,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-05-02-01-02-01.wav,angry,happy,0.8405,Kids are talking by the door.,Kids are talking by the door.,0.0,0.0,positive,positive,0,0,0,0,0,1,Normal vocal alignment.
+whisper-small,03-01-05-02-02-01-01.wav,angry,happy,0.5472,Dogs are sitting by the door.,Dogs are sitting by the door!,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
+whisper-small,03-01-05-02-02-02-01.wav,angry,happy,0.4948,Dogs are sitting by the door.,Dogs are sitting by the door!,0.0,0.0,negative,negative,0,1,1,0,0,1,Negative words spoken with a happy/excited voice.
