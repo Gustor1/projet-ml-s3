@@ -26,14 +26,16 @@ def main():
     # Load data
     df = pd.read_csv(csv_path)
     
-    # Calculate baseline accuracy from clean metadata
-    clean_meta = json.load(open(clean_path, "r"))
-    # In evaluate_emotion_robustness.py, clean_acc was 35.71%
-    # We will load that or calculate it from results
-    # Since we mapped them, let's just use the hardcoded baseline from the metadata we obtained
-    # or print it. We can read results/emotion_robustness.csv and use the values we reported:
-    # Clean baseline: 35.71%
-    clean_acc = 10.0 / 28.0 # 10 out of 28 files correct on clean baseline
+    # Calculate baseline accuracy dynamically from clean speech results CSV
+    clean_csv_path = Path("results/emotion_clean_results.csv")
+    if clean_csv_path.exists():
+        clean_df = pd.read_csv(clean_csv_path)
+        clean_acc = clean_df["correct"].mean()
+    else:
+        logger.warning("Clean speech results CSV not found. Calculating from metadata baseline fallback.")
+        clean_meta = json.load(open(clean_path, "r"))
+        # Fallback to previous hardcoded clean baseline for Actor 01
+        clean_acc = 10.0 / 28.0
     
     # Calculate accuracies per condition
     conditions = []
@@ -70,11 +72,11 @@ def main():
     
     # Add horizontal line for clean speech baseline
     plt.axhline(
-        y=0.3571, 
+        y=clean_acc, 
         color="#8B572A", 
         linestyle="--", 
         linewidth=1.5, 
-        label="Clean Audio Baseline (35.7%)"
+        label=f"Clean Audio Baseline ({clean_acc:.1%})"
     )
     
     # Annotate bars
@@ -93,7 +95,7 @@ def main():
             )
             
     # Title and labels
-    plt.title("Speech Emotion Recognition (SER) Accuracy under Noise & Preprocessing\n(Model: superb/wav2vec2-base-superb-er | Actor 01 Dataset)", fontsize=13, fontweight='bold', pad=15)
+    plt.title("Speech Emotion Recognition (SER) Accuracy under Noise & Preprocessing\n(Model: superb/wav2vec2-base-superb-er | Actors 01-06 Dataset)", fontsize=13, fontweight='bold', pad=15)
     plt.xlabel("Experimental Condition", fontsize=11, fontweight='bold', labelpad=10)
     plt.ylabel("Classification Accuracy", fontsize=11, fontweight='bold')
     plt.ylim(0, 1.0)

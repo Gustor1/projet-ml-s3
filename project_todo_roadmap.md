@@ -35,8 +35,8 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
   - [x] **Download & Augment Data**: zenodo RAVDESS Actor 01 downloads and noise injection scripts.
   - [x] **SER & Sarcasm Heuristic**: Evaluation script, sarcasm detector logic, and YIN pitch extraction.
   - [x] **Multimodal Fusion Calibration**: Implementation and verification showing +20% relative SER accuracy improvement on RAVDESS (from 35.7% to 42.8%).
-  - [ ] **Scientific Expansion**: Expand evaluation runs from Actor 01 (28 files) to a larger subset (e.g., all 24 actors) to increase statistical significance.
-  - [ ] **Document Calibration Gains**: Add a short section in `docs/experiment-6-emotions.md` explaining how peak normalization and multimodal fusion solved live close-mic errors.
+  - [x] **Scientific Expansion**: Expand evaluation runs from Actor 01 (28 files) to a larger subset (e.g., all 24 actors) to increase statistical significance.
+  - [x] **Document Calibration Gains**: Add a short section in `docs/experiment-6-emotions.md` explaining how peak normalization and multimodal fusion solved live close-mic errors.
 
 ### 5️⃣ Optimization & Real-Time Performance Engineer
 * **Objective**: Quantize the 3-model pipeline, profile GPU/CPU resource allocation, and analyze execution latency.

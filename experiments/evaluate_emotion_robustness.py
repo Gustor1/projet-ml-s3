@@ -86,8 +86,8 @@ def main():
     with open(clean_metadata_path, "r", encoding="utf-8") as f:
         clean_meta = json.load(f)
         
-    clean_correct = 0
-    clean_results = []
+    clean_audios = []
+    valid_clean_meta = []
     
     for entry in clean_meta:
         src_path = Path(entry["file_path"])
@@ -98,21 +98,30 @@ def main():
         if len(audio.shape) > 1:
             audio = audio.mean(axis=1)
             
-        # Classify
-        preds = ser_pipeline(audio)
+        clean_audios.append({"raw": audio, "sampling_rate": 16000})
+        valid_clean_meta.append(entry)
+        
+    logger.info(f"Classifying {len(clean_audios)} clean speech files using batching...")
+    # Run batch inference (batch_size=32 is efficient on CPU)
+    preds_list = ser_pipeline(clean_audios, batch_size=32)
+    
+    clean_correct = 0
+    clean_results = []
+    
+    for entry, preds in zip(valid_clean_meta, preds_list):
         pred_label = preds[0]["label"]
         true_label = EMOTION_MAP[entry["emotion"]]
         
         is_correct = 1 if pred_label == true_label else 0
         clean_correct += is_correct
         clean_results.append({
-            "file_name": src_path.name,
+            "file_name": Path(entry["file_path"]).name,
             "true_emotion": true_label,
             "pred_emotion": pred_label,
             "correct": is_correct
         })
         
-    clean_acc = clean_correct / len(clean_meta) if clean_meta else 0.0
+    clean_acc = clean_correct / len(valid_clean_meta) if valid_clean_meta else 0.0
     logger.info(f"Clean speech accuracy (Baseline): {clean_acc:.2%}")
     
     # 2. Run Noisy & Preprocessed Evaluation
@@ -120,12 +129,11 @@ def main():
     with open(noisy_metadata_path, "r", encoding="utf-8") as f:
         noisy_meta = json.load(f)
         
-    results = []
-    total = len(noisy_meta)
-    idx = 0
+    all_noisy_signals = []
+    valid_noisy_meta = []
     
+    logger.info("Generating preprocessed waveforms...")
     for entry in noisy_meta:
-        idx += 1
         src_path = Path(entry["file_path"])
         if not src_path.exists():
             continue
@@ -134,25 +142,38 @@ def main():
         if len(audio.shape) > 1:
             audio = audio.mean(axis=1)
             
-        true_label = EMOTION_MAP[entry["emotion"]]
+        valid_noisy_meta.append(entry)
         
         # Method A: None (Noisy raw)
         audio_none = preprocess_none(audio)
-        pred_none = ser_pipeline(audio_none)[0]["label"]
-        correct_none = 1 if pred_none == true_label else 0
+        all_noisy_signals.append({"raw": audio_none, "sampling_rate": 16000})
         
         # Method B: Wiener
         audio_wiener = preprocess_wiener(audio)
-        pred_wiener = ser_pipeline(audio_wiener)[0]["label"]
-        correct_wiener = 1 if pred_wiener == true_label else 0
+        all_noisy_signals.append({"raw": audio_wiener, "sampling_rate": 16000})
         
         # Method C: Spectral Subtraction
         audio_spec_sub = preprocess_spectral_subtraction(audio, sr)
-        pred_spec_sub = ser_pipeline(audio_spec_sub)[0]["label"]
+        all_noisy_signals.append({"raw": audio_spec_sub, "sampling_rate": 16000})
+        
+    logger.info(f"Classifying {len(all_noisy_signals)} noisy & preprocessed signals using batching...")
+    # Run batch inference for all processed files at once
+    noisy_preds_list = ser_pipeline(all_noisy_signals, batch_size=32)
+    
+    results = []
+    for idx, entry in enumerate(valid_noisy_meta):
+        true_label = EMOTION_MAP[entry["emotion"]]
+        
+        pred_none = noisy_preds_list[3 * idx][0]["label"]
+        pred_wiener = noisy_preds_list[3 * idx + 1][0]["label"]
+        pred_spec_sub = noisy_preds_list[3 * idx + 2][0]["label"]
+        
+        correct_none = 1 if pred_none == true_label else 0
+        correct_wiener = 1 if pred_wiener == true_label else 0
         correct_spec_sub = 1 if pred_spec_sub == true_label else 0
         
         results.append({
-            "file_name": src_path.name,
+            "file_name": Path(entry["file_path"]).name,
             "noise_type": entry["noise_type"],
             "snr_db": entry["snr_db"],
             "true_emotion": true_label,
@@ -163,9 +184,6 @@ def main():
             "correct_wiener": correct_wiener,
             "correct_spec_sub": correct_spec_sub
         })
-        
-        if idx % 16 == 0 or idx == total:
-            logger.info(f"Progress: [{idx}/{total}] files processed.")
             
     # Save CSV
     output_csv.parent.mkdir(parents=True, exist_ok=True)
@@ -179,6 +197,15 @@ def main():
         writer.writerows(results)
         
     logger.info(f"Results saved to {output_csv}")
+    
+    # Save Clean Results CSV
+    clean_csv = output_csv.parent / "emotion_clean_results.csv"
+    with open(clean_csv, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["file_name", "true_emotion", "pred_emotion", "correct"])
+        writer.writeheader()
+        writer.writerows(clean_results)
+        
+    logger.info(f"Clean speech results saved to {clean_csv}")
     
     # 3. Print Summarized Accuracy report
     print("\n" + "="*50)
