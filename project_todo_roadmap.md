@@ -41,8 +41,8 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
 ### 5️⃣ Optimization & Real-Time Performance Engineer (Split: Bilel & Elio)
 * **Objective**: Quantize the 3-model pipeline, profile GPU/CPU resource allocation, and analyze execution latency.
 * **Tasks**:
-  - [x] **Model Quantization (`optimization/quantize_model.py`)**: [Elio] Quantize the models (Whisper-tiny, Wav2Vec2-ER, DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprints on edge CPUs.
-  - [x] **Streaming Audio (`optimization/streaming_audio.py`)**: [Elio] Chunked audio processing for real-time edge constraints.
+  - [ ] **Model Quantization (`optimization/quantize_model.py`)**: [Elio] Quantize the models (Whisper-tiny, Wav2Vec2-ER, DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprints on edge CPUs.
+  - [ ] **Streaming Audio (`optimization/streaming_audio.py`)**: [Elio] Chunked audio processing for real-time edge constraints.
   - [x] **Joint Pipeline Profiling (`optimization/profiler.py`)**: [Bilel] Profile execution latency and peak RAM usage during joint ASR + SER + NLP multimodal inference runs.
 
 ### 6️⃣ Demo, Visualization & Video Production Engineer
