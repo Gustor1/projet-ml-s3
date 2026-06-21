@@ -5,6 +5,15 @@ Finalize ASR model integration (Whisper, Wav2Vec2), fix wrapper bugs, and implem
 
 ---
 
+## 📚 Literature & Hypothesis
+
+Following recent findings on the limits of end-to-end ASR (Sperber & Paulik, 2020) and the fragility of multimodal sarcasm detection (Castro et al., 2019), we formulated the following hypothesis:
+**Hypothesis**: *Transcription errors from lightweight ASR models (e.g., Whisper tiny) will disproportionately impact downstream NLP tasks (Sentiment Analysis) because phonetic substitutions often invert semantic meaning. Upgrading the ASR model scale will exponentially reduce the Sentiment Flip Rate.*
+
+To test this, we selected **Whisper** (Radford et al., 2023) over Faster-Whisper for baseline exactness, **DistilBERT** (Sanh et al., 2019) over RoBERTa for edge efficiency, and **Wav2Vec2-SER** (Baevski et al., 2020) as the acoustic anchor.
+
+---
+
 ## 🚨 Identified Issues & Limitations (What Was Failing)
 
 During our audit of the initial code under `asr/`, we discovered several structural limitations:

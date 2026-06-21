@@ -6,7 +6,12 @@
 
 ## What I Did
 
-Today I built the pipeline profiler (`optimization/profiler.py`) to benchmark the full multimodal inference stack: Whisper ASR + DistilBERT Sentiment + Wav2Vec2 SER. The goal was to answer a simple question: **can this 3-model pipeline run in real time on a CPU?**
+Today I built the pipeline profiler (`optimization/profiler.py`) to benchmark the full multimodal inference stack: Whisper ASR + DistilBERT Sentiment + Wav2Vec2 SER. 
+
+**Literature & Methodology**: Unlike standard ASR latency benchmarks which often use Faster-Whisper's CTranslate2 engine (Guillaumin et al., 2023) or INT8 quantization (Jacob et al., 2018), I deliberately chose to profile the unoptimized PyTorch FP32 baseline. The logic is simple: if we can prove the joint 3-model pipeline is real-time viable on an unoptimized CPU, it guarantees stellar performance in production. 
+For memory tracking, I used Python's `tracemalloc` instead of `torch.profiler` because we care about the high-level application heap footprint on the edge device, rather than low-level CUDA kernel execution times.
+
+The goal was to answer a simple question: **can this 3-model pipeline run in real time on a CPU?**
 
 ## Key Findings
 

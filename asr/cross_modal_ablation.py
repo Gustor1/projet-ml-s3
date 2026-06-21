@@ -110,6 +110,21 @@ def get_text_sentiment(sentiment_pipe, text: str) -> tuple:
 
 
 # ---------------------------------------------------------------------------
+# Noise Injection (to simulate real-world ASR failure)
+# ---------------------------------------------------------------------------
+
+def inject_white_noise(audio: np.ndarray, snr_db: float) -> np.ndarray:
+    """Inject white Gaussian noise at a specific SNR."""
+    signal_power = np.mean(audio ** 2)
+    if signal_power == 0:
+        return audio
+    snr_linear = 10 ** (snr_db / 10.0)
+    noise_power = signal_power / snr_linear
+    noise = np.random.normal(0, np.sqrt(noise_power), len(audio))
+    return (audio + noise).astype(np.float32)
+
+
+# ---------------------------------------------------------------------------
 # Core ablation runner
 # ---------------------------------------------------------------------------
 
@@ -118,6 +133,7 @@ def run_cross_modal_ablation(
     models: list = None,
     output_dir: str = "results",
     reference_field: str = "transcription",
+    inject_noise_snr: float = None,
 ) -> dict:
     """
     Run the full cross-modal ablation study.
@@ -182,6 +198,9 @@ def run_cross_modal_ablation(
         audio, sr = sf.read(fpath, dtype="float32")
         if len(audio.shape) > 1:
             audio = audio.mean(axis=1)
+            
+        if inject_noise_snr is not None:
+            audio = inject_white_noise(audio, inject_noise_snr)
 
         # SER
         ser_result = ser_pipe(audio)
@@ -383,8 +402,12 @@ def main():
         "--output", type=str, default="results",
         help="Output directory for CSV results"
     )
+    parser.add_argument(
+        "--noise-snr", type=float, default=None,
+        help="If set, injects white Gaussian noise at this SNR (dB) to force ASR errors"
+    )
     args = parser.parse_args()
-    run_cross_modal_ablation(args.metadata, args.models, args.output)
+    run_cross_modal_ablation(args.metadata, args.models, args.output, inject_noise_snr=args.noise_snr)
 
 
 if __name__ == "__main__":
