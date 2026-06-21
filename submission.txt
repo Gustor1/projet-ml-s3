@@ -53,6 +53,7 @@ Deliverables:
 - docs/insights.md (11 insights + Whisper-AT citation [Gong et al., 2023])
 - docs/tradeoffs.md (Engineering trade-offs for ASR & SER)
 - docs/speaker_analysis.md (Speaker-level variance analysis)
+- docs/final_report_data_engineer.md (Comprehensive final research synthesis report)
 - docs/journal/ (Iterative development journal)
 
 [Interactive Demonstration]
