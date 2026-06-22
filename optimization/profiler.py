@@ -51,14 +51,21 @@ def get_model_size_mb(model) -> float:
     if hasattr(model, "model"):
         model = model.model
     try:
-        with tempfile.NamedTemporaryFile(suffix=".pt", delete=False) as f:
-            torch.save(model.state_dict(), f.name)
-            size = os.path.getsize(f.name) / (1024 * 1024)
-            os.unlink(f.name)
-        return round(size, 2)
+        fd, path = tempfile.mkstemp(suffix=".pt")
+        try:
+            os.close(fd)
+            torch.save(model.state_dict(), path)
+            size = os.path.getsize(path) / (1024 * 1024)
+        finally:
+            try:
+                os.unlink(path)
+            except Exception:
+                pass
+        return round(size, 4)
     except Exception as e:
         logger.warning(f"Could not estimate model size: {e}")
         return 0.0
+
 
 
 def profile_block(func, *args, **kwargs):

@@ -51,11 +51,19 @@ logger = logging.getLogger(__name__)
 
 def get_model_size_mb(model) -> float:
     """Estimate model size in MB by saving to a temp file."""
-    with tempfile.NamedTemporaryFile(suffix=".pt", delete=False) as f:
-        torch.save(model.state_dict(), f.name)
-        size = os.path.getsize(f.name) / (1024 * 1024)
-        os.unlink(f.name)
-    return round(size, 2)
+    import tempfile
+    fd, path = tempfile.mkstemp(suffix=".pt")
+    try:
+        os.close(fd)
+        torch.save(model.state_dict(), path)
+        size = os.path.getsize(path) / (1024 * 1024)
+    finally:
+        try:
+            os.unlink(path)
+        except Exception:
+            pass
+    return round(size, 4)
+
 
 
 def benchmark_whisper(model, processor, num_runs=5):
