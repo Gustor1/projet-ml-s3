@@ -14,7 +14,7 @@ Deliverables:
 
 [Audio Pipeline & Augmentation]
 - scripts/download_real_librispeech.py (Data pipeline)
-- scripts/download_emotion_samples.py (RAVDESS Actor 01 speech data downloader & prep)
+- scripts/download_emotion_samples.py (RAVDESS Actor 01-06 speech data downloader & prep)
 - scripts/augment_audio.py (Gaussian white noise augmentation at SNR 20/10/5 dB)
 - scripts/augment_pink_noise.py (Pink noise, 1/f spectrum)
 - scripts/augment_urban_noise.py (Real urban noise: traffic, café, street)
@@ -31,6 +31,7 @@ Deliverables:
 - results/urban_noise_comparison.csv (Urban noise results)
 - results/babble_noise_comparison.csv (Babble noise results + outlier analysis)
 - results/emotion_robustness.csv (SER model raw accuracy metrics)
+- results/emotion_clean_results.csv (SER model clean speech baseline results)
 
 [Analysis & Visualization Scripts]
 - scripts/add_cer_baseline.py (CER metric addition)
@@ -165,3 +166,21 @@ Deliverables:
 - docs/journal/2026-06-21-optimization-profiling.md (Development journal: what worked, what didn't, key findings)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
+Bilel — Optimization & Profiling (shared Role 5) — additional 8%
+--------------------------------------------------
+Responsibilities (Role 5, shared with Elio):
+- Profiled the joint multimodal pipeline (Whisper + DistilBERT + Wav2Vec2) for latency and peak RAM usage.
+- Generated performance benchmarks and latency visualizations.
+
+Deliverables:
+
+[Optimization — Pipeline Profiling (shared Role 5)]
+- optimization/profiler.py (Joint pipeline latency & RAM profiling)
+- results/profiling_report.csv (Per-file latency breakdown)
+- results/profiling_summary.csv (Aggregate profiling statistics)
+- visuals/profiling_latency.png (Per-model latency bar chart)
+- docs/journal/2026-06-21-role5-profiling.md (Development journal)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+

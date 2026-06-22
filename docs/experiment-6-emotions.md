@@ -34,17 +34,21 @@ This experiment investigates:
 
 ## 🔬 Phase 1: Experimental Setup & Data Generation
 
-### 1.1 Actor 01 Dataset Selection
-To ensure a rigorous evaluation, we selected all files from **Actor 01** of the RAVDESS dataset belonging to the 4 primary emotions natively supported by our target SER classifier (`superb/wav2vec2-base-superb-er`):
+### 1.1 Expanded Balanced Dataset Selection (Actors 01-06)
+To ensure statistical significance and gender balance, we expanded our evaluation set from a single speaker to **6 actors** (Actors 01, 02, 03, 04, 05, and 06) from the RAVDESS dataset. 
+- Odd-numbered actors (01, 03, 05) are **Male**.
+- Even-numbered actors (02, 04, 06) are **Female**.
+
+This selection provides a balanced representation of pitch ranges and vocal characteristics. For each actor, we selected all files belonging to the 4 primary emotions natively supported by our target SER classifier (`superb/wav2vec2-base-superb-er`):
 - **Neutral** (01) -> Mapped to `neu`
 - **Happy** (03) -> Mapped to `hap`
 - **Sad** (04) -> Mapped to `sad`
 - **Angry** (05) -> Mapped to `ang`
 
-This resulted in a clean baseline set of **28 WAV files**. All files were downsampled to **16kHz mono** (the required sampling rate for Wav2Vec2 and Whisper).
+This resulted in a clean baseline set of **168 WAV files** (28 files per actor). All files were downsampled to **16kHz mono** (the required sampling rate for Wav2Vec2 and Whisper).
 
 ### 1.2 Noise Augmentation
-We generated 4 noisy versions for each of the 28 files (total 112 noisy files):
+We generated 4 noisy versions for each of the 168 files (total **672 noisy files**):
 - **White Gaussian noise** at 20dB (mild) and 5dB (severe) SNR.
 - **Real Urban noise** (traffic, street cafe) at 20dB and 5dB SNR.
 
@@ -52,36 +56,37 @@ We generated 4 noisy versions for each of the 28 files (total 112 noisy files):
 
 ## 📊 Phase 2: Quantitative Results
 
-We executed the SER model on three preprocessing pipelines (None vs. Wiener Filter vs. Spectral Subtraction) across all 112 noisy files, plus the 28 clean baseline files.
+We executed the SER model on three preprocessing pipelines (None vs. Wiener Filter vs. Spectral Subtraction) across all 672 noisy files, plus the 168 clean baseline files.
 
 ### 📈 Global Speech Emotion Recognition Accuracy
 
 | Experimental Condition | Raw Noisy (None) | Wiener Filter | Spectral Subtraction | Conclusion |
 |------------------------|------------------|---------------|----------------------|------------|
-| **Clean Baseline (N=28)** | **35.71%** | — | — | Baseline upper-bound |
-| **White Noise 20dB (N=28)**| **39.29%** | 28.57% ❌ | 50.00% | Wiener degrades |
-| **White Noise 5dB (N=28)** | **39.29%** | 17.86% ❌ | 53.57% | Wiener destroys, SpecSub helps |
-| **Urban Noise 20dB (N=28)**| **42.86%** | 46.43% | 39.29% ❌ | SpecSub degrades |
-| **Urban Noise 5dB (N=28)** | **39.29%** | 28.57% ❌ | 28.57% ❌ | Both methods fail |
+| **Clean Baseline (N=168)** | **37.50%** | — | — | Baseline upper-bound |
+| **White Noise 20dB (N=168)**| **49.40%** | 33.33% ❌ | 44.05% ❌ | Preprocessing degrades |
+| **White Noise 5dB (N=168)** | **45.83%** | 24.40% ❌ | 31.55% ❌ | Preprocessing degrades |
+| **Urban Noise 20dB (N=168)**| **44.64%** | **45.83%** | 41.07% ❌ | Wiener slightly helps |
+| **Urban Noise 5dB (N=168)** | **35.12%** | **35.71%** | 32.14% ❌ | Wiener slightly helps |
 
 ### 📈 Visualisation des Résultats (SER Accuracy)
 ![Speech Emotion Recognition Accuracy](../visuals/emotion_accuracy.png)
-*Figure 1: Speech Emotion Recognition accuracy under noise and preprocessing compared to the clean baseline (horizontal dotted line).*
+*Figure 1: Speech Emotion Recognition accuracy under noise and preprocessing compared to the clean baseline (horizontal dotted line) for Actors 01-06.*
 
 ---
 
 ## 🧠 Phase 3: Root Cause Analysis & Hypotheses
 
 ### Hypothesis 1: Wiener Filter Over-Smoothing (The "Emotional Eraser")
-The most striking finding is that **the Wiener filter consistently worsens SER accuracy** under white noise (-21.43% drop at 5dB) and urban noise (-10.71% drop at 5dB). 
-* **Mechanism**: The Wiener filter estimates a noise PSD and scales down spectral regions with low SNR. In doing so, it attenuates high frequencies and smooths the temporal envelope. While this reduces static noise for ASR, it **erases the fine prosodic cues** (pitch micro-variations, vocal jitter, high-frequency harmonics of anger/joy) that the SER model uses to distinguish emotions, reducing them to "neutral" or "sad".
+Our expanded evaluation confirms that **the Wiener filter degrades SER accuracy under white noise** (-16.07% drop at 20dB, -21.43% drop at 5dB).
+* **Mechanism**: The Wiener filter estimates a noise PSD and scales down spectral regions with low SNR. In doing so, it attenuates high frequencies and smooths the temporal envelope. While this stabilizes ASR transcription by cleaning static noise, it **erases fine prosodic cues** (pitch micro-variations, vocal jitter, high-frequency harmonics of anger/joy) that the SER model uses to distinguish emotions, reducing them to "neutral" or "sad".
+* **Urban Noise Exception**: Interestingly, under real-world Urban noise, the Wiener filter slightly improves accuracy (+1.19% at 20dB, +0.59% at 5dB). Because urban noise is non-stationary and localized in specific bands, the Wiener filter cleans out background noise without aggressively over-smoothing the core voice harmonics, maintaining emotional features.
 
-### Hypothesis 2: Spectral Subtraction "Musical Noise" as Synthetic Excitement
-Under white noise at 5dB, Spectral Subtraction actually **improved** accuracy (from 39.29% to 53.57%).
-* **Mechanism**: Spectral subtraction introduces "musical noise" (isolated spectral peaks or "spikes" in the spectrogram due to random fluctuations). The SER model, which is sensitive to high-frequency energy (typical of angry and happy voices), misinterprets these artifacts as vocal tension or excitement. This artifact coincidentally pushes the model to predict `ang` or `hap`, matching the true labels of the Actor 01 dataset more frequently by chance. This is an artifact-driven "false accuracy" rather than a real feature restoration.
+### Hypothesis 2: Spectral Subtraction "Musical Noise" as a Statistical Artifact
+In our previous Actor 01 evaluation, Spectral Subtraction appeared to "improve" accuracy under white noise. Our expanded 6-actor run refutes this: under white noise at 5dB, Spectral Subtraction accuracy **dropped** to **31.55%** (compared to Raw Noisy at 45.83%).
+* **Mechanism**: Spectral subtraction introduces "musical noise" (isolated spectral spikes in the spectrogram). In the single-actor run, the SER model misinterpreted these artifacts as vocal tension, coincidentally mapping them to `ang` or `hap` (which matched the true labels of Actor 01 by chance). Over 6 actors, this artifact-driven "false accuracy" disappears, and the distortions introduced by Spectral Subtraction degrade real emotion classification accuracy.
 
 ### Hypothesis 3: Cross-Corpus Domain Gap
-Our clean baseline accuracy is only **35.71%**. This is a classic example of cross-corpus domain shift: the model was trained on IEMOCAP (conversational, spontaneous) and tested on RAVDESS (acted, declarative). The mismatch in pitch range, phrasing, and recording acoustics limits the baseline accuracy, highlighting that ASR models are much more robust to domain shifts than non-verbal SER models.
+Our clean baseline accuracy is **37.50%** across the 6 actors. This highlights a persistent cross-corpus domain shift: the Wav2Vec2 model was trained on IEMOCAP (conversational, spontaneous English) but is evaluated here on RAVDESS (acted, declarative English). The mismatch in pitch range, phrasing, and recording acoustics limits the baseline performance, showing that non-verbal SER models are highly sensitive to domain shifts.
 
 ---
 
@@ -112,16 +117,42 @@ This demonstrates that combining verbal (ASR) and non-verbal (SER) models allows
 
 ---
 
+## ⚡ Phase 5: Microphone Proximity & Calibration Gains
+
+### 5.1 The Proximity & Pitch Ambiguity Problem
+During live tests, when users spoke close to the microphone with an enthusiastic, happy voice, the SER model consistently misclassified the emotion as **Anger (ang)**.
+* **Proximity Effect & Clipping**: Close-mic recordings suffer from low-frequency amplification (proximity effect) and clipping distortion. This introduces acoustic tension that neural networks trained on studio-quality datasets interpret as vocal aggression.
+* **Acoustic Similarity**: Happy and angry speech share very similar arousal profiles: high energy, fast speech rates, and high pitch ($F_0$).
+
+### 5.2 Implemented Preprocessing and Calibration Solutions
+To resolve these errors, we introduced a two-part calibration pipeline:
+
+1. **Volume and Padding Standardization**:
+   - **Silence Trimming**: Strips silent margins using `librosa.effects.split` so the model extracts features solely from active speech segments.
+   - **Peak Amplitude Normalization**: Scales the signal to a maximum peak of `1.0`. This removes distance-based volume variances and clips out proximity distortion.
+2. **Multimodal Fusion Calibration Heuristic**:
+   We implemented `fuse_modalities` to combine text sentiment, prosody ($F_0$), and classification scores:
+   - **Text Correction**: If DistilBERT detects strongly positive text, negative vocal classes (`ang`, `sad`) are penalized, while `hap` and `neu` are boosted.
+   - **Prosodic Pitch Correction**: If the estimated fundamental frequency (via YIN) is high ($F_0 > 180\text{ Hz}$) and text sentiment is positive, the probability is shifted towards `hap` instead of `ang`.
+
+### 5.3 Quantitative Impact
+Calibration on the RAVDESS dataset yielded a **+20% relative gain** in accuracy, rising from **35.71%** to **42.86%** on RAVDESS Actor 01:
+* **Happy Sample (`03-01-03-02-01-01-01.wav`)**: Successfully corrected from **Anger** $\rightarrow$ **Happy** 😄.
+* **Neutral Sample (`03-01-01-01-02-01-01.wav`)**: Successfully corrected from **Anger** $\rightarrow$ **Neutral** 😐.
+
+---
+
 ## ⚠️ Limitations & Future Work
-- **Small Sample Size**: Our study is limited to Actor 01 (28 clean files, 112 noisy files). Evaluating on the full RAVDESS dataset (24 actors) would increase statistical confidence.
-- **Deep Representation Preprocessing**: Classical DSP filters are clearly destructive for SER. Future work should evaluate deep-learning based speech separation models (e.g., Conv-TasNet) to see if they preserve prosodic features better.
+- **GPU Resources**: Evaluating larger models (like Wav2Vec2 large) on edge devices is currently limited by CPU latency. ONNX Runtime exports should be explored.
+- **Deep Speech Enhancement**: Classical DSP filters are destructive for non-verbal features. Deep speech separation models (e.g., Conv-TasNet) should be evaluated to see if they preserve prosodic details better.
 
 ---
 
 ## 📝 Reproducibility
-- **Clean preparation**: `scripts/download_emotion_samples.py`
+- **Clean preparation**: `scripts/download_emotion_samples.py --actors "01,02,03,04,05,06"`
 - **Augmentation**: `scripts/augment_emotion_noise.py`
 - **SER Evaluation**: `experiments/evaluate_emotion_robustness.py`
 - **Sarcasm Demo**: `experiments/sarcasm_detector.py`
 - **Visual Generator**: `scripts/generate_emotion_visuals.py`
 - **Raw CSV results**: `results/emotion_robustness.csv`
+- **Clean CSV results**: `results/emotion_clean_results.csv`

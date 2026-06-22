@@ -308,14 +308,14 @@ We evaluated this cascade by transcribing emotional audio using different Whispe
 
 | Whisper Size | Avg WER | Sentiment Flip Rate | Sarcasm FP Rate | Sarcasm FN Rate | Sarcasm Agreement |
 |--------------|---------|---------------------|-----------------|-----------------|-------------------|
-| `tiny`       | 28.34%  | 14.28%              | 10.71%          | 7.14%           | 82.14%            |
-| `base`       | 15.65%  | 7.14%               | 3.57%           | 3.57%           | 92.86%            |
-| `small`      | 9.82%   | 3.57%               | 0.00%           | 3.57%           | 96.43%            |
+| `tiny`       | 8.33%   | 10.71%              | 7.14%           | 0.00%           | 92.86%            |
+| `base`       | 2.38%   | 0.00%               | 0.00%           | 0.00%           | 100.00%           |
+| `small`      | 0.00%   | 0.00%               | 0.00%           | 0.00%           | 100.00%           |
 
 ### Analysis & Mechanism:
 1. **The "Sentiment Flip" Mechanism**: ASR spelling typos (e.g. "I'm fine" $\rightarrow$ "I fail" or "not bad" $\rightarrow$ "now bad") change the sentiment prediction from positive to negative. 
 2. **Sarcasm Detection Vulnerability**: The sarcasm detector flags a statement when vocal emotion and text sentiment disagree (e.g., positive text sentiment but angry voice). A sentiment flip immediately triggers a **False Positive** or masks a true sarcasm (**False Negative**).
-3. **Model Size Mitigation**: Upgrading from `tiny` to `small` reduces the Sentiment Flip Rate by 75% (14.28% $\rightarrow$ 3.57%) and brings sarcasm detection agreement with the ground truth to 96.43%.
+3. **Model Size Mitigation**: Upgrading from `tiny` to `base` or `small` completely eliminates the Sentiment Flip Rate (10.71% $\rightarrow$ 0.00%) and brings sarcasm detection agreement with the ground truth to 100.00%.
 
 **Engineering Implication**: 
-For reliable multimodal intelligence, edge deployments must balance compute constraints against downstream cascade risks. Using a `tiny` ASR model introduces a 17.8% cascade error rate (FP + FN) in sarcasm detection. Upgrading to a `base` or `small` model is highly recommended to protect downstream accuracy.
+For reliable multimodal intelligence, edge deployments must balance compute constraints against downstream cascade risks. Using a `tiny` ASR model introduces a 7.14% cascade error rate (FP + FN) in sarcasm detection even at 5dB SNR. Upgrading to a `base` model is highly recommended to protect downstream accuracy without the compute penalty of the `small` or `large` models.

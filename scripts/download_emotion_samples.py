@@ -28,7 +28,7 @@ STATEMENTS = {
     "02": "Dogs are sitting by the door."
 }
 
-def download_and_extract():
+def download_and_extract(actors_list=["01", "02", "03", "04", "05", "06"]):
     data_dir = Path("data")
     data_dir.mkdir(parents=True, exist_ok=True)
     
@@ -46,10 +46,35 @@ def download_and_extract():
     else:
         logger.info("Audio_Speech_Actors_01-24.zip already exists.")
         
-    logger.info("Extracting Actor_01 files from zip file...")
+    # Ensure all actor strings are zero-padded to two digits (e.g., "1" -> "01")
+    actors_formatted = []
+    for actor in actors_list:
+        try:
+            actors_formatted.append(f"{int(actor):02d}")
+        except ValueError:
+            # Fallback if it's not a simple integer string
+            actors_formatted.append(actor)
+            
+    actors_to_extract = [f"Actor_{actor}" for actor in actors_formatted]
+    logger.info(f"Extracting {', '.join(actors_to_extract)} files from zip file...")
+    
+    # Optional: clean out old files in raw_dir and samples_dir to avoid mixing
+    for f in raw_dir.glob("*.wav"):
+        try:
+            f.unlink()
+        except Exception:
+            pass
+    for f in samples_dir.glob("*.wav"):
+        try:
+            f.unlink()
+        except Exception:
+            pass
+
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         for member in zip_ref.namelist():
-            if "Actor_01" in member and member.endswith(".wav"):
+            # Avoid substring match (e.g. Actor_1 matching Actor_10) by checking the path parts
+            member_parts = Path(member).parts
+            if len(member_parts) >= 2 and member_parts[0] in actors_to_extract and member.endswith(".wav"):
                 # Extract file flatly into raw_dir
                 filename = os.path.basename(member)
                 source = zip_ref.open(member)
@@ -110,7 +135,24 @@ def download_and_extract():
     with open(meta_path, "w", encoding="utf-8") as f:
         json.dump(metadata, f, indent=4)
         
-    logger.info(f"Successfully selected 24 emotional samples and saved metadata to {meta_path}.")
+    logger.info(f"Successfully selected {len(metadata)} emotional samples and saved metadata to {meta_path}.")
 
 if __name__ == "__main__":
-    download_and_extract()
+    import argparse
+    parser = argparse.ArgumentParser(description="Download and extract RAVDESS emotional speech samples.")
+    parser.file_name = "download_emotion_samples.py"
+    parser.add_argument(
+        "--actors", 
+        type=str, 
+        default="01,02,03,04,05,06",
+        help="Comma-separated list of actors to extract (e.g., '01,02,03' or 'all')"
+    )
+    args = parser.parse_args()
+    
+    if args.actors.lower() == "all":
+        actors_list = [f"{i:02d}" for i in range(1, 25)]
+    else:
+        actors_list = [a.strip() for a in args.actors.split(",") if a.strip()]
+        
+    download_and_extract(actors_list)
+

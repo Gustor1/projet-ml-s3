@@ -35,16 +35,16 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
   - [x] **Download & Augment Data**: zenodo RAVDESS Actor 01 downloads and noise injection scripts.
   - [x] **SER & Sarcasm Heuristic**: Evaluation script, sarcasm detector logic, and YIN pitch extraction.
   - [x] **Multimodal Fusion Calibration**: Implementation and verification showing +20% relative SER accuracy improvement on RAVDESS (from 35.7% to 42.8%).
-  - [ ] **Scientific Expansion**: Expand evaluation runs from Actor 01 (28 files) to a larger subset (e.g., all 24 actors) to increase statistical significance.
-  - [ ] **Document Calibration Gains**: Add a short section in `docs/experiment-6-emotions.md` explaining how peak normalization and multimodal fusion solved live close-mic errors.
+  - [x] **Scientific Expansion**: Expand evaluation runs from Actor 01 (28 files) to a larger subset (e.g., all 24 actors) to increase statistical significance.
+  - [x] **Document Calibration Gains**: Add a short section in `docs/experiment-6-emotions.md` explaining how peak normalization and multimodal fusion solved live close-mic errors.
 
-### 5️⃣ Optimization & Real-Time Performance Engineer
+### 5️⃣ Optimization & Real-Time Performance Engineer (Split: Bilel & Elio)
 * **Objective**: Quantize the 3-model pipeline, profile GPU/CPU resource allocation, and analyze execution latency.
 * **Tasks**:
-  - [x] **Model Quantization (`optimization/quantize_model.py`)**: Quantize the models (Whisper-tiny, DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprints on edge CPUs. Wav2Vec2 excluded (conv-heavy architecture, <5% gains).
-  - [x] **Joint Pipeline Profiling (`optimization/profiler.py`)**: Profile execution latency and peak RAM usage during joint ASR + SER + NLP multimodal inference runs.
-  - [x] **Streaming Audio (`optimization/streaming_audio.py`)**: Chunked audio loader for processing long files with overlap-aware transcription merging.
-  - [x] **ONNX Runtime (Investigated)**: Documented as impractical for Whisper encoder-decoder architecture — recommending Whisper.cpp for production.
+  - [x] **Model Quantization (`optimization/quantize_model.py`)**: [Elio] Quantize the models (Whisper-tiny, DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprints on edge CPUs. Wav2Vec2 excluded (conv-heavy architecture, <5% gains).
+  - [x] **Joint Pipeline Profiling (`optimization/profiler.py`)**: [Bilel & Elio] Profile execution latency, peak RAM usage, and model sizes during joint ASR + SER + NLP multimodal inference runs.
+  - [x] **Streaming Audio (`optimization/streaming_audio.py`)**: [Elio] Chunked audio loader for processing long files with overlap-aware transcription merging for real-time edge constraints.
+  - [x] **ONNX Runtime (Investigated)**: [Elio] Documented as impractical for Whisper encoder-decoder architecture — recommending Whisper.cpp for production.
 
 ### 6️⃣ Demo, Visualization & Video Production Engineer
 * **Objective**: Maintain the Web dashboard responsive and produce the final presentation video.
