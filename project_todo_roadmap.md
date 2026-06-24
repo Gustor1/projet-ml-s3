@@ -17,10 +17,10 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
 ### 2️⃣ Audio Preprocessing Engineer
 * **Objective**: Export DSP filters, implement ASR vs. SER routing, and code VAD helpers.
 * **Tasks**:
-  - [ ] **Extract Denoising APIs (`preprocessing/denoise.py`)**: Move the Wiener filter and Spectral Subtraction implementations out of the demo code into importable modular functions.
-  - [ ] **Parallel Stream Routing**: Adapt the pipeline to support parallel routes: a **Denoised Stream** (optimized for ASR transcription, as classical filters clean static noise) and a **Normalized Stream** (optimized for SER, as classical filters destroy pitch prosody but peak scaling + silent margin trimming preserves emotion features).
-  - [ ] **VAD Implementation (`preprocessing/vad.py`)**: Integrate a Voice Activity Detection utility (e.g., using `webrtcvad` or energy levels) to automatically isolate voiced segments.
-  - [ ] **Unit Tests**: Write testing scripts to check signal properties (sample rate matches 16kHz, output amplitude bounds, etc.).
+  - [x] **Extract Denoising APIs (`preprocessing/denoise.py`)**: Move the Wiener filter and Spectral Subtraction implementations out of the demo code into importable modular functions.
+  - [x] **Parallel Stream Routing**: Adapt the pipeline to support parallel routes: a **Denoised Stream** (optimized for ASR transcription, as classical filters clean static noise) and a **Normalized Stream** (optimized for SER, as classical filters destroy pitch prosody but peak scaling + silent margin trimming preserves emotion features).
+  - [x] **VAD Implementation (`preprocessing/vad.py`)**: Integrate a Voice Activity Detection utility (e.g., using `webrtcvad` or energy levels) to automatically isolate voiced segments.
+  - [x] **Unit Tests**: Write testing scripts to check signal properties (sample rate matches 16kHz, output amplitude bounds, etc.).
 
 ### 3️⃣ ASR Integration & Evaluation Engineer
 * **Objective**: Maintain wrapper features and analyze how ASR transcription quality impacts downstream NLP sentiment.
