@@ -13,32 +13,43 @@ Responsibilities:
 Deliverables:
 
 [Audio Pipeline & Augmentation]
+- scripts/setup.sh (Shell setup script for environment paths and dependencies)
 - scripts/download_real_librispeech.py (Data pipeline)
 - scripts/download_emotion_samples.py (RAVDESS Actor 01-06 speech data downloader & prep)
+- scripts/download_urban_noise.py (Script to download real-world urban noise source files)
+- scripts/convert_urban_noise.py (Script to convert urban noise formats)
 - scripts/augment_audio.py (Gaussian white noise augmentation at SNR 20/10/5 dB)
 - scripts/augment_pink_noise.py (Pink noise, 1/f spectrum)
 - scripts/augment_urban_noise.py (Real urban noise: traffic, café, street)
+- scripts/generate_urban_noise.py (Script to simulate non-stationary noise patterns)
 - scripts/augment_babble_noise.py (Crowd noise / Cocktail party problem)
 - scripts/augment_emotion_noise.py (White & urban noise injection on emotional speech)
+- scripts/extract_audio_samples.py (Helper to extract audio clips)
+- scripts/extract_sample_audio.py (Helper to isolate speech subsets)
 
 [Experiments & Raw Data]
 - experiments/baseline_wer.py (Metric computation on clean audio)
 - experiments/compare_preprocessing.py (Comparison of None vs Wiener vs Spectral Subtraction)
 - experiments/evaluate_emotion_robustness.py (Accuracy benchmark of SER model superb/wav2vec2-base-superb-er)
 - experiments/sarcasm_detector.py (ASR + SER + Text Sentiment sarcasm joint pipeline)
+- notebooks/emotion_demo.ipynb (Jupyter notebook exploring Wav2Vec2 SER model calibration)
 - results/baseline.csv & results/preprocessing_comparison.csv (White noise results)
 - results/pink_noise_comparison.csv (Pink noise results)
 - results/urban_noise_comparison.csv (Urban noise results)
 - results/babble_noise_comparison.csv (Babble noise results + outlier analysis)
 - results/emotion_robustness.csv (SER model raw accuracy metrics)
 - results/emotion_clean_results.csv (SER model clean speech baseline results)
+- results/test_perplexity.csv & results/test_perplexity_v2.csv (Perplexity analysis metrics for Whisper text transcripts)
 
 [Analysis & Visualization Scripts]
 - scripts/add_cer_baseline.py (CER metric addition)
 - scripts/analyze_speakers.py (Variance analysis)
 - scripts/analyze_babble_robust.py (Statistical filtering of ASR hallucinations)
+- scripts/analyze_perplexity.py (Script to calculate Whisper language model perplexity metrics)
 - scripts/generate_all_visuals.py (Generation of comparative charts)
 - scripts/generate_emotion_visuals.py (SER accuracy visual chart generator)
+- scripts/generate_all_graphs.py (Script to generate comparative charts for experiments)
+- scripts/generate_spectrograms.py (Script to generate pink noise and Wiener-filtered spectrograms)
 
 [Scientific Documentation & Reports]
 - docs/experiment-1-baseline.md (Clean audio baseline)
@@ -55,6 +66,7 @@ Deliverables:
 - docs/speaker_analysis.md (Speaker-level variance analysis)
 - docs/final_report_data_engineer.md (Comprehensive final research synthesis report)
 - docs/journal/ (Iterative development journal)
+- video_script_role3.md (Video presentation script for Role 3 - designed and written by Eliott)
 - video_script_role4.md (Video presentation script for Role 4)
 
 [Interactive Demonstration]
@@ -121,7 +133,6 @@ Deliverables:
 - results/cross_modal_ablation.csv (Detail per-file cross-modal study)
 - results/cross_modal_ablation_summary.csv (Summary metrics for ASR cascaded errors)
 - docs/role3-asr-integration-report.md (ASR integration and ablation research report)
-- video_script_role3.md (Video presentation script for Role 3)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
