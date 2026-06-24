@@ -156,9 +156,31 @@ We evaluated how Whisper model size (tiny, base, small) affects sarcasm detectio
 
 Smaller models introduce orthographic errors (e.g., transcribing *"I'm fine"* as *"I fail"*), which causes a **Sentiment Flip Rate of 10.71%** in DistilBERT. This sentiment flip triggers false positive sarcasm alerts. Upgrading from `tiny` to `base` or `small` completely eliminates the sentiment flip rate ($10.71\% \to 0.00\%$) and increases sarcasm classification agreement with the ground truth to $100.00\%$, demonstrating that ASR quality is a critical factor for downstream multimodal NLP performance.
 
+## 🔍 Insight 13: State-of-the-Art Neural Alternatives to Classical DSP
+
+**Observation**: Our results show that classical DSP filters fail in realistic noise environments. This motivates a comparison with state-of-the-art neural speech enhancement systems documented in the literature.
+
+| System | Type | Key Mechanism | Edge Viable | Preserves Prosody |
+|:---|:---|:---|:---:|:---:|
+| **Wiener Filter** *(this work)* | Classical DSP | MMSE linear estimator | ✅ Yes | ❌ No |
+| **Spectral Subtraction** *(this work)* | Classical DSP | Magnitude subtraction | ✅ Yes | ❌ No |
+| **RNNoise** (Valin, 2018) | RNN/DSP Hybrid | GRU-based noise gate | ✅ Yes (~1 MB) | ⚠️ Partial |
+| **DeepFilterNet** (Schröter et al., 2022) | Deep Learning | Complex-valued filtering | ⚠️ Limited | ⚠️ Partial |
+| **Conv-TasNet** (Luo & Mesgarani, 2019) | End-to-End DNN | Learned time-domain masks | ❌ GPU req. | ✅ Better |
+| **Demucs v4** (Défossez et al., 2020) | Hybrid DNN | Encoder-decoder waveform | ❌ GPU req. | ✅ Better |
+
+**Engineering Implication**: The fundamental problem with Wiener and Spectral Subtraction is their inability to model speech structure — they operate on spectral magnitude without understanding the phonemic or prosodic content. Neural systems like Conv-TasNet and Demucs learn these speech priors from data, enabling non-linear, content-aware separation. However, for edge-constrained deployments (mobile, IoT), only RNNoise (~1 MB) is viable without quantization. Our parallel routing architecture (passing raw audio to SER, denoised audio to ASR) remains the recommended design pattern regardless of the enhancement system used.
+
+**Unique Contribution of This Work**: Unlike existing benchmarks, we evaluate the downstream SER prosody impact of denoising — a dimension absent from standard PESQ/STOI/WER speech enhancement evaluation frameworks.
+
 ## 📚 References
 * [1] A. Radford et al., "Robust Speech Recognition via Large-Scale Weak Supervision," *Proceedings of the International Conference on Machine Learning (ICML)*, 2022.
 * [2] C. Evans et al., "On the Fundamental Limitations of Spectral Subtraction," *Proceedings of the European Signal Processing Conference (EUSIPCO)*, 2005.
 * [3] Y. Gong et al., "Whisper-AT: Noise-Robust Automatic Speech Recognizers are Also Strong General Audio Event Taggers," *Proceedings of Interspeech*, pp. 2798–2802, 2023.
 * [4] C. Busso et al., "IEMOCAP: Interactive emotional dyadic motion capture database," *Language Resources and Evaluation*, vol. 42, no. 4, pp. 335–359, 2008.
 * [5] S. R. Livingstone and F. A. Russo, "The Ryerson Audio-Visual Database of Emotional Speech and Song (RAVDESS)," *PLoS ONE*, vol. 13, no. 5, p. e0196391, 2018.
+* [6] J.-M. Valin, "A Hybrid DSP/Deep Learning Approach to Real-Time Full-Band Speech Enhancement," *WASPAA*, pp. 266–270, 2018.
+* [7] H. Schröter, A. N. Goetze, T. Rosenkranz, and A. Maier, "DeepFilterNet: A Low Complexity Speech Enhancement Framework for Full-Band Audio," *Interspeech*, pp. 4098–4102, 2022.
+* [8] Y. Luo and N. Mesgarani, "Conv-TasNet: Surpassing Ideal Time–Frequency Magnitude Masking for Speech Separation," *IEEE/ACM TASLP*, vol. 27, no. 8, pp. 1256–1266, 2019.
+* [9] A. Défossez, G. Synnaeve, and Y. Adi, "Real Time Speech Enhancement in the Waveform Domain," *Interspeech*, pp. 3291–3295, 2020.
+

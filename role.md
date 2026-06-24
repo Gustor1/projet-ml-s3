@@ -82,6 +82,6 @@ The professor will check the commit history. To ensure everything is validated:
 5. 🎬 Final video editing 2 weeks before the deadline
 
 ---
-🔗 *GitHub Repo:* [To be completed]  
+🔗 *GitHub Repo:* [https://github.com/Gustor1/projet-ml-s3](https://github.com/Gustor1/projet-ml-s3)  
 📅 *Deadline:* First Friday of SHU exam weeks, 23:59  
 👥 *Group:* 6 students | *Topic:* 3 — Local Audio Preprocessing for Better ASR

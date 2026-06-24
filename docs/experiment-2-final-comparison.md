@@ -27,6 +27,12 @@ In practice, $\xi(\omega, t)$ is estimated iteratively using the decision-direct
 ## 📖 Context & Scientific Objective
 The objective of this experiment is to measure the degradation curve of the Whisper-tiny model under additive White Gaussian Noise ($WGN$), and to evaluate whether classical DSP algorithms ($Wiener$ and $Spectral\ Subtraction$) improve ASR performance (reducing $WER$ and $CER$) or introduce harmful acoustic distortions.
 
+## 🎯 Hypotheses
+
+* **$H_0$ (Null Hypothesis)**: Classical speech enhancement filters (Wiener, Spectral Subtraction) improve ASR Word Error Rate ($WER$) under all SNR conditions when applied as an upstream preprocessing step.
+* **$H_1$ (Alternative — Conditional Gain)**: The benefit of classical filters is SNR-conditional. Wiener filtering only improves $WER$ under *severe* noise levels (5 dB SNR), where noise suppression outweighs spectral distortion costs. Under mild to moderate noise (20–10 dB SNR), the spectral artifacts introduced by the filter degrade model accuracy.
+* **$H_2$ (Spectral Subtraction)**: Spectral subtraction will degrade performance under all SNR conditions due to the introduction of spectral holes and musical noise artifacts that Whisper's self-attention layers misinterpret as phonemic structures.
+
 ## 🔬 Experimental Protocol
 
 ### Dataset & Noise Augmentation

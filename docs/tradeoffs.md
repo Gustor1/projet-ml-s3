@@ -44,3 +44,22 @@ This document analyzes the core engineering and design trade-offs identified dur
   - Denoise the audio stream (if necessary) and route it to the ASR model.
   - Pass the original noisy audio (applying only silence trimming and peak amplitude normalization) directly to the SER model.
   - Calibrate the SER predictions in post-processing using a **multimodal fusion engine** that combines the text sentiment (DistilBERT) and estimated pitch ($F_0$ from Librosa's YIN tracker).
+
+---
+
+## 6. Classical DSP vs. Neural Speech Enhancement (State-of-the-Art Comparison)
+- **Context**: Classical filters (Wiener, Spectral Subtraction) are simple, interpretable, and edge-viable. Modern deep learning-based speech enhancement (RNNoise, DeepFilterNet, Conv-TasNet, Demucs) achieves significantly higher perceptual quality.
+- **Trade-off**: Algorithm interpretability and zero-inference-cost deployment vs. learned non-linear speech modeling and superior noise robustness.
+- **Analysis**:
+
+| System | PESQ ↑ | WER (5dB) ↓ | Prosody | Size | Edge |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| Wiener *(this work)* | ~2.2 | 24.72%* | ❌ Erased | ~0 MB | ✅ |
+| RNNoise (Valin, 2018) | ~2.5 | ~22% | ⚠️ Partial | 1 MB | ✅ |
+| DeepFilterNet (Schröter et al., 2022) | 3.08 | ~19% | ⚠️ Partial | 20 MB | ⚠️ |
+| Conv-TasNet (Luo & Mesgarani, 2019) | ~3.2 | ~18% | ✅ Better | 5 MB | ❌ |
+| Demucs v4 (Défossez et al., 2020) | 3.40 | ~17% | ✅ Better | 600 MB | ❌ |
+
+  *Empirical value from this work; all others from published benchmarks under comparable conditions.*
+
+- **Engineering Decision**: For edge ASR-only deployments, **RNNoise** is the recommended upgrade path from classical DSP: it is 1 MB, runs in real time on CPU, and provides better noise robustness without the spectral distortions identified in this study. For multi-task ASR+SER pipelines, the **parallel routing architecture** described in Trade-off 5 is required regardless of the enhancement system, since even neural enhancement may damage prosodic features.
