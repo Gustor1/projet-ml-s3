@@ -1,5 +1,6 @@
 """
 preprocessing/vad.py — Voice Activity Detection & Audio Normalization
+Author: Elio
 
 Provides three audio conditioning utilities:
     1. trim_silence     — Removes silent margins using energy-based splitting

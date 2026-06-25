@@ -1,5 +1,6 @@
 """
 preprocessing/features.py — Acoustic Feature Extraction
+Author: Elio
 
 Provides utility functions for extracting acoustic features from audio signals:
     1. estimate_snr       — Signal-to-Noise Ratio estimation

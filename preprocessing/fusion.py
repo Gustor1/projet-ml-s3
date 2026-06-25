@@ -1,5 +1,6 @@
 """
 preprocessing/fusion.py — Multimodal Fusion Calibration Heuristic
+Author: Elio
 
 Corrects Speech Emotion Recognition (SER) predictions by combining
 acoustic features (pitch/F0) with text-based sentiment analysis.
