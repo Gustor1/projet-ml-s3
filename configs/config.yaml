@@ -1,25 +1,118 @@
+# ============================================================
+# Global Configuration — Audio Preprocessing + ASR + SER Pipeline
+# Role 1: Pipeline Architect & DevOps
+# ============================================================
+
 project:
   name: local-audio-preprocessing-asr
+  description: "Multimodal pipeline: Audio Preprocessing → ASR → Text Sentiment → SER → Sarcasm Detection"
   seed: 42
 
+# -----------------------------------------------------------
+# Filesystem paths
+# -----------------------------------------------------------
 paths:
   raw_data: data/raw
   processed_data: data/processed
+  emotion_samples: data/emotion_samples
+  emotion_metadata: data/emotion_metadata.json
   models: models
   logs: logs
   outputs: outputs
+  results: results
 
+# -----------------------------------------------------------
+# ASR (Automatic Speech Recognition) — Whisper
+# -----------------------------------------------------------
 asr:
-  model_name: "openai/whisper-small"
+  model_name: "openai/whisper-tiny"
   languages: ["en", "fr", "zh"]
+  default_language: "en"
 
+# -----------------------------------------------------------
+# SER (Speech Emotion Recognition) — Wav2Vec2
+# -----------------------------------------------------------
+ser:
+  model_name: "superb/wav2vec2-base-superb-er"
+  labels: ["neu", "hap", "ang", "sad"]
+
+# -----------------------------------------------------------
+# NLP (Text Sentiment Analysis) — DistilBERT
+# -----------------------------------------------------------
+nlp:
+  model_name: "distilbert-base-uncased-finetuned-sst-2-english"
+
+# -----------------------------------------------------------
+# Audio Preprocessing
+# -----------------------------------------------------------
 preprocessing:
   sample_rate: 16000
+  method: "wiener"              # Options: "none", "wiener", "spectral_subtraction"
   enable_denoise: true
   enable_vad: true
   enable_echo_cancellation: false
   enable_beamforming: false
 
+  # SNR estimation
+  snr_threshold_db: 10          # Below this threshold, denoising is strongly recommended
+
+  # Wiener filter parameters
+  wiener:
+    size: 3                     # Window size (odd integer)
+
+  # Spectral subtraction parameters
+  spectral_subtraction:
+    alpha: 2.0                  # Oversubtraction factor
+    beta: 0.01                  # Spectral floor
+
+  # Voice Activity Detection
+  vad:
+    enabled: true
+    sensitivity: 2              # 0 (least aggressive) to 3 (most aggressive)
+    frame_duration_ms: 30       # Frame size for VAD analysis
+
+  # Silence trimming
+  trim_silence:
+    enabled: true
+    top_db: 30                  # Threshold in dB below reference to consider silence
+
+  # Peak normalization
+  normalize:
+    enabled: true
+
+# -----------------------------------------------------------
+# Pitch Estimation (YIN algorithm via librosa)
+# -----------------------------------------------------------
+pitch:
+  algorithm: "yin"
+  fmin: 75                      # Minimum expected F0 frequency (Hz)
+  fmax: 400                     # Maximum expected F0 frequency (Hz)
+  max_analysis_seconds: 10      # Cap pitch analysis to first N seconds
+
+# -----------------------------------------------------------
+# Sarcasm Detection
+# -----------------------------------------------------------
+sarcasm:
+  enabled: true
+  # Mismatch rules:
+  # positive text + angry/sad voice => sarcasm
+  # negative text + happy voice => sarcasm
+  # neutral text + emotional voice => passive-aggressive
+
+# -----------------------------------------------------------
+# Multimodal Fusion Calibration
+# -----------------------------------------------------------
+fusion:
+  enabled: true
+  text_boost_factor: 0.25       # How much text sentiment adjusts SER scores
+  pitch_high_threshold: 180.0   # Hz — above this, high arousal (happy/angry)
+  pitch_low_threshold: 130.0    # Hz — below this, low arousal (sad/neutral)
+
+# -----------------------------------------------------------
+# Experiments
+# -----------------------------------------------------------
 experiments:
   run_baseline: true
   run_with_preprocessing: true
+  noise_types: ["white_gaussian", "urban_real"]
+  snr_levels: [20.0, 5.0]

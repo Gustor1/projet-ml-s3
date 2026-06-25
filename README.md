@@ -2,11 +2,13 @@
 
 > **Topic 3** — Research-grade evaluation of classical DSP speech enhancement for edge ASR and multimodal affective computing.  
 > **GitHub Repository:** [https://github.com/Gustor1/projet-ml-s3](https://github.com/Gustor1/projet-ml-s3)  
-> **Group:** 6 students | SHU S3 Machine Learning Project
+> **Group:** 6 students | Shanghai University × UTBM
 
 ---
 
 ## 📖 Overview
+
+A multimodal pipeline that combines **Audio Preprocessing**, **ASR (Whisper)**, **Speech Emotion Recognition (Wav2Vec2)**, **Text Sentiment Analysis (DistilBERT)**, and **Sarcasm Detection** to analyze speech from both verbal and non-verbal perspectives.
 
 This project evaluates whether classical **frequency-domain speech enhancement algorithms** (Wiener filtering, Spectral Subtraction) improve or degrade modern deep learning-based **Automatic Speech Recognition (ASR)** and **Speech Emotion Recognition (SER)** under realistic noise conditions.
 
@@ -32,7 +34,7 @@ We also design a **parallel routing architecture** and **multimodal fusion calib
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Pipeline Architecture
 
 ```
                          +----------------------------+
@@ -66,6 +68,66 @@ We also design a **parallel routing architecture** and **multimodal fusion calib
                          +----------------------------+
 ```
 
+**Key design decision**: Two parallel preprocessing routes because classical DSP filters (Wiener, Spectral Subtraction) help ASR transcription but destroy the prosodic cues that SER relies on. See [Experiment 6](docs/experiment-6-emotions.md) for the evidence.
+
+---
+
+## 🚀 Quick Start
+
+### Install (Ubuntu / WSL2 / macOS)
+```bash
+# Clone and setup
+git clone https://github.com/Gustor1/projet-ml-s3.git
+cd projet-ml-s3
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Run the full multimodal pipeline on an audio file
+python main.py --audio data/emotion_samples/03-01-05-02-01-01-01.wav
+
+# Override preprocessing method
+python main.py --audio recording.wav --method spectral_subtraction
+
+# Save results as JSON
+python main.py --audio recording.wav --output results/output.json
+```
+
+### Install (Windows)
+```powershell
+git clone https://github.com/Gustor1/projet-ml-s3.git
+cd projet-ml-s3
+
+python -m venv .venv
+.venv\Scripts\activate
+
+pip install -r requirements.txt
+```
+
+### 🐳 Docker (Offline Execution)
+
+```bash
+# Build image (pre-downloads all 3 HuggingFace models: ~1.2GB)
+docker build -t projet-ml-s3 .
+
+# Run pipeline inside container (no internet needed)
+docker run --rm projet-ml-s3 python main.py --audio data/emotion_samples/03-01-05-02-01-01-01.wav
+```
+
+---
+
+## 🧪 Testing & CI
+
+```bash
+# Run unit tests
+pytest tests/ -v
+
+# Run linter
+flake8 . --max-line-length=120
+```
+
+GitHub Actions automatically runs lint + compile + test on every push to `main` and `feature/**` branches.
+
 ---
 
 ## 🔬 Experiments
@@ -80,67 +142,6 @@ We also design a **parallel routing architecture** and **multimodal fusion calib
 | 6 | Speech Emotion Recognition (SER) + Sarcasm | `experiments/evaluate_emotion_robustness.py` | `results/emotion_robustness.csv` |
 | — | Cross-Modal ASR→NLP Ablation | `asr/cross_modal_ablation.py` | `results/cross_modal_ablation_summary.csv` |
 | — | Joint Pipeline Profiling | `optimization/profiler.py` | `results/profiling_summary.csv` |
-
----
-
-## 🛠️ Setup
-
-### Requirements
-- Python 3.9+
-- GPU optional (CPU inference supported, RTF ≈ 0.4x on standard laptop)
-
-### Install (Ubuntu / WSL2 / macOS)
-```bash
-git clone https://github.com/Gustor1/projet-ml-s3.git
-cd projet-ml-s3
-
-python3 -m venv .venv
-source .venv/bin/activate
-
-pip install -r requirements.txt
-```
-
-### Install (Windows)
-```powershell
-git clone https://github.com/Gustor1/projet-ml-s3.git
-cd projet-ml-s3
-
-python -m venv .venv
-.venv\Scripts\activate
-
-pip install -r requirements.txt
-```
-
-### Docker
-```bash
-docker build -t asr-preprocessing .
-docker run --rm asr-preprocessing python experiments/baseline_wer.py
-```
-
----
-
-## 🚀 Running Experiments
-
-```bash
-# 1. Download data (LibriSpeech + RAVDESS)
-python scripts/download_real_librispeech.py
-python scripts/download_emotion_samples.py
-
-# 2. Generate noise augmentations
-python scripts/augment_audio.py          # White noise
-python scripts/augment_pink_noise.py     # Pink noise
-python scripts/augment_urban_noise.py    # Urban noise
-python scripts/augment_babble_noise.py   # Babble noise
-
-# 3. Run experiments
-python experiments/baseline_wer.py
-python experiments/compare_preprocessing.py
-python experiments/evaluate_emotion_robustness.py
-python experiments/sarcasm_detector.py
-
-# 4. Generate visualizations
-python scripts/generate_all_visuals.py
-```
 
 ---
 
@@ -162,24 +163,27 @@ The dashboard provides:
 
 ```
 projet-ml-s3/
-├── asr/                        # ASR wrappers (Whisper, Wav2Vec2) + evaluators
+├── main.py                 # Pipeline entry point (ASR + SER + Sarcasm)
+├── configs/config.yaml     # Global configuration (models, preprocessing, pitch, etc.)
+├── Dockerfile              # Production container with model caching
+├── requirements.txt        # Python dependencies
+├── asr/                    # ASR model wrappers (Whisper, Wav2Vec2)
 │   ├── whisper_wrapper.py
 │   ├── wav2vec_wrapper.py
 │   ├── evaluator.py
 │   ├── benchmark.py
 │   ├── ablation_study.py
 │   └── cross_modal_ablation.py
-├── preprocessing/              # DSP algorithms (Wiener, Spectral Subtraction, VAD)
-├── experiments/                # Scientific experiment scripts
-├── optimization/               # Profiling + quantization
-├── demo/                       # Streamlit dashboard
-├── scripts/                    # Data pipeline (download, augment, visualize)
-├── results/                    # CSV metrics (WER, CER, SER accuracy, PPL, latency)
-├── visuals/                    # PNG charts and spectrograms
-├── docs/                       # Research reports, experiment logs, insights
-│   ├── final_report_data_engineer.md   # Main research report (Role 4)
-│   ├── insights.md                     # 12 curated scientific insights
-│   ├── tradeoffs.md                    # Engineering trade-offs analysis
+├── preprocessing/          # DSP algorithms (Wiener, Spectral Subtraction, VAD)
+├── experiments/            # Scientific experiment scripts
+├── optimization/           # Profiling + quantization
+├── demo/app.py             # Streamlit interactive dashboard
+├── scripts/                # Data download, augmentation, visualization
+├── tests/                  # Unit tests (pytest)
+├── docs/                   # Technical reports, experiment logs, journal
+│   ├── final_report_data_engineer.md
+│   ├── insights.md
+│   ├── tradeoffs.md
 │   ├── experiment-1-baseline.md
 │   ├── experiment-2-final-comparison.md
 │   ├── experiment-3-pink-noise.md
@@ -188,27 +192,24 @@ projet-ml-s3/
 │   ├── experiment-6-emotions.md
 │   ├── role3-asr-integration-report.md
 │   ├── role5-profiling-report.md
-│   └── journal/                        # Development journal (day-by-day)
-├── configs/                    # YAML configuration
-├── data/                       # Audio datasets (gitignored)
-├── main.py
-├── requirements.txt
-├── Dockerfile
-└── submission.txt
+│   └── journal/
+├── results/                # CSV experiment outputs
+├── visuals/                # Generated charts and figures
+└── notebooks/              # Interactive Jupyter demos
 ```
 
 ---
 
-## 👥 Team
+## 👥 Team Roles
 
-| Member | Role | Contribution |
-|---|---|---|
-| **Eliott** | Data & Experimentation Engineer (Role 4) | 17% |
-| **Bilel** | ASR Integration & Evaluation (Role 3) + Profiling (Role 5) | 25% |
-| TBD | Pipeline Architect & DevOps (Role 1) | ~17% |
-| TBD | Audio Preprocessing Engineer (Role 2) | ~17% |
-| TBD | Optimization & Real-Time (Role 5) | ~8% |
-| TBD | Demo & Video Production (Role 6) | ~16% |
+| Role | Member | Focus |
+|------|--------|-------|
+| 1. Pipeline Architect & DevOps | Elio | `main.py`, `config.yaml`, Docker, CI/CD |
+| 2. Audio Preprocessing Engineer | — | Denoise APIs, VAD, parallel stream routing |
+| 3. ASR Integration & Evaluation | Bilel | Whisper/Wav2Vec2 wrappers, WER/CER benchmarks |
+| 4. Experimentation & Data | Eliott | 6 experiments, SER + sarcasm pipeline, data augmentation |
+| 5. Optimization & Performance | Bilel & Elio | Model quantization, profiling, ONNX |
+| 6. Demo & Video Production | — | Streamlit app, presentation video |
 
 ---
 
@@ -223,6 +224,16 @@ projet-ml-s3/
 7. Schröter et al. (2022). *DeepFilterNet.* Interspeech.
 
 See [`docs/final_report_data_engineer.md`](docs/final_report_data_engineer.md) for the full bibliography (14 references).
+
+---
+
+## 📚 Documentation
+
+- [Pipeline Architecture Report](docs/pipeline-architecture-report.md) — Design decisions, trade-offs, limitations
+- [Experiment Reports](docs/) — 6 experiments across 4 noise types
+- [Engineering Insights](docs/insights.md) — 12 curated findings with academic references
+- [Development Journal](docs/journal/) — Iterative progress logs
+- [Submission Details](submission.txt) — Team contributions & deliverables
 
 ---
 

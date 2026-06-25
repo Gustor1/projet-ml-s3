@@ -111,6 +111,38 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
+Elio — Pipeline Architect & DevOps — 17%
+--------------------------------------------------
+Responsibilities:
+- Designed and implemented the full multimodal pipeline entry point (main.py) integrating ASR, SER, and text sentiment into a single config-driven executable.
+- Implemented dual-route audio preprocessing architecture: denoised stream for ASR (Whisper) and normalized stream for SER (Wav2Vec2), based on Experiment 6 findings that classical DSP filters destroy prosodic cues.
+- Completed the project-wide YAML configuration specification (95+ parameters) as a single source of truth for all models, preprocessing methods, pitch estimation bounds, and sarcasm detection thresholds.
+- Built Docker model caching infrastructure for fully offline container execution (pre-downloading 3 HuggingFace models during image build).
+- Set up CI/CD pipeline with GitHub Actions: flake8 linting (critical errors blocking, style advisory), Python compilation checks, and pytest unit testing.
+- Wrote 16 unit tests covering config validation, preprocessing functions, and sarcasm detection logic.
+
+Deliverables:
+
+[Pipeline & Configuration]
+- main.py (Full multimodal pipeline: audio loading → dual-route preprocessing → Whisper ASR → DistilBERT sentiment → Wav2Vec2 SER → sarcasm detection → JSON output)
+- configs/config.yaml (Complete config specification: model paths, preprocessing parameters, SNR thresholds, VAD sensitivity, YIN pitch bounds, fusion calibration, sarcasm toggle)
+
+[Docker & Deployment]
+- Dockerfile (Production-ready with system deps, pip install, and model caching for offline execution)
+- scripts/cache_models.py (Pre-downloads openai/whisper-tiny, superb/wav2vec2-base-superb-er, distilbert-base-uncased-finetuned-sst-2-english during Docker build)
+
+[CI/CD & Testing]
+- .github/workflows/ci.yml (3-job CI: flake8 lint, Python compilation, pytest)
+- tests/test_config.py (5 unit tests validating YAML structure, model names, preprocessing defaults, pitch ranges)
+- tests/test_pipeline.py (11 unit tests for preprocessing functions, normalization, and sarcasm detection heuristic)
+- requirements.txt (Updated with pyyaml, pytest, flake8)
+
+[Documentation]
+- docs/pipeline-architecture-report.md (Technical report: architecture decisions, what worked, what didn't, limitations, reproducibility)
+- docs/journal/2026-06-21-pipeline-integration.md (Development journal: design decisions, trade-offs, debugging notes)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
 Bilel — ASR Integration & Evaluation Engineer — 17%
 --------------------------------------------------
 Responsibilities:
@@ -133,6 +165,39 @@ Deliverables:
 - results/cross_modal_ablation.csv (Detail per-file cross-modal study)
 - results/cross_modal_ablation_summary.csv (Summary metrics for ASR cascaded errors)
 - docs/role3-asr-integration-report.md (ASR integration and ablation research report)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
+Elio — Optimization & Real-Time Performance Engineer — 16%
+--------------------------------------------------
+Responsibilities:
+- Quantized pipeline models (Whisper-tiny and DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprint on edge CPUs.
+- Profiled the full 3-model multimodal pipeline (ASR + NLP + SER) measuring per-stage latency, peak RAM, and model sizes.
+- Implemented a streaming/chunked audio loader for processing long audio files (podcasts, meetings) without loading everything into memory.
+- Investigated ONNX Runtime export (documented as impractical for encoder-decoder Whisper architecture).
+- Wrote 11 unit tests covering streaming chunker logic and quantization helpers.
+
+Deliverables:
+
+[Quantization & Benchmarking]
+- optimization/quantize_model.py (INT8 dynamic quantization for Whisper-tiny and DistilBERT with before/after size and latency benchmarks, CSV export, and visualization)
+- results/quantization_report.csv (Generated: per-model size reduction and speedup metrics)
+- visuals/quantization_speedup.png (Generated: FP32 vs INT8 comparison charts)
+
+[Pipeline Profiling]
+- optimization/profiler.py (3-stage pipeline profiler: per-model load time, inference latency, peak RAM via tracemalloc, model size estimation)
+- results/profiling_report.csv (Generated: per-stage profiling metrics)
+- visuals/profiling_breakdown.png (Generated: latency stacked bar + model size pie chart)
+
+[Streaming Audio]
+- optimization/streaming_audio.py (Chunked audio loader with configurable window size, overlap, and overlap-aware transcription merging for long-form audio processing)
+
+[Testing]
+- tests/test_optimization.py (11 unit tests for streaming chunker boundaries, overlap validation, merge deduplication, and model size helper)
+
+[Documentation]
+- docs/optimization-report.md (Technical report: profiling methodology, quantization results, Wav2Vec2 exclusion rationale, ONNX investigation, honest limitations)
+- docs/journal/2026-06-21-optimization-profiling.md (Development journal: what worked, what didn't, key findings)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
@@ -196,3 +261,4 @@ Deliverables:
 - visuals/slide_r6_dashboard.png (Presentation slide: UI & Real-Time Plots)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+

@@ -9,10 +9,10 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
 ### 1️⃣ Pipeline Architect & DevOps
 * **Objective**: Package the 3-model multimodal stack, manage global configs, and integrate the final pipeline entry point.
 * **Tasks**:
-  - [ ] **Docker Model Caching**: Write a caching script to pre-download Hugging Face weights (`openai/whisper-tiny`, `superb/wav2vec2-base-superb-er`, and `distilbert-base-uncased-finetuned-sst-2-english`) during Docker image build. This guarantees the joint ASR+NLP+SER container executes fully offline.
-  - [ ] **Pipeline Entry Point (`main.py`)**: Integrate the modules inside [main.py](file:///c:/Users/eliot/projet-ml-s3/main.py) to run the full sequence: load raw audio, apply VAD, trigger parallel routes (denoised audio to ASR; normalized audio to SER), feed ASR transcription to DistilBERT, and execute sarcasm checks.
-  - [ ] **Config Specification (`configs/config.yaml`)**: Complete the YAML configuration to set default SNR thresholds, model paths, YIN pitch min/max frequencies, and VAD sensitivity.
-  - [ ] **CI Actions**: Set up basic GitHub Actions workflows for format checkers (linting) and unit testing.
+  - [x] **Docker Model Caching**: Write a caching script to pre-download Hugging Face weights (`openai/whisper-tiny`, `superb/wav2vec2-base-superb-er`, and `distilbert-base-uncased-finetuned-sst-2-english`) during Docker image build. This guarantees the joint ASR+NLP+SER container executes fully offline.
+  - [x] **Pipeline Entry Point (`main.py`)**: Integrate the modules inside [main.py](file:///c:/Users/eliot/projet-ml-s3/main.py) to run the full sequence: load raw audio, apply VAD, trigger parallel routes (denoised audio to ASR; normalized audio to SER), feed ASR transcription to DistilBERT, and execute sarcasm checks.
+  - [x] **Config Specification (`configs/config.yaml`)**: Complete the YAML configuration to set default SNR thresholds, model paths, YIN pitch min/max frequencies, and VAD sensitivity.
+  - [x] **CI Actions**: Set up basic GitHub Actions workflows for format checkers (linting) and unit testing.
 
 ### 2️⃣ Audio Preprocessing Engineer
 * **Objective**: Export DSP filters, implement ASR vs. SER routing, and code VAD helpers.
@@ -45,9 +45,10 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
 ### 5️⃣ Optimization & Real-Time Performance Engineer (Split: Bilel & Elio)
 * **Objective**: Quantize the 3-model pipeline, profile GPU/CPU resource allocation, and analyze execution latency.
 * **Tasks**:
-  - [ ] **Model Quantization (`optimization/quantize_model.py`)**: [Elio] Quantize the models (Whisper-tiny, Wav2Vec2-ER, DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprints on edge CPUs.
-  - [ ] **Streaming Audio (`optimization/streaming_audio.py`)**: [Elio] Chunked audio processing for real-time edge constraints.
-  - [x] **Joint Pipeline Profiling (`optimization/profiler.py`)**: [Bilel] Profile execution latency and peak RAM usage during joint ASR + SER + NLP multimodal inference runs.
+  - [x] **Model Quantization (`optimization/quantize_model.py`)**: [Elio] Quantize the models (Whisper-tiny, DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprints on edge CPUs. Wav2Vec2 excluded (conv-heavy architecture, <5% gains).
+  - [x] **Joint Pipeline Profiling (`optimization/profiler.py`)**: [Bilel & Elio] Profile execution latency, peak RAM usage, and model sizes during joint ASR + SER + NLP multimodal inference runs.
+  - [x] **Streaming Audio (`optimization/streaming_audio.py`)**: [Elio] Chunked audio loader for processing long files with overlap-aware transcription merging for real-time edge constraints.
+  - [x] **ONNX Runtime (Investigated)**: [Elio] Documented as impractical for Whisper encoder-decoder architecture — recommending Whisper.cpp for production.
 
 ### 6️⃣ Demo, Visualization & Video Production Engineer
 * **Objective**: Maintain the Web dashboard responsive and produce the final presentation video.
