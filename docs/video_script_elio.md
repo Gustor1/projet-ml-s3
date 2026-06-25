@@ -1,17 +1,18 @@
-# 🎬 Video Presentation Script — Elio (Role 1 & Role 5)
+# 🎬 Video Presentation Script — Elio (Role 1: Pipeline Architect & DevOps)
 
-This script contains the precise spoken lines (in English) and visual instructions for **Elio's parts** in the final presentation video (≥ 10 minutes). 
+This script contains the precise spoken lines (in English) and visual instructions for Elio's part in the final presentation video (≥ 10 minutes).
 
 ---
 
-## 📌 Part 1: Pipeline Architecture & DevOps (Role 1)
-**Estimated Duration:** ~2:30 - 3:00 minutes
+## 📌 Pipeline Architecture & DevOps (Role 1)
+**Estimated Duration:** ~3:00 minutes
 
 ### 🎥 Visuals on Screen
 * **0:00 - 0:30:** Show the overall system architecture diagram (from [pipeline-architecture-report.md](file:///c:/Users/fabre/.gemini/antigravity-ide/scratch/projet-ml-s3/docs/pipeline-architecture-report.md)).
 * **0:30 - 1:15:** Scroll through [main.py](file:///c:/Users/fabre/.gemini/antigravity-ide/scratch/projet-ml-s3/main.py) highlighting the imports and the `run_pipeline` function. Show the dual-route routing logic.
 * **1:15 - 1:45:** Open and highlight sections of [configs/config.yaml](file:///c:/Users/fabre/.gemini/antigravity-ide/scratch/projet-ml-s3/configs/config.yaml).
-* **1:45 - 2:30:** Display the [Dockerfile](file:///c:/Users/fabre/.gemini/antigravity-ide/scratch/projet-ml-s3/Dockerfile) and highlight the model caching step. Open [.github/workflows/ci.yml](file:///c:/Users/fabre/.gemini/antigravity-ide/scratch/projet-ml-s3/.github/workflows/ci.yml) and show the pytest results on GitHub interface or local terminal.
+* **1:45 - 2:30:** Display the [Dockerfile](file:///c:/Users/fabre/.gemini/antigravity-ide/scratch/projet-ml-s3/Dockerfile) and highlight the model caching step (`scripts/cache_models.py`).
+* **2:30 - 3:00:** Open [.github/workflows/ci.yml](file:///c:/Users/fabre/.gemini/antigravity-ide/scratch/projet-ml-s3/.github/workflows/ci.yml) and show the pytest results on the GitHub Action interface or local terminal.
 
 ### 🗣️ Spoken Script (English)
 
@@ -32,36 +33,7 @@ This script contains the precise spoken lines (in English) and visual instructio
 > "To ensure our scientific benchmarks are completely reproducible, I designed a project-wide configuration specification in `configs/config.yaml`. 
 > With over 95 parameters, this single file serves as the absolute source of truth—controlling everything from model weight paths to Pitch estimation YIN bounds and sarcasm detection thresholds."
 >
-> *(Point to Dockerfile & CI)*
+> *(Point to Dockerfile & cache_models.py)*
 > "From a DevOps perspective, I built a production-ready `Dockerfile`. To enable fully offline, edge-capable execution, I wrote a custom caching script that pre-downloads and packages our three Hugging Face models—Whisper, Wav2Vec2, and DistilBERT—directly during the Docker image build.
 > 
 > Finally, to enforce code quality across our collaborative development, I set up a 3-job CI/CD pipeline using GitHub Actions. It runs Python compilation checks, strict Flake8 linting, and executes our suite of 16 unit tests, ensuring that no breaking commits reach our main branch."
-
----
-
-## 📌 Part 2: Optimization & Real-Time Performance (Role 5)
-**Estimated Duration:** ~2:00 - 2:30 minutes
-
-### 🎥 Visuals on Screen
-* **0:00 - 0:45:** Show the quantization comparison charts/heatmaps (e.g. `visuals/quantization_speedup.png` or `visuals/profiling_breakdown.png`).
-* **0:45 - 1:30:** Open [optimization/quantize_model.py](file:///c:/Users/fabre/.gemini/antigravity-ide/scratch/projet-ml-s3/optimization/quantize_model.py) and show the PyTorch Dynamic Quantization code lines.
-* **1:30 - 2:00:** Display [optimization/streaming_audio.py](file:///c:/Users/fabre/.gemini/antigravity-ide/scratch/projet-ml-s3/optimization/streaming_audio.py) and highlight how overlapping chunks are processed and stitched.
-* **2:00 - 2:30:** Run the test suite using `pytest tests/test_optimization.py` in the terminal to show 11 passing tests.
-
-### 🗣️ Spoken Script (English)
-
-> "In addition to Role 1, I also worked on **Role 5: Optimization and Real-Time Performance**."
->
-> *(Point to the Quantization charts)*
-> "Our pipeline runs three separate neural networks simultaneously, which is highly resource-intensive for CPU edge devices. 
-> 
-> To mitigate this, I implemented **INT8 Dynamic Quantization** using PyTorch on both our Whisper ASR model and the DistilBERT sentiment classifier. 
-> By converting model weights from float32 to 8-bit integers, we successfully compressed the model sizes by nearly 4 times, leading to a massive speedup in CPU inference latency while maintaining transcription accuracy.
-> Note that we intentionally excluded the Wav2Vec2 SER model from quantization, as its convolution-heavy architecture showed less than 5% performance gains, which didn't justify the risk of accuracy loss."
->
-> *(Point to streaming_audio.py)*
-> "To handle long-form audio files like meetings or podcasts under strict RAM constraints, I developed a **streaming chunked audio processor**. 
-> Instead of loading an entire large file into memory, it loads the audio in sliding windows with a configurable overlap. 
-> The challenge here was preventing transcription duplication at the boundaries. I implemented an overlap-aware stitching logic that compares string overlaps and merges them cleanly.
-> 
-> To guarantee the stability of these optimizations, I wrote 11 dedicated unit tests validating chunk boundaries, overlap merges, and model quantization helpers. All tests pass successfully, providing a robust, fast, and edge-friendly backend for our Streamlit dashboard."
