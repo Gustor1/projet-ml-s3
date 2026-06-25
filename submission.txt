@@ -180,7 +180,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-TBD — Demo, Visualization & Video Production Engineer (Role 6) — 16%
+Eliott — Demo, Visualization & Video Production (Role 6 — App & Visuals) — 16%
 --------------------------------------------------
 Responsibilities:
 - Built the interactive Streamlit demonstration dashboard supporting live speech processing.
