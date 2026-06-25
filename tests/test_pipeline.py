@@ -2,6 +2,12 @@
 """
 tests/test_pipeline.py
 Unit tests for core pipeline functions (no model loading required).
+
+Tests verify that:
+  - Preprocessing functions from preprocessing/ work correctly
+  - Utility functions from utils/ work correctly
+  - Sarcasm detection heuristic in main.py works correctly
+  - Config loading via utils/ works correctly
 """
 
 import numpy as np
@@ -12,9 +18,12 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
+# =====================================================================
+# Preprocessing module tests (preprocessing/denoise.py)
+# =====================================================================
 def test_preprocess_none():
     """preprocess_none should return input unchanged."""
-    from main import preprocess_none
+    from preprocessing.denoise import preprocess_none
 
     audio = np.random.randn(16000).astype(np.float32)
     result = preprocess_none(audio)
@@ -23,7 +32,7 @@ def test_preprocess_none():
 
 def test_preprocess_wiener_output_shape():
     """Wiener filter should preserve audio length."""
-    from main import preprocess_wiener
+    from preprocessing.denoise import preprocess_wiener
 
     audio = np.random.randn(16000).astype(np.float32)
     result = preprocess_wiener(audio, size=3)
@@ -32,7 +41,7 @@ def test_preprocess_wiener_output_shape():
 
 def test_preprocess_wiener_odd_size():
     """Wiener filter should handle even size by adding 1."""
-    from main import preprocess_wiener
+    from preprocessing.denoise import preprocess_wiener
 
     audio = np.random.randn(16000).astype(np.float32)
     # Even size should not crash
@@ -42,7 +51,7 @@ def test_preprocess_wiener_odd_size():
 
 def test_preprocess_spectral_subtraction_output_shape():
     """Spectral subtraction should preserve audio length."""
-    from main import preprocess_spectral_subtraction
+    from preprocessing.denoise import preprocess_spectral_subtraction
 
     audio = np.random.randn(16000).astype(np.float32)
     result = preprocess_spectral_subtraction(audio, sr=16000)
@@ -51,16 +60,19 @@ def test_preprocess_spectral_subtraction_output_shape():
 
 def test_preprocess_spectral_subtraction_bounded():
     """Spectral subtraction output should be bounded after normalization."""
-    from main import preprocess_spectral_subtraction
+    from preprocessing.denoise import preprocess_spectral_subtraction
 
     audio = np.random.randn(32000).astype(np.float32) * 0.5
     result = preprocess_spectral_subtraction(audio, sr=16000)
     assert np.max(np.abs(result)) <= 1.0 + 1e-6, "Output should be peak-normalized to ≤ 1.0"
 
 
+# =====================================================================
+# Utils module tests (utils/audio_utils.py)
+# =====================================================================
 def test_normalize_volume():
     """normalize_volume should scale audio to [-1, 1]."""
-    from main import normalize_volume
+    from utils.audio_utils import normalize_volume
 
     audio = np.array([0.0, 0.5, -0.5, 0.25], dtype=np.float32)
     result = normalize_volume(audio)
@@ -69,13 +81,16 @@ def test_normalize_volume():
 
 def test_normalize_volume_silence():
     """normalize_volume on silence should return zeros."""
-    from main import normalize_volume
+    from utils.audio_utils import normalize_volume
 
     audio = np.zeros(16000, dtype=np.float32)
     result = normalize_volume(audio)
     np.testing.assert_array_equal(result, audio)
 
 
+# =====================================================================
+# Sarcasm detection tests (main.py)
+# =====================================================================
 def test_detect_sarcasm_positive_angry():
     """Positive text + angry voice should trigger sarcasm."""
     from main import detect_sarcasm
@@ -109,10 +124,22 @@ def test_detect_sarcasm_neutral_emotional():
     assert is_sarcastic is True
 
 
+# =====================================================================
+# Config loading tests (utils/config_loader.py)
+# =====================================================================
 def test_load_config():
     """load_config should parse config.yaml without errors."""
-    from main import load_config
+    from utils.config_loader import load_config
 
     config = load_config("configs/config.yaml")
     assert isinstance(config, dict)
     assert "project" in config
+
+
+def test_load_config_via_main():
+    """main.py should re-export load_config from utils."""
+    from main import load_config as main_load_config
+    from utils.config_loader import load_config as utils_load_config
+
+    # Both should be the same function
+    assert main_load_config is utils_load_config

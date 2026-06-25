@@ -4,13 +4,13 @@ main.py — Multimodal Audio Analysis Pipeline Entry Point
 =========================================================
 Role 1: Pipeline Architect & DevOps
 
-Runs the complete multimodal inference sequence:
-  1. Load raw audio file
-  2. Apply configurable preprocessing (Wiener / Spectral Subtraction)
-  3. Route: Denoised audio → ASR (Whisper) transcription
-  4. Route: Normalized audio → SER (Wav2Vec2) emotion classification
-  5. Feed ASR transcription → DistilBERT text sentiment analysis
-  6. Execute sarcasm / passive-aggressiveness detection heuristic
+Integrates all team modules into a unified pipeline:
+  1. Load raw audio file                  (utils.audio_utils)
+  2. Apply configurable preprocessing     (preprocessing.denoise)
+  3. Route: Denoised audio → ASR          (transformers pipeline — Whisper)
+  4. Route: Normalized audio → SER        (transformers pipeline — Wav2Vec2)
+  5. Feed ASR transcription → NLP         (transformers pipeline — DistilBERT)
+  6. Execute sarcasm detection heuristic
   7. Output structured results
 
 Usage:
@@ -26,9 +26,17 @@ import time
 from pathlib import Path
 
 import numpy as np
-import soundfile as sf
-import yaml
-from scipy.signal import wiener
+
+# ---------------------------------------------------------------------------
+# Project module imports — integrating team deliverables
+# ---------------------------------------------------------------------------
+from utils.config_loader import load_config                      # Role 1: utils/
+from utils.audio_utils import load_audio, normalize_volume, trim_silence  # Role 1: utils/
+from preprocessing.denoise import (                              # Role 2: preprocessing/
+    preprocess_none,
+    preprocess_wiener,
+    preprocess_spectral_subtraction,
+)
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -39,93 +47,6 @@ logging.basicConfig(
     datefmt="%H:%M:%S",
 )
 logger = logging.getLogger("pipeline")
-
-
-# =====================================================================
-# Configuration Loader
-# =====================================================================
-def load_config(config_path: str) -> dict:
-    """Load and return the YAML configuration file."""
-    config_path = Path(config_path)
-    if not config_path.exists():
-        raise FileNotFoundError(f"Config file not found: {config_path}")
-    with config_path.open("r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
-
-
-# =====================================================================
-# Audio Preprocessing Functions
-# =====================================================================
-def preprocess_none(audio: np.ndarray) -> np.ndarray:
-    """Pass-through: no preprocessing applied."""
-    return audio
-
-
-def preprocess_wiener(audio: np.ndarray, size: int = 3) -> np.ndarray:
-    """Apply Wiener filter for noise reduction (optimized for ASR)."""
-    if size % 2 == 0:
-        size += 1
-    return wiener(audio, mysize=size).astype(np.float32)
-
-
-def preprocess_spectral_subtraction(
-    audio: np.ndarray, sr: int = 16000, alpha: float = 2.0, beta: float = 0.01
-) -> np.ndarray:
-    """Apply spectral subtraction denoising (optimized for ASR)."""
-    n = len(audio)
-    nfft = 2048
-    hop = nfft // 2
-
-    # Estimate noise from first 0.5s
-    noise_len = int(min(0.5 * sr, n))
-    noise_frame = audio[:noise_len]
-    noise_spec = np.abs(np.fft.rfft(noise_frame, n=nfft))
-    noise_pow = np.mean(noise_spec ** 2)
-
-    result = np.zeros(n)
-    window = np.hanning(nfft)
-
-    for i in range(0, n, hop):
-        frame = audio[i : i + nfft]
-        if len(frame) < nfft:
-            frame = np.pad(frame, (0, nfft - len(frame)))
-
-        spec = np.fft.rfft(frame * window)
-        power = np.abs(spec) ** 2
-        clean_pow = np.maximum(power - alpha * noise_pow, beta * noise_pow)
-        clean_spec = np.sqrt(clean_pow) * np.exp(1j * np.angle(spec))
-        clean_frame = np.fft.irfft(clean_spec) * window
-
-        chunk_len = min(nfft, n - i)
-        result[i : i + chunk_len] += clean_frame[:chunk_len]
-
-    max_val = np.max(np.abs(result))
-    if max_val > 0:
-        result = result / max_val
-    return result[:n].astype(np.float32)
-
-
-def trim_silence(audio: np.ndarray, top_db: int = 30) -> np.ndarray:
-    """Trim leading/trailing silence using energy-based detection."""
-    import librosa
-
-    try:
-        intervals = librosa.effects.split(audio, top_db=top_db)
-        if len(intervals) > 0:
-            start = intervals[0][0]
-            end = intervals[-1][1]
-            return audio[start:end]
-    except Exception:
-        pass
-    return audio
-
-
-def normalize_volume(audio: np.ndarray) -> np.ndarray:
-    """Peak-normalize audio to [-1, 1] range."""
-    max_val = np.max(np.abs(audio))
-    if max_val > 0:
-        return audio / max_val
-    return audio
 
 
 # =====================================================================
@@ -193,23 +114,15 @@ def run_pipeline(audio_path: str, config: dict, method_override: str = None) -> 
       - Normalized Stream → SER (Wav2Vec2)
       - Cross-modal comparison → Sarcasm Detection
     """
-    audio_path = Path(audio_path)
-    if not audio_path.exists():
-        raise FileNotFoundError(f"Audio file not found: {audio_path}")
-
-    # --- Load audio ---
+    # --- Load audio (using utils/) ---
     sr = config.get("preprocessing", {}).get("sample_rate", 16000)
-    logger.info(f"Loading audio: {audio_path}")
-    audio, file_sr = sf.read(str(audio_path), dtype="float32")
-    if len(audio.shape) > 1:
-        audio = audio.mean(axis=1)  # Convert stereo to mono
-    logger.info(f"  Duration: {len(audio) / file_sr:.2f}s | Sample rate: {file_sr} Hz")
+    audio, file_sr = load_audio(str(audio_path), target_sr=sr)
 
     # --- Determine preprocessing method ---
     preprocess_cfg = config.get("preprocessing", {})
     method = method_override or preprocess_cfg.get("method", "none")
 
-    # --- ROUTE 1: Denoised stream for ASR ---
+    # --- ROUTE 1: Denoised stream for ASR (using preprocessing/) ---
     logger.info(f"[Route 1] Denoising audio with method: {method}")
     if method == "wiener":
         wiener_size = preprocess_cfg.get("wiener", {}).get("size", 3)
@@ -222,7 +135,7 @@ def run_pipeline(audio_path: str, config: dict, method_override: str = None) -> 
     else:
         audio_denoised = preprocess_none(audio)
 
-    # --- ROUTE 2: Normalized stream for SER ---
+    # --- ROUTE 2: Normalized stream for SER (using utils/) ---
     logger.info("[Route 2] Normalizing audio for SER (trim silence + peak normalize)")
     trim_cfg = preprocess_cfg.get("trim_silence", {})
     audio_normalized = trim_silence(audio, top_db=trim_cfg.get("top_db", 30))
@@ -238,7 +151,7 @@ def run_pipeline(audio_path: str, config: dict, method_override: str = None) -> 
     default_lang = config.get("asr", {}).get("default_language", "en")
     asr_result = asr_pipe(audio_denoised, generate_kwargs={"language": default_lang})
     transcription = asr_result["text"].strip()
-    logger.info(f"  Transcription: \"{transcription}\"")
+    logger.info(f'  Transcription: "{transcription}"')
 
     # --- Step 2: Text sentiment on transcription ---
     logger.info("[Step 2/4] Running text sentiment analysis (DistilBERT)...")
@@ -293,11 +206,11 @@ def run_pipeline(audio_path: str, config: dict, method_override: str = None) -> 
     print("\n" + "=" * 64)
     print("  MULTIMODAL PIPELINE RESULTS")
     print("=" * 64)
-    print(f"  File             : {audio_path.name}")
+    print(f"  File             : {Path(audio_path).name}")
     print(f"  Duration         : {results['duration_s']}s")
     print(f"  Preprocessing    : {method}")
     print("-" * 64)
-    print(f"  Transcription    : \"{transcription}\"")
+    print(f'  Transcription    : "{transcription}"')
     print(f"  Text Sentiment   : {text_sentiment.upper()} ({sent_confidence:.1%})")
     print(f"  Vocal Emotion    : {voice_emotion.upper()} ({ser_confidence:.1%})")
     print("-" * 64)
@@ -355,7 +268,7 @@ Examples:
     )
     args = parser.parse_args()
 
-    # Load config
+    # Load config (using utils/)
     config = load_config(args.config)
     project_name = config.get("project", {}).get("name", "unknown")
     logger.info(f"Loaded config for project: {project_name}")
