@@ -179,3 +179,20 @@ Deliverables:
 - visuals/slide_parallel_routing.png (Presentation slide: Parallel Stream Routing Architecture block diagram)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
+TBD — Demo, Visualization & Video Production Engineer (Role 6) — 16%
+--------------------------------------------------
+Responsibilities:
+- Built the interactive Streamlit demonstration dashboard supporting live speech processing.
+- Implemented side-by-side raw vs preprocessed signal waves, log spectrograms, and pitch contours.
+- Integrated the full multi-modal pipeline (ASR, Sentiment, SER) with parameter tuning.
+- Engineered the custom CSS styling for a glassmorphism dark UI experience.
+
+Deliverables:
+- demo/app.py (Streamlit interactive demonstration dashboard)
+- video_script_role6.md (Video presentation script for Role 6)
+- scripts/generate_r6_slides.py (Script to generate Role 6 slides)
+- visuals/slide_r6_title.png (Presentation slide: Title - Demo & Visuals)
+- visuals/slide_r6_dashboard.png (Presentation slide: UI & Real-Time Plots)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
