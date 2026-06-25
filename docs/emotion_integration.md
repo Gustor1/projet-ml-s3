@@ -1,108 +1,126 @@
-# 🎭 Integrating Emotion & Sarcasm Detection ("Fun" Extension)
+# 🎭 Developer Guide: Integrating Speech Emotion Recognition & Sarcasm Detection (Affective Extension)
 
-This document describes how to integrate Speech Emotion Recognition (SER) and sarcasm analysis into our audio preprocessing and ASR project (Topic 3).
-
----
-
-## 💡 The "Fun & Fancy" Concept
-
-The goal is to enrich our baseline pipeline:
-1. **Input**: Noisy user audio.
-2. **Preprocessing**: Cleaned audio (Wiener, etc.).
-3. **ASR**: Text transcription (Whisper/Wav2Vec2).
-4. **SER (New)**: Emotion detection in the voice (Anger, Happiness, Sadness, etc.).
-5. **Sentiment Analysis (New)**: Analysis of the transcribed text's sentiment.
-6. **Sarcasm Detector (New)**: Alert if the voice emotion does not match the text sentiment (e.g., positive text spoken in a very angry tone).
+This document provides a technical integration guide for incorporating Speech Emotion Recognition (SER) and multimodal sarcasm detection into the audio preprocessing and ASR pipeline (Topic 3).
 
 ---
 
-## 📊 Data Engineer Task (Scientific Angle)
+## 💡 System Concept & Multimodal Mismatch
+The goal of this extension is to enrich the baseline ASR system with affective computing capabilities, creating a joint verbal and non-verbal analysis pipeline:
 
-As a Data Engineer, the goal is to analyze the impact of our preprocessing filters on non-verbal audio (emotion).
-
-### Steps to follow:
-1. **Download test samples**: Use an emotion dataset like **RAVDESS** (for example, 10 angry, 10 happy, 10 sad files).
-2. **Apply noise**: Use our existing scripts in `scripts/` to add noise (white, pink, urban, babble) to these files at different SNR levels (20dB, 10dB, 5dB).
-3. **Apply preprocessing**: Clean these noisy files with the Wiener filter and spectral subtraction.
-4. **Calculate SER accuracy**: Compare the correct emotion classification rate on:
-   - Clean raw audio (baseline).
-   - Noisy audio.
-   - Cleaned audio using the Wiener filter.
-   - Cleaned audio using spectral subtraction.
-5. **Document the results**: Add conclusions and a comparative chart in `docs/insights.md`.
+1. **Acoustic Input**: Noisy user voice recordings.
+2. **Parallel Signal Routing**: Denoised audio stream (Wiener) is routed to ASR, while the original audio (silence-trimmed and peak-normalized) is routed to SER.
+3. **Verbal Transcription (ASR)**: `openai/whisper-tiny` extracts the verbal text.
+4. **Speech Emotion Recognition (SER)**: `superb/wav2vec2-base-superb-er` classifies vocal emotion from acoustic features (prosody, intensity, harmonics).
+5. **Text Sentiment Analysis (NLP)**: `distilbert-base-uncased-finetuned-sst-2-english` classifies the literal semantic sentiment of the transcribed text.
+6. **Sarcasm Detection**: Identifies semantic mismatch between verbal sentiment and vocal tone (e.g., positive words spoken in an angry, aggressive tone).
 
 ---
 
-## 🛠️ Technical Implementation Guide
+## 🛠️ Software Architecture & API Implementation
 
-### Step 1: Required Dependencies
-Verify that the following libraries are installed in the virtual environment:
+### 1. Dependencies and Environment Setup
+Verify that the virtual environment includes PyTorch and the Hugging Face Transformers library:
 ```bash
-pip install transformers torch librosa
+pip install transformers torch librosa scipy
 ```
 
-### Step 2: Speech Emotion Recognition Code
-Here is a simple implementation using a Wav2Vec2 model trained for emotion (`superb/wav2vec2-base-superb-er`):
+### 2. Speech Emotion Classifier Wrapper
+We utilize a Wav2Vec2 model pre-trained via self-supervised learning on raw speech and fine-tuned for emotion recognition on the IEMOCAP corpus. The classifier expects a $16\text{ kHz}$ mono float32 array:
 
 ```python
 import torch
 import librosa
+import numpy as np
 from transformers import pipeline
 
-# Initialize the audio emotion classification pipeline
-# Detected emotions: neutral, happy, sad, angry
+# Initialize the self-supervised audio emotion classification pipeline
+# Classifier labels: neutral, happy, sad, angry
 emotion_classifier = pipeline(
     "audio-classification",
     model="superb/wav2vec2-base-superb-er",
-    device="cuda" if torch.cuda.is_available() else "cpu"
+    device=0 if torch.cuda.is_available() else -1
 )
 
-def get_voice_emotion(audio_path: str) -> dict:
+def extract_vocal_emotion(audio_array: np.ndarray, sample_rate: int = 16000) -> dict:
     """
-    Analyzes an audio file to extract its main emotion.
+    Extracts the dominant emotional state from a raw audio waveform.
+    
+    Parameters:
+        audio_array (np.ndarray): Float32 audio signal amplitude array.
+        sample_rate (int): Sampling frequency (default: 16000 Hz).
+        
+    Returns:
+        dict: dominant label, confidence score, and raw probability distribution.
     """
-    predictions = emotion_classifier(audio_path)
-    # predictions looks like: [{'label': 'angry', 'score': 0.85}, {'label': 'happy', 'score': 0.05}, ...]
+    # Ensure signal is sampled at 16 kHz
+    if sample_rate != 16000:
+        audio_array = librosa.resample(audio_array, orig_sr=sample_rate, target_sr=16000)
+    
+    # Run inference directly on the in-memory NumPy array
+    predictions = emotion_classifier(audio_array)
     dominant_emotion = predictions[0]
+    
     return {
         "emotion": dominant_emotion["label"],
         "confidence": round(dominant_emotion["score"], 4),
-        "all_scores": predictions
+        "scores": predictions
     }
-
-# Example usage:
-# result = get_voice_emotion("path/to/my_audio.wav")
-# print(f"Detected emotion: {result['emotion']} ({result['confidence']:.2%})")
 ```
 
-### Step 3: Sarcasm Detector (Text-Sentiment vs Voice-Emotion Logic)
-To compare text and voice, we can use a lightweight text sentiment classifier:
+### 3. Sarcasm Detection & Multimodal Fusion Calibration
+The sarcasm engine compares the semantic sentiment and vocal emotion, applying YIN-based pitch calibration to resolve Joy/Anger class ambiguities caused by microphone proximity clipping:
 
 ```python
-# Initialize the text sentiment pipeline
-text_sentiment_classifier = pipeline(
+# Initialize the distilled semantic sentiment pipeline
+sentiment_classifier = pipeline(
     "sentiment-analysis",
     model="distilbert-base-uncased-finetuned-sst-2-english"
 )
 
-def detect_sarcasm(text: str, voice_emotion: str) -> dict:
+def estimate_pitch_yin(audio_array: np.ndarray, sample_rate: int = 16000) -> float:
     """
-    Compares text sentiment and voice emotion to identify sarcasm.
+    Estimates the mean fundamental frequency (F0) using the YIN algorithm.
+    """
+    f0, voiced_flag, voiced_probs = librosa.pyin(
+        audio_array,
+        fmin=librosa.note_to_hz('C2'),
+        fmax=librosa.note_to_hz('C7'),
+        sr=sample_rate
+    )
+    # Remove NaN values from unvoiced segments
+    valid_f0 = f0[~np.isnan(f0)]
+    return float(np.mean(valid_f0)) if len(valid_f0) > 0 else 0.0
+
+def detect_sarcasm_multimodal(text: str, audio_array: np.ndarray, raw_ser_result: dict) -> dict:
+    """
+    Applies multimodal calibration and cross-modal analysis to detect sarcasm.
     """
     if not text.strip():
-        return {"sarcastic": False, "reason": "No speech detected"}
+        return {"is_sarcastic": False, "reason": "No speech detected"}
 
-    text_res = text_sentiment_classifier(text)[0]
+    # 1. Semantic Sentiment Classification
+    text_res = sentiment_classifier(text)[0]
     text_sentiment = text_res["label"].lower()  # 'positive' or 'negative'
     
-    is_sarcastic = False
-    reason = "Normal speech alignment"
+    # 2. Extract Pitch Trajectory (F0)
+    mean_f0 = estimate_pitch_yin(audio_array)
     
-    # Simple alignment mismatch rules
-    if text_sentiment == "positive" and voice_emotion in ["angry", "sad"]:
+    # 3. Apply Multimodal Fusion Calibration
+    calibrated_emotion = raw_ser_result["emotion"]
+    
+    # Calibration Rule: High pitch + positive text corrects false positive Anger to Happy
+    if text_sentiment == "positive":
+        if raw_ser_result["emotion"] == "angry" and mean_f0 > 180.0:
+            calibrated_emotion = "happy"
+            
+    # 4. Cross-Modal Mismatch Rules
+    is_sarcastic = False
+    reason = "Acoustic and semantic alignment"
+    
+    if text_sentiment == "positive" and calibrated_emotion in ["angry", "sad"]:
         is_sarcastic = True
-        reason = f"Positive words spoken with a negative voice ({voice_emotion})"
-    elif text_sentiment == "negative" and voice_emotion == "happy":
+        reason = f"Positive words spoken with a negative voice ({calibrated_emotion})"
+    elif text_sentiment == "negative" and calibrated_emotion == "happy":
         is_sarcastic = True
         reason = "Negative words spoken with a happy voice"
         
@@ -110,21 +128,22 @@ def detect_sarcasm(text: str, voice_emotion: str) -> dict:
         "is_sarcastic": is_sarcastic,
         "reason": reason,
         "text_sentiment": text_sentiment,
-        "voice_emotion": voice_emotion
+        "raw_emotion": raw_ser_result["emotion"],
+        "calibrated_emotion": calibrated_emotion,
+        "mean_f0_hz": round(mean_f0, 2)
     }
 ```
 
 ---
 
-## 🚀 Demo Integration Plan (Streamlit / Gradio)
+## 🚀 Streamlit Demo Integration Plan
+In the interactive dashboard `demo/app.py` (implemented by the Demo Engineer), the pipeline should be structured as follows:
 
-In the demo script `demo/app.py` (to be implemented by the demo engineer):
-1. Provide an audio recorder.
-2. Run the audio preprocessing chosen by the user.
-3. Display the Whisper transcription.
-4. Display the detected voice emotion with large emojis:
-   - 😡 `angry`
-   - 😄 `happy`
-   - 😢 `sad`
-   - 😐 `neutral`
-5. Display a flash banner if sarcasm is detected.
+1. **Acoustic Capture**: Streamlit microphone recorder component returning raw float32 NumPy arrays.
+2. **DSP Preprocessing Live Switch**: Toggles between `none`, `wiener`, and `spectral_subtraction`.
+3. **Parallel Routing Engine**: Routes Wiener-filtered audio to Whisper-tiny, and peak-normalized/silence-trimmed raw audio to Wav2Vec2 SER.
+4. **Visualization Layer**:
+   - Displays Whisper transcription.
+   - Plots spectrogram with YIN pitch ($F_0$) trajectory overlays.
+   - Renders calibrated vocal emotion with animated indicators (😡 `angry`, 😄 `happy`, 😢 `sad`, 😐 `neutral`).
+   - Renders a warning banner when sarcasm is detected ($is\_sarcastic = True$).

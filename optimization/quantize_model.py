@@ -65,7 +65,6 @@ def get_model_size_mb(model) -> float:
     return round(size, 4)
 
 
-
 def benchmark_whisper(model, processor, num_runs=5):
     """Benchmark Whisper inference on dummy audio."""
     dummy_audio = np.random.randn(16000 * 3).astype(np.float32)  # 3s audio

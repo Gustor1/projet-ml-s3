@@ -14,13 +14,13 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
   - [x] **Config Specification (`configs/config.yaml`)**: Complete the YAML configuration to set default SNR thresholds, model paths, YIN pitch min/max frequencies, and VAD sensitivity.
   - [x] **CI Actions**: Set up basic GitHub Actions workflows for format checkers (linting) and unit testing.
 
-### 2️⃣ Audio Preprocessing Engineer
+### 2️⃣ Audio Preprocessing Engineer (Split: Bilel & Elio)
 * **Objective**: Export DSP filters, implement ASR vs. SER routing, and code VAD helpers.
 * **Tasks**:
-  - [ ] **Extract Denoising APIs (`preprocessing/denoise.py`)**: Move the Wiener filter and Spectral Subtraction implementations out of the demo code into importable modular functions.
-  - [ ] **Parallel Stream Routing**: Adapt the pipeline to support parallel routes: a **Denoised Stream** (optimized for ASR transcription, as classical filters clean static noise) and a **Normalized Stream** (optimized for SER, as classical filters destroy pitch prosody but peak scaling + silent margin trimming preserves emotion features).
-  - [ ] **VAD Implementation (`preprocessing/vad.py`)**: Integrate a Voice Activity Detection utility (e.g., using `webrtcvad` or energy levels) to automatically isolate voiced segments.
-  - [ ] **Unit Tests**: Write testing scripts to check signal properties (sample rate matches 16kHz, output amplitude bounds, etc.).
+  - [x] **Extract Denoising APIs (`preprocessing/denoise.py`)**: Move the Wiener filter and Spectral Subtraction implementations out of the demo code into importable modular functions.
+  - [x] **Parallel Stream Routing**: Adapt the pipeline to support parallel routes: a **Denoised Stream** (optimized for ASR transcription, as classical filters clean static noise) and a **Normalized Stream** (optimized for SER, as classical filters destroy pitch prosody but peak scaling + silent margin trimming preserves emotion features).
+  - [x] **VAD Implementation (`preprocessing/vad.py`)**: Integrate a Voice Activity Detection utility (e.g., using `webrtcvad` or energy levels) to automatically isolate voiced segments.
+  - [x] **Unit Tests**: Write testing scripts to check signal properties (sample rate matches 16kHz, output amplitude bounds, etc.).
 
 ### 3️⃣ ASR Integration & Evaluation Engineer
 * **Objective**: Maintain wrapper features and analyze how ASR transcription quality impacts downstream NLP sentiment.
@@ -37,6 +37,10 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
   - [x] **Multimodal Fusion Calibration**: Implementation and verification showing +20% relative SER accuracy improvement on RAVDESS (from 35.7% to 42.8%).
   - [x] **Scientific Expansion**: Expand evaluation runs from Actor 01 (28 files) to a larger subset (e.g., all 24 actors) to increase statistical significance.
   - [x] **Document Calibration Gains**: Add a short section in `docs/experiment-6-emotions.md` explaining how peak normalization and multimodal fusion solved live close-mic errors.
+  - [x] **Explicit Research Hypotheses**: H1–H4 formulated and added to `docs/final_report_data_engineer.md` section 1.1, with validation summary table in section 5.4.
+  - [x] **SOTA Neural Comparison**: DeepFilterNet, RNNoise, Conv-TasNet, Demucs comparison table added to `docs/final_report_data_engineer.md` §6.1, `docs/insights.md` Insight 13, and `docs/tradeoffs.md` Trade-off 6.
+  - [x] **README.md enriched**: Full project README with key findings, architecture diagram, setup instructions, and experiment table.
+  - [x] **GitHub URL**: Updated in `role.md` (was placeholder, now `https://github.com/Gustor1/projet-ml-s3`).
 
 ### 5️⃣ Optimization & Real-Time Performance Engineer (Split: Bilel & Elio)
 * **Objective**: Quantize the 3-model pipeline, profile GPU/CPU resource allocation, and analyze execution latency.

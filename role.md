@@ -19,7 +19,7 @@ To make the project **fun and scientifically premium**, we have extended it with
 - 📊 **Contribution:** ~17%
 - 🛠️ **Stack:** Python, YAML, Docker, Hugging Face Hub (Model caching).
 
-### 2️⃣ Audio Preprocessing Engineer
+### 2️⃣ Audio Preprocessing Engineer (Split: Bilel & Elio)
 - 🎯 **Mission:** Develop audio preprocessing algorithms (denoising, VAD, spectral subtraction) and export them as clean, importable APIs to be run in real-time by the demo dashboard.
 - 💻 **Expected Commits:** `preprocessing/denoise.py`, `preprocessing/vad.py`, `preprocessing/spectral_subtraction.py`, `preprocessing/pipeline.py`, unit tests.
 - 📊 **Contribution:** ~17%
@@ -82,6 +82,6 @@ The professor will check the commit history. To ensure everything is validated:
 5. 🎬 Final video editing 2 weeks before the deadline
 
 ---
-🔗 *GitHub Repo:* [To be completed]  
+🔗 *GitHub Repo:* [https://github.com/Gustor1/projet-ml-s3](https://github.com/Gustor1/projet-ml-s3)  
 📅 *Deadline:* First Friday of SHU exam weeks, 23:59  
 👥 *Group:* 6 students | *Topic:* 3 — Local Audio Preprocessing for Better ASR

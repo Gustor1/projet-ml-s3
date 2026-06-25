@@ -13,32 +13,43 @@ Responsibilities:
 Deliverables:
 
 [Audio Pipeline & Augmentation]
+- scripts/setup.sh (Shell setup script for environment paths and dependencies)
 - scripts/download_real_librispeech.py (Data pipeline)
 - scripts/download_emotion_samples.py (RAVDESS Actor 01-06 speech data downloader & prep)
+- scripts/download_urban_noise.py (Script to download real-world urban noise source files)
+- scripts/convert_urban_noise.py (Script to convert urban noise formats)
 - scripts/augment_audio.py (Gaussian white noise augmentation at SNR 20/10/5 dB)
 - scripts/augment_pink_noise.py (Pink noise, 1/f spectrum)
 - scripts/augment_urban_noise.py (Real urban noise: traffic, café, street)
+- scripts/generate_urban_noise.py (Script to simulate non-stationary noise patterns)
 - scripts/augment_babble_noise.py (Crowd noise / Cocktail party problem)
 - scripts/augment_emotion_noise.py (White & urban noise injection on emotional speech)
+- scripts/extract_audio_samples.py (Helper to extract audio clips)
+- scripts/extract_sample_audio.py (Helper to isolate speech subsets)
 
 [Experiments & Raw Data]
 - experiments/baseline_wer.py (Metric computation on clean audio)
 - experiments/compare_preprocessing.py (Comparison of None vs Wiener vs Spectral Subtraction)
 - experiments/evaluate_emotion_robustness.py (Accuracy benchmark of SER model superb/wav2vec2-base-superb-er)
 - experiments/sarcasm_detector.py (ASR + SER + Text Sentiment sarcasm joint pipeline)
+- notebooks/emotion_demo.ipynb (Jupyter notebook exploring Wav2Vec2 SER model calibration)
 - results/baseline.csv & results/preprocessing_comparison.csv (White noise results)
 - results/pink_noise_comparison.csv (Pink noise results)
 - results/urban_noise_comparison.csv (Urban noise results)
 - results/babble_noise_comparison.csv (Babble noise results + outlier analysis)
 - results/emotion_robustness.csv (SER model raw accuracy metrics)
 - results/emotion_clean_results.csv (SER model clean speech baseline results)
+- results/test_perplexity.csv & results/test_perplexity_v2.csv (Perplexity analysis metrics for Whisper text transcripts)
 
 [Analysis & Visualization Scripts]
 - scripts/add_cer_baseline.py (CER metric addition)
 - scripts/analyze_speakers.py (Variance analysis)
 - scripts/analyze_babble_robust.py (Statistical filtering of ASR hallucinations)
+- scripts/analyze_perplexity.py (Script to calculate Whisper language model perplexity metrics)
 - scripts/generate_all_visuals.py (Generation of comparative charts)
 - scripts/generate_emotion_visuals.py (SER accuracy visual chart generator)
+- scripts/generate_all_graphs.py (Script to generate comparative charts for experiments)
+- scripts/generate_spectrograms.py (Script to generate pink noise and Wiener-filtered spectrograms)
 
 [Scientific Documentation & Reports]
 - docs/experiment-1-baseline.md (Clean audio baseline)
@@ -53,12 +64,15 @@ Deliverables:
 - docs/insights.md (11 insights + Whisper-AT citation [Gong et al., 2023])
 - docs/tradeoffs.md (Engineering trade-offs for ASR & SER)
 - docs/speaker_analysis.md (Speaker-level variance analysis)
+- docs/final_report_data_engineer.md (Comprehensive final research synthesis report)
 - docs/journal/ (Iterative development journal)
+- video_script_role3.md (Video presentation script for Role 3 - designed and written by Eliott)
+- video_script_role4.md (Video presentation script for Role 4)
 
 [Interactive Demonstration]
 - demo/app.py (Full multi-modal Streamlit application with parameter sliders, live pitch tracking overlays, and calibrated SER/sarcasm alerts)
 
-[Video & Image Assets]
+[Video & Image Assets (Designed & Created by Eliott)]
 - visuals/preprocessing_comparison.png
 - visuals/pink_noise_comparison.png
 - visuals/urban_noise_comparison.png
@@ -76,6 +90,24 @@ Deliverables:
 - visuals/wiener_impact_heatmap.png
 - visuals/emotion_accuracy.png (Speech Emotion Recognition accuracy comparison plot)
 - docs/images/user_happy_test.png (Screenshot verifying successful live recording calibration)
+
+[Presentation Visuals & Slides (Designed & Created by Eliott for Roles 2, 3, and 4)]
+- visuals/slide_role4_title.png (Role 4 Title slide - Data & Experimentation)
+- visuals/slide_hypotheses.png (Role 4 Scientific Hypotheses H1-H4)
+- visuals/slide_model_comparison.png (Role 4 Whisper vs Wav2Vec2 Noise Robustness)
+- visuals/slide_experiment_design.png (Role 4 6-Phase Experiment Design & Noise Injection)
+- visuals/slide_hypothesis_validation.png (Role 4 Scientific Hypotheses Validation Matrix)
+- visuals/slide_sota_comparison.png (Role 4 SOTA Comparison & Bibliography References)
+- visuals/slide_r3_title.png (Role 3 Title slide - ASR Integration & Evaluation)
+- visuals/slide_r3_model_selection.png (Role 3 Model Selection & Robustness)
+- visuals/slide_r3_error_cascade.png (Role 3 Error Cascade to NLP Sentiment)
+- visuals/slide_r3_sarcasm_logic.png (Role 3 Multimodal Sarcasm Logic)
+- visuals/slide_r3_pipeline_arch.png (Role 3 System Pipeline Architecture)
+- visuals/slide_r3_ablation_results.png (Role 3 Whisper Model Size Ablation)
+- visuals/slide_r3_conclusion.png (Role 3 Integration Trade-offs & Conclusion)
+- visuals/slide_r2_title.png (Role 2 Title slide - Preprocessing & DSP)
+- visuals/slide_r2_limits.png (Role 2 Limits of Classical DSP)
+- visuals/slide_parallel_routing.png (Role 2 Parallel Stream Routing Architecture)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
@@ -121,6 +153,7 @@ Responsibilities:
 - Cross-modal ablation study to evaluate how ASR transcription errors cascade into text sentiment predictions (DistilBERT) and impact sarcasm/passive-aggressiveness detection reliability (False Positives/Negatives).
 
 Deliverables:
+- asr/base_asr.py (Abstract base interface for ASR wrappers)
 - asr/whisper_wrapper.py (Multi-size and multi-language Whisper wrapper, GPU-aware)
 - asr/wav2vec_wrapper.py (Wav2Vec2 wrapper for EN/FR/ZH)
 - asr/evaluator.py (WER/CER calculation + CSV export)
@@ -131,6 +164,7 @@ Deliverables:
 - results/ablation_raw.csv (Ablation results)
 - results/cross_modal_ablation.csv (Detail per-file cross-modal study)
 - results/cross_modal_ablation_summary.csv (Summary metrics for ASR cascaded errors)
+- docs/role3-asr-integration-report.md (ASR integration and ablation research report)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
@@ -181,6 +215,59 @@ Deliverables:
 - results/profiling_summary.csv (Aggregate profiling statistics)
 - visuals/profiling_latency.png (Per-model latency bar chart)
 - docs/journal/2026-06-21-role5-profiling.md (Development journal)
+- docs/role5-profiling-report.md (Optimization and real-time performance report)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
+Bilel — Audio Preprocessing (DSP & Routing, Role 2) — additional 8.5%
+--------------------------------------------------
+Responsibilities (Role 2, shared with Elio):
+- Developed classical DSP denoising algorithms (Wiener Filter and Spectral Subtraction).
+- Engineered a Parallel Stream Routing architecture to decouple ASR and SER audio paths.
+- Created comprehensive unit tests validating the DSP algorithms.
+
+Deliverables:
+- preprocessing/denoise.py (Wiener and Spectral Subtraction APIs)
+- preprocessing/pipeline.py (Parallel stream routing architecture)
+- tests/test_preprocessing.py (Comprehensive unit tests for the preprocessing module)
+- docs/role2-preprocessing-report.md (Co-authored scientific research report)
+- video_script_role2.md (Co-authored video presentation script)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
+Elio — Audio Preprocessing (VAD & Features, Role 2) — 8.5%
+--------------------------------------------------
+Responsibilities (Role 2, shared with Bilel):
+- Implemented robust Voice Activity Detection (VAD) and volume normalization.
+- Extracted acoustic features (SNR and YIN pitch) for downstream evaluation.
+- Implemented the multimodal fusion calibration heuristic.
+
+Deliverables:
+- preprocessing/__init__.py (Preprocessing package init)
+- preprocessing/vad.py (VAD, trim_silence, normalize_volume utilities)
+- preprocessing/features.py (Acoustic feature extraction: SNR and YIN pitch)
+- preprocessing/fusion.py (Multimodal fusion calibration heuristic)
+- scripts/generate_r2_slides.py (Script to generate Role 2 slides)
+- visuals/slide_r2_title.png (Presentation slide: Title - Preprocessing & DSP Architecture)
+- visuals/slide_r2_limits.png (Presentation slide: Limits of Classical DSP)
+- visuals/slide_parallel_routing.png (Presentation slide: Parallel Stream Routing Architecture block diagram)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
+Eliott — Demo, Visualization & Video Production (Role 6 — App & Visuals) — 16%
+--------------------------------------------------
+Responsibilities:
+- Built the interactive Streamlit demonstration dashboard supporting live speech processing.
+- Implemented side-by-side raw vs preprocessed signal waves, log spectrograms, and pitch contours.
+- Integrated the full multi-modal pipeline (ASR, Sentiment, SER) with parameter tuning.
+- Engineered the custom CSS styling for a glassmorphism dark UI experience.
+
+Deliverables:
+- demo/app.py (Streamlit interactive demonstration dashboard)
+- video_script_role6.md (Video presentation script for Role 6)
+- scripts/generate_r6_slides.py (Script to generate Role 6 slides)
+- visuals/slide_r6_title.png (Presentation slide: Title - Demo & Visuals)
+- visuals/slide_r6_dashboard.png (Presentation slide: UI & Real-Time Plots)
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
