@@ -154,25 +154,34 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Eliott — Audio Preprocessing Engineer (Role 2) — 17%
+Bilel — Audio Preprocessing (DSP & Routing, Role 2) — additional 8.5%
 --------------------------------------------------
-Responsibilities:
+Responsibilities (Role 2, shared with Elio):
 - Developed classical DSP denoising algorithms (Wiener Filter and Spectral Subtraction).
 - Engineered a Parallel Stream Routing architecture to decouple ASR and SER audio paths.
-- Implemented robust Voice Activity Detection (VAD) and volume normalization.
-- Authored the research report justifying preprocessing choices and their impact on downstream tasks.
 - Created comprehensive unit tests validating the DSP algorithms.
 
 Deliverables:
-- preprocessing/__init__.py (Preprocessing package init)
 - preprocessing/denoise.py (Wiener and Spectral Subtraction APIs)
+- preprocessing/pipeline.py (Parallel stream routing architecture)
+- tests/test_preprocessing.py (Comprehensive unit tests for the preprocessing module)
+- docs/role2-preprocessing-report.md (Co-authored scientific research report)
+- video_script_role2.md (Co-authored video presentation script)
+
+GitHub Repository: https://github.com/Gustor1/projet-ml-s3
+
+Elio — Audio Preprocessing (VAD & Features, Role 2) — 8.5%
+--------------------------------------------------
+Responsibilities (Role 2, shared with Bilel):
+- Implemented robust Voice Activity Detection (VAD) and volume normalization.
+- Extracted acoustic features (SNR and YIN pitch) for downstream evaluation.
+- Implemented the multimodal fusion calibration heuristic.
+
+Deliverables:
+- preprocessing/__init__.py (Preprocessing package init)
 - preprocessing/vad.py (VAD, trim_silence, normalize_volume utilities)
 - preprocessing/features.py (Acoustic feature extraction: SNR and YIN pitch)
 - preprocessing/fusion.py (Multimodal fusion calibration heuristic)
-- preprocessing/pipeline.py (Parallel stream routing architecture)
-- tests/test_preprocessing.py (Comprehensive unit tests for the preprocessing module)
-- video_script_role2.md (Video presentation script and slide generation for Role 2)
-- docs/role2-preprocessing-report.md (Scientific preprocessing research report)
 - scripts/generate_r2_slides.py (Script to generate Role 2 slides)
 - visuals/slide_r2_title.png (Presentation slide: Title - Preprocessing & DSP Architecture)
 - visuals/slide_r2_limits.png (Presentation slide: Limits of Classical DSP)

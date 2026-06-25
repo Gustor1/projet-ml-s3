@@ -1,5 +1,6 @@
 # Audio Preprocessing & DSP Architecture Report (Role 2)
 
+**Authors:** Bilel & Elio
 ## 1. Introduction and Objectives
 The core objective of the preprocessing pipeline in this project is to enhance the robustness of the downstream ASR (Whisper) and SER (Wav2Vec2) models when dealing with noisy, real-world audio. Given the severe degradation of neural networks under acoustic domain shifts, robust front-end signal processing is essential. 
 

@@ -14,7 +14,7 @@ This document details the checklist of tasks remaining to finalize the Audio Pre
   - [ ] **Config Specification (`configs/config.yaml`)**: Complete the YAML configuration to set default SNR thresholds, model paths, YIN pitch min/max frequencies, and VAD sensitivity.
   - [ ] **CI Actions**: Set up basic GitHub Actions workflows for format checkers (linting) and unit testing.
 
-### 2️⃣ Audio Preprocessing Engineer
+### 2️⃣ Audio Preprocessing Engineer (Split: Bilel & Elio)
 * **Objective**: Export DSP filters, implement ASR vs. SER routing, and code VAD helpers.
 * **Tasks**:
   - [x] **Extract Denoising APIs (`preprocessing/denoise.py`)**: Move the Wiener filter and Spectral Subtraction implementations out of the demo code into importable modular functions.
