@@ -254,7 +254,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Eliott — Demo, Visualization & Video Production (Role 6 — App & Visuals) — 16%
+Eliott — Demo & Visualization Engineer (Role 6a — App & Visuals) — 16%
 --------------------------------------------------
 Responsibilities:
 - Built the interactive Streamlit demonstration dashboard supporting live speech processing.
@@ -271,3 +271,12 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
+Axel — Video Production & Narration (Role 6b) — 10%
+--------------------------------------------------
+Responsibilities:
+- Edited and produced the final >= 10 minute presentation video.
+- Managed the voiceover narration and synced it with the generated visuals.
+- (Note: Did not participate in the core codebase or ML integration.)
+
+Deliverables:
+- video.mp4 (Final video presentation delivered via Google Drive)
