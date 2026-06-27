@@ -1,6 +1,6 @@
 Team Contributions — Topic 3: Local Audio Preprocessing for Better ASR Performance
 
-Eliott — Data & Experimentation Engineer — 14%
+Eliott — Data & Experimentation Engineer — 15%
 --------------------------------------------------
 Responsibilities:
 - Managed the data pipeline (LibriSpeech and RAVDESS download, conversion, multi-noise augmentation).
@@ -168,7 +168,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Elio — Optimization & Real-Time Performance (shared Role 5) — 9%
+Elio — Optimization & Real-Time Performance (shared Role 5) — 8%
 --------------------------------------------------
 Responsibilities:
 - Quantized pipeline models (Whisper-tiny and DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprint on edge CPUs.
@@ -201,7 +201,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Bilel — Optimization & Profiling (shared Role 5) — additional 9%
+Bilel — Optimization & Profiling (shared Role 5) — additional 8%
 --------------------------------------------------
 Responsibilities (Role 5, shared with Elio):
 - Profiled the joint multimodal pipeline (Whisper + DistilBERT + Wav2Vec2) for latency and peak RAM usage.
@@ -254,7 +254,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Eliott — Demo & Visualization Engineer (Role 6a — App & Visuals) — 14%
+Eliott — Demo & Visualization Engineer (Role 6a — App & Visuals) — 15%
 --------------------------------------------------
 Responsibilities:
 - Built the interactive Streamlit demonstration dashboard supporting live speech processing.
