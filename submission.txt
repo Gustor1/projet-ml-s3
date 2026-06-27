@@ -168,7 +168,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Elio — Optimization & Real-Time Performance Engineer — 14%
+Elio — Optimization & Real-Time Performance (shared Role 5) — 9%
 --------------------------------------------------
 Responsibilities:
 - Quantized pipeline models (Whisper-tiny and DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprint on edge CPUs.
@@ -201,7 +201,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Bilel — Optimization & Profiling (shared Role 5) — additional 7%
+Bilel — Optimization & Profiling (shared Role 5) — additional 9%
 --------------------------------------------------
 Responsibilities (Role 5, shared with Elio):
 - Profiled the joint multimodal pipeline (Whisper + DistilBERT + Wav2Vec2) for latency and peak RAM usage.
@@ -219,7 +219,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Bilel — Audio Preprocessing (DSP & Routing, Role 2) — additional 7%
+Bilel — Audio Preprocessing (DSP & Routing, Role 2) — additional 8%
 --------------------------------------------------
 Responsibilities (Role 2, shared with Elio):
 - Developed classical DSP denoising algorithms (Wiener Filter and Spectral Subtraction).
@@ -235,7 +235,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Elio — Audio Preprocessing (VAD & Features, Role 2) — 7%
+Elio — Audio Preprocessing (VAD & Features, Role 2) — 8%
 --------------------------------------------------
 Responsibilities (Role 2, shared with Bilel):
 - Implemented robust Voice Activity Detection (VAD) and volume normalization.
@@ -271,7 +271,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Axel — Video Production & Narration (Role 6b) — 9%
+Axel — Video Production & Narration (Role 6b) — 10%
 --------------------------------------------------
 Responsibilities:
 - Edited and produced the final >= 10 minute presentation video.
