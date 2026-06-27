@@ -229,7 +229,7 @@ projet-ml-s3/
 | 3. ASR Integration & Evaluation | Bilel | Whisper/Wav2Vec2 wrappers, WER/CER benchmarks |
 | 4. Experimentation & Data | Eliott | 6 experiments, SER + sarcasm pipeline, data augmentation |
 | 5. Optimization & Performance | — | Model quantization, profiling, ONNX |
-| 6. Demo & Video Production | — | Streamlit app, presentation video |
+| 6. Demo & Video Production | Axel | Streamlit app, presentation video |
 
 ## 📊 Key Findings
 
