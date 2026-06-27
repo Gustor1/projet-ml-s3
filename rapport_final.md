@@ -689,8 +689,8 @@ These findings are supported by theoretical analysis grounded in published liter
 | Audio Preprocessing (DSP) | Bilel & Enzo | 8% + 8% | `preprocessing/`, parallel routing, VAD, features |
 | ASR Integration & Evaluation | Bilel | 14% | Whisper/Wav2Vec2 wrappers, WER/CER benchmarks, cross-modal ablation |
 | Experimentation & Data | Eliott | 15% | 6 experiments, SER + sarcasm pipeline, data augmentation, 11 scripts |
-| Optimization & Performance | Enzo & Elio | 8% + 8% | INT8 quantization, profiling, streaming audio, ONNX investigation |
-| Demo & Video | Eliott & Axel & Baptiste | 15% + 10% | Streamlit dashboard, presentation video |
+| Optimization & Performance | Axel & Elio | 8% + 8% | INT8 quantization, profiling, streaming audio, ONNX investigation |
+| Demo & Video | Eliott - Axel & Baptiste - Enzo | 15% + 10% | Streamlit dashboard, presentation video |
 
 ---
 
