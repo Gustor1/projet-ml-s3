@@ -1,6 +1,6 @@
 Team Contributions — Topic 3: Local Audio Preprocessing for Better ASR Performance
 
-Eliott — Data & Experimentation Engineer — 17%
+Eliott — Data & Experimentation Engineer — 14%
 --------------------------------------------------
 Responsibilities:
 - Managed the data pipeline (LibriSpeech and RAVDESS download, conversion, multi-noise augmentation).
@@ -111,7 +111,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Elio — Pipeline Architect & DevOps — 17%
+Elio — Pipeline Architect & DevOps — 14%
 --------------------------------------------------
 Responsibilities:
 - Designed and implemented the full multimodal pipeline entry point (main.py) integrating ASR, SER, and text sentiment into a single config-driven executable.
@@ -143,7 +143,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Bilel — ASR Integration & Evaluation Engineer — 17%
+Bilel — ASR Integration & Evaluation Engineer — 14%
 --------------------------------------------------
 Responsibilities:
 - Integration of ASR models (Whisper, Wav2Vec2) with EN/FR/ZH support, error-handling capabilities, and hardware acceleration detection.
@@ -168,7 +168,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Elio — Optimization & Real-Time Performance Engineer — 16%
+Elio — Optimization & Real-Time Performance Engineer — 14%
 --------------------------------------------------
 Responsibilities:
 - Quantized pipeline models (Whisper-tiny and DistilBERT) to INT8 using PyTorch Dynamic Quantization to reduce memory footprint on edge CPUs.
@@ -201,7 +201,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Bilel — Optimization & Profiling (shared Role 5) — additional 8%
+Bilel — Optimization & Profiling (shared Role 5) — additional 7%
 --------------------------------------------------
 Responsibilities (Role 5, shared with Elio):
 - Profiled the joint multimodal pipeline (Whisper + DistilBERT + Wav2Vec2) for latency and peak RAM usage.
@@ -219,7 +219,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Bilel — Audio Preprocessing (DSP & Routing, Role 2) — additional 8.5%
+Bilel — Audio Preprocessing (DSP & Routing, Role 2) — additional 7%
 --------------------------------------------------
 Responsibilities (Role 2, shared with Elio):
 - Developed classical DSP denoising algorithms (Wiener Filter and Spectral Subtraction).
@@ -235,7 +235,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Elio — Audio Preprocessing (VAD & Features, Role 2) — 8.5%
+Elio — Audio Preprocessing (VAD & Features, Role 2) — 7%
 --------------------------------------------------
 Responsibilities (Role 2, shared with Bilel):
 - Implemented robust Voice Activity Detection (VAD) and volume normalization.
@@ -254,7 +254,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Eliott — Demo & Visualization Engineer (Role 6a — App & Visuals) — 16%
+Eliott — Demo & Visualization Engineer (Role 6a — App & Visuals) — 14%
 --------------------------------------------------
 Responsibilities:
 - Built the interactive Streamlit demonstration dashboard supporting live speech processing.
@@ -271,7 +271,7 @@ Deliverables:
 
 GitHub Repository: https://github.com/Gustor1/projet-ml-s3
 
-Axel — Video Production & Narration (Role 6b) — 10%
+Axel — Video Production & Narration (Role 6b) — 9%
 --------------------------------------------------
 Responsibilities:
 - Edited and produced the final >= 10 minute presentation video.
