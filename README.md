@@ -225,11 +225,11 @@ projet-ml-s3/
 | Role | Member | Focus |
 |------|--------|-------|
 | 1. Pipeline Architect & DevOps | Elio | `main.py`, `config.yaml`, Docker, CI/CD |
-| 2. Audio Preprocessing Engineer | — | Denoise APIs, VAD, parallel stream routing |
+| 2. Audio Preprocessing Engineer | bilel & enzo | Denoise APIs, VAD, parallel stream routing |
 | 3. ASR Integration & Evaluation | Bilel | Whisper/Wav2Vec2 wrappers, WER/CER benchmarks |
 | 4. Experimentation & Data | Eliott | 6 experiments, SER + sarcasm pipeline, data augmentation |
-| 5. Optimization & Performance | — | Model quantization, profiling, ONNX |
-| 6. Demo & Video Production | Axel | Streamlit app, presentation video |
+| 5. Optimization & Performance | Axel & Elio | Model quantization, profiling, ONNX |
+| 6. Demo & Video Production | Axel & Baptiste | Streamlit app, presentation video |
 
 ## 📊 Key Findings
 
